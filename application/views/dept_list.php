@@ -11,6 +11,9 @@ if ($pgtype == 1) {
 } else if ($pgtype == 3) {
 	$relink = "salaryBreakup_list";
 	$headname = "";
+} else if ($pgtype == 4) {
+	$relink = "company_list";
+	$headname = "Company";
 }
 ?>
 

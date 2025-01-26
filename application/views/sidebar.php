@@ -48,10 +48,22 @@
   								<p>Designation</p>
   							</a>
   						</li> 
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/company_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Company</p>
+  							</a>
+  						</li> 
   						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Salary Breakup</p>
+  							</a>
+  						</li> 
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/employe_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Employees</p>
   							</a>
   						</li> 
   					</ul>

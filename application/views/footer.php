@@ -47,9 +47,9 @@
 <!-- AdminLTE App -->
 <script src="<?php echo base_url("assets/dist/js/adminlte.js")?>"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url("assets/dist/js/demo.js")?>"></script>
+<!-- <script src="<?php // echo base_url("assets/dist/js/demo.js")?>"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo base_url("assets/dist/js/pages/dashboard.js")?>"></script>
+<script src="<?php // echo base_url("assets/dist/js/pages/dashboard.js")?>"></script>
 <script src="<?php echo base_url("assets/plugins/jquery/jquery.js")?>"></script> 
 
 <script src="<?php echo base_url("assets/dist/js/adminlte.min.js")?>"></script> 
@@ -67,5 +67,7 @@
 <script src="<?php echo base_url("assets/plugins/datatables-buttons/js/buttons.html5.min.js")?>"></script>
 <script src="<?php echo base_url("assets/plugins/datatables-buttons/js/buttons.print.min.js")?>"></script>
 <script src="<?php echo base_url("assets/plugins/datatables-buttons/js/buttons.colVis.min.js")?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 </body>
 </html>

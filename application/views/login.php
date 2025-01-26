@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital | Shakha</title>
+  <title><?php echo (!empty($pagename)) ? $pagename : 'Login' ; ?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,10 +14,11 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition login-page">
+<body style="background: url('<?php echo base_url('uploads/user/logo1.jpg'); ?>') no-repeat center center; background-size: cover;" class="hold-transition login-page">
+
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Digital</b>Shakha</a>
+    <a href="../../index2.html" style="color: white;"><b>Digital</b>Shakha</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -42,17 +43,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
+          <!-- <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
                 Remember Me
               </label>
             </div>
-          </div>
+          </div> -->
           <!-- /.col -->
-          <div class="col-4">
-            <button type='submit' class="btn btn-primary btn-block">Sign In</button>
+          <div class="col-4 text-right">
+            <button type='submit' class="btn btn-primary btn-block">Login</button>
           </div>
           <!-- /.col -->
         </div>
@@ -60,12 +61,12 @@
       </form>
 
      
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>
