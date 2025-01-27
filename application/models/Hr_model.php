@@ -167,24 +167,13 @@ public function get_active_company()
 			"m_emp_company" => 		$this->input->post('m_emp_company'),
 			"m_emp_dept" => 		$this->input->post('m_emp_dept')?:'',
 			"m_emp_design" => 		$this->input->post('m_emp_design')?:'',
-			// "m_emp_hq" => 			$this->input->post('m_emp_hq') ?:'',
 			"m_emp_altmobile" =>	$this->input->post('m_emp_altmobile'),
 			"m_emp_email" => 		$this->input->post('m_emp_email') ?:'',
 			"m_emp_altemail" => 	$this->input->post('m_emp_altemail') ?:'',
-			// "m_emp_bg" => 			$this->input->post('m_emp_bg') ,
 			"m_emp_dshift" => 		$this->input->post('m_emp_dshift') ,
 			"m_emp_dtype" => 		$this->input->post('m_emp_dtype') ,
 			"m_emp_rest" => 		$this->input->post('m_emp_rest'),
-			// "m_emp_ottype" => 		$this->input->post('m_emp_ottype'),
-			"m_emp_salary" => 		$this->input->post('m_emp_salary') ?:'',
-			// "m_emp_cca" => 			$this->input->post('m_emp_cca') ?:'',
-			// "m_emp_medic_allow" =>	$this->input->post('m_emp_medic_allow') ?:'',
-			// "m_emp_ta" => 			$this->input->post('m_emp_ta') ?:'',
-			// "m_emp_spl_allow" => 	$this->input->post('m_emp_spl_allow') ?:'',
-			// "m_emp_medicliam_ded" => $this->input->post('m_emp_medicliam_ded') ?:'',
-			// "m_emp_hra" => 			$this->input->post('m_emp_hra') ?:'',
-			// "m_emp_educ_allow" => 	$this->input->post('m_emp_educ_allow') ?:'',
-			// "m_emp_gross_salary" => $this->input->post('m_emp_gross_salary') ?:'',
+			"m_emp_salary" => 		$this->input->post('m_emp_salary') ?:'', 
 			"m_emp_epfno" => 		$this->input->post('m_emp_epfno') ?:'',
 			"m_emp_esicno" => 		$this->input->post('m_emp_esicno') ?:'',
 			"m_emp_accno" => 		$this->input->post('m_emp_accno') ?:'',
@@ -210,21 +199,15 @@ public function get_active_company()
 			"is_tds_applicable" => 	$is_tds_applicable,
 			// "is_out_of_job" => 		$is_out_of_job,
 			"is_epf_applicable" => 	$is_epf_applicable,
+			"m_login_type" => 2,
+			"m_emp_status" =>1,
 
 		);
 
 		if (!empty($emp_id)) {
 			$emp_detail = $this->db->where('m_emp_id', $emp_id)->get('master_employee_tbl')->row();
 
-			$data["m_emp_salary"] = 		$this->input->post('m_emp_salary') ?: $emp_detail->m_emp_salary;
-			// $data["m_emp_cca"] = 			$this->input->post('m_emp_cca') ?: $emp_detail->m_emp_cca;
-			// $data["m_emp_medic_allow"] =	$this->input->post('m_emp_medic_allow') ?: $emp_detail->m_emp_medic_allow;
-			// $data["m_emp_ta"] = 			$this->input->post('m_emp_ta') ?: $emp_detail->m_emp_ta;
-			// $data["m_emp_spl_allow"] = 	$this->input->post('m_emp_spl_allow') ?: $emp_detail->m_emp_spl_allow;
-			// $data["m_emp_medicliam_ded"] = $this->input->post('m_emp_medicliam_ded') ?: $emp_detail->m_emp_medicliam_ded;
-			// $data["m_emp_hra"] = 			$this->input->post('m_emp_hra') ?: $emp_detail->m_emp_hra;
-			// $data["m_emp_educ_allow"] = 	$this->input->post('m_emp_educ_allow') ?: $emp_detail->m_emp_educ_allow;
-			// $data["m_emp_gross_salary"] = $this->input->post('m_emp_gross_salary') ?: $emp_detail->m_emp_gross_salary;
+			$data["m_emp_salary"] = 		$this->input->post('m_emp_salary') ?: $emp_detail->m_emp_salary; 
 			$data["m_emp_epfno"] = 		$this->input->post('m_emp_epfno') ?: $emp_detail->m_emp_epfno;
 			$data["m_emp_esicno"] = 		$this->input->post('m_emp_esicno') ?: $emp_detail->m_emp_esicno;
 			$data["m_emp_accno"] = 		$this->input->post('m_emp_accno') ?: $emp_detail->m_emp_accno;

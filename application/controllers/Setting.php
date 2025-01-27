@@ -9,7 +9,7 @@
       $data = $this->login_details();
  	  $data['pagename'] = 'My Profile';
       $data['user_dtl'] = $this->Login_model->get_user_profile_details();
-    //   echo "<pre>";print_r($data['user_dtl']);die();
+      // echo "<pre>";print_r($data['user_dtl']);die();
  	 	$this->load->view('profile',$data);
  	 }
 

@@ -94,6 +94,8 @@
        var relink = "designation_list";
       } else if (pgtype == 3) {
        var relink = "salaryBreakup_list";
+      }else if (pgtype == 4) {
+       var relink = "company_list";
       }
 
       $.ajax({

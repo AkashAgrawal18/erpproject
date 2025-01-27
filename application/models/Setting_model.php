@@ -5,14 +5,14 @@ class Setting_model extends CI_model {
 //===========================Profile==========================//
 public function update_profile(){
   $update_data = array(
-    "m_user_name"    => $this->input->post('m_admin_name'),
-    "m_user_email"   => $this->input->post('m_admin_email'),
+    "m_emp_name"    => $this->input->post('m_admin_name'),
+    "m_emp_email"   => $this->input->post('m_admin_email'),
     // "m_admin_login_id"=> $this->input->post('m_admin_login_id'),
-    "m_user_password"    => $this->input->post('m_admin_pass'),
-    "m_user_contact" => $this->input->post('m_admin_contact'),
-    "m_user_pic"     => $this->input->post('pre_m_admin_img'),
+    "m_emp_password"    => $this->input->post('m_admin_pass'),
+    "m_emp_mobile" => $this->input->post('m_admin_contact'),
+    // "m_user_pic"     => $this->input->post('pre_m_admin_img'),
 
-    "m_user_address"     => $this->input->post('m_admin_address'),
+    "m_emp_laddress"     => $this->input->post('m_admin_address'),
     // "m_admin_state"     => $this->input->post('m_admin_state'),
     // "m_admin_city"     => $this->input->post('m_admin_city'),
     // "m_admin_pincode"     => $this->input->post('m_admin_pincode'),
@@ -47,9 +47,9 @@ public function update_profile(){
         }
       }
 
-print_r($update_data); die();
-      $this->db->where('m_user_id', $this->session->userdata('user_id'));
-      return $this->db->update('master_user',$update_data);
+// print_r($update_data); die();
+      $this->db->where('m_emp_id', $this->session->userdata('user_id'));
+      return $this->db->update('master_employee_tbl',$update_data);
     }
 
 

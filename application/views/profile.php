@@ -26,7 +26,7 @@
 				<div class="col-md-3">
 
 					<!-- Profile Image -->
-					<div class="card card-primary card-outline">
+					<!-- <div class="card card-primary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
 								<?php
@@ -47,16 +47,15 @@
 							<button type="button" id="uploadImagebtn" class="btn btn-primary btn-block"> Upload New Photo </button>
 							<input type="file" id="uploadImage" class="account-file-input" name="m_admin_img" onchange="PreviewImage();"
 								hidden accept="image/png, image/jpeg, image/jpg" />
-						</div>
-						<!-- /.card-body -->
-					</div>
+						</div> 
+					</div> -->
 					<!-- /.card -->
 
 
 					<!-- /.card -->
 				</div>
 				<!-- /.col -->
-				<div class="col-md-9">
+				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header p-2">
 							<ul class="nav nav-pills"> 
@@ -74,33 +73,33 @@
 										<div class="form-group row">
 											<label for="inputName" class="col-sm-2 col-form-label">Admin Name</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputName" name="m_admin_name" value="<?php echo $user_dtl[0]->m_user_name; ?>" placeholder="enter admin name"
+												<input type="text" class="form-control" id="inputName" name="m_admin_name" value="<?php echo $user_dtl[0]->m_emp_name; ?>" placeholder="enter admin name"
 													required />
 											</div>
 										</div>
 										<div class="form-group row">
 											<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputEmail" name="m_admin_email" value="<?php echo $user_dtl[0]->m_user_email; ?>" required>
+												<input type="text" class="form-control" id="inputEmail" name="m_admin_email" value="<?php echo $user_dtl[0]->m_emp_email; ?>" required>
 											</div>
 										</div>
 
 										<div class="form-group row">
 											<label for="inputName2" class="col-sm-2 col-form-label">Password</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputName2" name="m_admin_pass" value="<?php echo $user_dtl[0]->m_user_password; ?>">
+												<input type="text" class="form-control" id="inputName2" name="m_admin_pass" value="<?php echo $user_dtl[0]->m_emp_password; ?>">
 											</div>
 										</div>
 										<div class="form-group row">
 											<label for="inputName2" class="col-sm-2 col-form-label">Phone Number</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputName2" name="m_admin_contact" onkeypress="return /[0-9]/i.test(event.key)" - only number placeholder=" enter admin contact number" aria-label="" aria-describedby="" required value="<?php echo $user_dtl[0]->m_user_contact; ?>">
+												<input type="text" class="form-control" id="inputName2" name="m_admin_contact" onkeypress="return /[0-9]/i.test(event.key)" - only number placeholder=" enter admin contact number" aria-label="" aria-describedby="" required value="<?php echo $user_dtl[0]->m_emp_mobile; ?>">
 											</div>
 										</div>
 										<div class="form-group row">
 											<label for="inputExperience" class="col-sm-2 col-form-label">Address</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" id="inputExperience" name="m_admin_address" required><?php echo $user_dtl[0]->m_user_address; ?></textarea>
+												<textarea class="form-control" id="inputExperience" name="m_admin_address" required><?php echo $user_dtl[0]->m_emp_laddress; ?></textarea>
 											</div>
 										</div>
 										<div class="form-group row">
