@@ -22,40 +22,41 @@
 	<!-- Main content -->
 	<section class="content">
 		<div class="container-fluid">
+			
+		<form method="post" action="#" id="frm-update-profile" enctype="multipart/form-data"  >
 			<div class="row">
 				<div class="col-md-3">
-
 					<!-- Profile Image -->
-					<!-- <div class="card card-primary card-outline">
+					<div class="card card-primary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
 								<?php
-								$admin_img = base_url('uploads/user/logo.png');
-								if (!empty($user_dtl[0]->m_user_pic)) {
-									$img_title = $user_dtl[0]->m_user_pic;
-									if (file_exists('uploads/user/' . $img_title)) {
-										$admin_img = base_url('uploads/user/') . $img_title;
+								$admin_img = base_url('uploads/emp/logo.jpg');
+								if (!empty($user_dtl[0]->m_emp_pic)) {
+									$img_title = $user_dtl[0]->m_emp_pic;
+									if (file_exists('uploads/emp/' . $img_title)) {
+										$admin_img = base_url('uploads/emp/') . $img_title;
 									}
 								}
 								?>
 								<img class="profile-user-img img-fluid img-circle"
 									src="<?php echo $admin_img;  ?>"
 									alt="profile picture" id="uploadPreview">
-								<input type="hidden" name="pre_m_admin_img" value="<?php echo $user_dtl[0]->m_user_pic; ?>">
+								<input type="hidden" name="pre_m_admin_img" value="<?php echo $user_dtl[0]->m_emp_pic; ?>">
 							</div>
-							<h3 class="profile-username text-center"><?php echo $user_dtl[0]->m_user_name; ?></h3> 
+							<h3 class="profile-username text-center"><?php echo $user_dtl[0]->m_emp_name; ?></h3> 
 							<button type="button" id="uploadImagebtn" class="btn btn-primary btn-block"> Upload New Photo </button>
 							<input type="file" id="uploadImage" class="account-file-input" name="m_admin_img" onchange="PreviewImage();"
 								hidden accept="image/png, image/jpeg, image/jpg" />
 						</div> 
-					</div> -->
+					</div>
 					<!-- /.card -->
 
 
 					<!-- /.card -->
 				</div>
 				<!-- /.col -->
-				<div class="col-md-12">
+				<div class="col-md-9">
 					<div class="card">
 						<div class="card-header p-2">
 							<ul class="nav nav-pills"> 
@@ -67,8 +68,9 @@
 
 								<!-- /.tab-pane -->
 
-								<div class="tab-pane active" id="settings">
-									<form method="post" action="#" id="frm-update-profile" class="form-horizontal">
+								<div class="tab-pane active" id="settings"> 
+
+									
 
 										<div class="form-group row">
 											<label for="inputName" class="col-sm-2 col-form-label">Admin Name</label>
@@ -107,7 +109,7 @@
 												<button type="submit" class="btn btn-danger">Update</button>
 											</div>
 										</div>
-									</form>
+									
 								</div>
 								<!-- /.tab-pane -->
 							</div>
@@ -117,7 +119,9 @@
 					<!-- /.card -->
 				</div>
 				<!-- /.col -->
+			
 			</div>
+			</form>
 			<!-- /.row -->
 		</div><!-- /.container-fluid -->
 	</section>

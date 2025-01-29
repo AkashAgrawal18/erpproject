@@ -51,7 +51,6 @@
                   <div id="captcha" class="captcha-text  ">
                     <!-- CAPTCHA text will appear here -->
                   </div>
-
                   <input type="text" class="form-control" id="captcha-input" placeholder="Enter CAPTCHA"  required/>
                  </div>
               </div>

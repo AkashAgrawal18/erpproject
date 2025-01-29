@@ -18,7 +18,7 @@
 	<!-- Main content -->
 	<section class="content">
 		<div class="container-fluid">
-			<form method="POST" action="#" id="frm-update">
+			<form method="POST" action="#" id="frm-update" enctype="multipart/form-data">
 				<!-- SELECT2 EXAMPLE -->
 				<div class="card card-default">
 					<div class="card-header">
@@ -128,10 +128,10 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<?php
-										if (!empty($app_details[0]->m_app_logo) && file_exists('uploads/user/logo/' . $app_details[0]->m_app_logo)) {
-											$applogo = base_url('uploads/user/logo/' . $app_details[0]->m_app_logo);
+										if (!empty($app_details[0]->m_app_logo) && file_exists('uploads/user/' . $app_details[0]->m_app_logo)) {
+											$applogo = base_url('uploads/user/' . $app_details[0]->m_app_logo);
 										} else {
-											$applogo = base_url('uploads/default.jpg');
+											$applogo = base_url('uploads/user/default.jpg');
 										}
 										?> <img style="max-height:120px" src="<?php echo $applogo ?>" class="img-responsive img-thumbnail" /><br>
 										<label class="control-label">Color Logo</label>
@@ -141,10 +141,10 @@
 									<!-- /.form-group -->
 									<div class="form-group">
 										<?php
-										if (!empty($app_details[0]->m_app_icon) && file_exists('uploads/user/logo/' . $app_details[0]->m_app_icon)) {
-											$appfavi = base_url('uploads/user/logo/' . $app_details[0]->m_app_icon);
+										if (!empty($app_details[0]->m_app_icon) && file_exists('uploads/user/' . $app_details[0]->m_app_icon)) {
+											$appfavi = base_url('uploads/user/' . $app_details[0]->m_app_icon);
 										} else {
-											$appfavi = base_url('uploads/default.jpg');
+											$appfavi = base_url('uploads/user/default.jpg');
 										}
 										?>
 										<img style="max-height:50px" src="<?php echo $appfavi ?>" class="img-responsive img-thumbnail" /><br>
@@ -158,13 +158,13 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<?php
-										if (!empty($app_details[0]->m_app_black_logo) && file_exists('uploads/user/logo/' . $app_details[0]->m_app_black_logo)) {
-											$appblack_logo = base_url('uploads/user/logo/' . $app_details[0]->m_app_black_logo);
+										if (!empty($app_details[0]->m_app_black_logo) && file_exists('uploads/user/' . $app_details[0]->m_app_black_logo)) {
+											$appblack_logo = base_url('uploads/user/' . $app_details[0]->m_app_black_logo);
 										} else {
-											$appblack_logo = base_url('uploads/default.jpg');
+											$appblack_logo = base_url('uploads/user/default.jpg');
 										}
 										?>
-										<img   src="<?php echo $appblack_logo ?>" class="img-responsive img-thumbnail" /><br>
+										<img src="<?php echo $appblack_logo ?>" class="img-responsive img-thumbnail" /><br>
 										<label class="control-label">Black Logo</label>
 										<input type="hidden" name="app_black_logo" value="<?php echo $app_details[0]->m_app_black_logo ?>">
 										<input type="file" name="m_app_black_logo" class="form-control">
@@ -172,13 +172,13 @@
 									<!-- /.form-group -->
 									<div class="form-group">
 										<?php
-										if (!empty($app_details[0]->m_app_white_logo) && file_exists('uploads/user/logo/' . $app_details[0]->m_app_white_logo)) {
-											$appwhite_logo = base_url('uploads/user/logo/' . $app_details[0]->m_app_white_logo);
+										if (!empty($app_details[0]->m_app_white_logo) && file_exists('uploads/user/' . $app_details[0]->m_app_white_logo)) {
+											$appwhite_logo = base_url('uploads/user/' . $app_details[0]->m_app_white_logo);
 										} else {
-											$appwhite_logo = base_url('uploads/default.jpg');
+											$appwhite_logo = base_url('uploads/user/default.jpg');
 										}
 										?>
-										<img  src="<?php echo $appwhite_logo ?>" class="img-responsive img-thumbnail" /><br>
+										<img src="<?php echo $appwhite_logo ?>" class="img-responsive img-thumbnail" /><br>
 										<label class="control-label">White Logo</label>
 										<input type="hidden" name="app_white_logo" value="<?php echo $app_details[0]->m_app_white_logo ?>">
 										<input type="file" name="m_app_white_logo" class="form-control">

@@ -20,7 +20,8 @@ class Login extends CI_Controller {
         'user_id' => $data[0]->m_emp_id,
         'm_login_type' => $data[0]->m_login_type,
         'designation' => $data[0]->m_emp_design,   
-      );  
+      ); 
+			// print_r($usrdata); die(); 
         $this->session->set_userdata($usrdata);
         redirect('Welcome');
       }else{ 

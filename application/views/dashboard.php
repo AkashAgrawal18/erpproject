@@ -1,99 +1,189 @@
- <?php $this->view('header') ?> 
- 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <!-- <h1 class="m-0">Dashboard</h1> -->
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
-              <!-- <li class="breadcrumb-item active">Dashboard v1</li> -->
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+ <?php $this->view('header') ?>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+ 	<!-- Content Header (Page header) -->
+ 	<div class="content-header">
+ 		<div class="container-fluid">
+ 			<div class="row mb-2">
+ 				<div class="col-sm-6">
+ 					<!-- <h1 class="m-0">Dashboard</h1> -->
+ 				</div><!-- /.col -->
+ 				<div class="col-sm-6">
+ 					<ol class="breadcrumb float-sm-right">
+ 						<!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
+ 						<!-- <li class="breadcrumb-item active">Dashboard v1</li> -->
+ 					</ol>
+ 				</div><!-- /.col -->
+ 			</div><!-- /.row -->
+ 		</div><!-- /.container-fluid -->
+ 	</div>
+ 	<!-- /.content-header -->
 
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+ 	<!-- Main content -->
+ 	<section class="content">
+ 		<div class="container-fluid">
+ 			<!-- Small boxes (Stat box) -->
+ 			<div class="row">
+ 				<div class="col-lg-3 col-6">
+ 					<!-- small box -->
+ 					<div class="small-box bg-info">
+ 						<div class="inner">
+ 							<h3>150</h3>
 
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+ 							<p>New Orders</p>
+ 						</div>
+ 						<div class="icon">
+ 							<i class="ion ion-bag"></i>
+ 						</div>
+ 						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+ 					</div>
+ 				</div>
+ 				<!-- ./col -->
+ 				<div class="col-lg-3 col-6">
+ 					<!-- small box -->
+ 					<div class="small-box bg-success">
+ 						<div class="inner">
+ 							<h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+ 							<p>Bounce Rate</p>
+ 						</div>
+ 						<div class="icon">
+ 							<i class="ion ion-stats-bars"></i>
+ 						</div>
+ 						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+ 					</div>
+ 				</div>
+ 				<!-- ./col -->
+ 				<div class="col-lg-3 col-6">
+ 					<!-- small box -->
+ 					<div class="small-box bg-warning">
+ 						<div class="inner">
+ 							<h3>44</h3>
 
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-        <!-- Main row -->
-       
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+ 							<p>User Registrations</p>
+ 						</div>
+ 						<div class="icon">
+ 							<i class="ion ion-person-add"></i>
+ 						</div>
+ 						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+ 					</div>
+ 				</div>
+ 				<!-- ./col -->
+ 				<div class="col-lg-3 col-6">
+ 					<!-- small box -->
+ 					<div class="small-box bg-danger">
+ 						<div class="inner">
+ 							<h3>65</h3>
 
- <?php $this->view('footer') ?> 
+ 							<p>Unique Visitors</p>
+ 						</div>
+ 						<div class="icon">
+ 							<i class="ion ion-pie-graph"></i>
+ 						</div>
+ 						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+ 					</div>
+
+ 				</div>
+ 				<!-- ./col -->
+ 			</div>
+ 			<!-- /.row -->
+ 			<!-- Main row -->
+
+ 			<!-- /.row (main row) -->
+ 		</div><!-- /.container-fluid -->
+ 	</section>
+ 	<!-- /.content -->
+ </div>
+ <!-- /.content-wrapper -->
+
+ <?php $this->view('footer') ?>
+
+ <script type="text/javascript">
+ 	$(document).ready(function() {
+ 		const clockInBtn = $("#clockInBtn");
+ 		const clockOutBtn = $("#clockOutBtn");
+ 		var empId = "<?php echo $this->session->userdata('user_id'); ?>";
+
+ 		// Initially check the clock-in status
+ 		checkClockInStatus();
+ 		console.log("Emp ID being sent: ", empId);
+
+ 		// Clock In
+ 		clockInBtn.click(function() {
+ 			$.ajax({
+ 				url: "<?php echo base_url('Setting/clock_in'); ?>",
+ 				type: "POST",
+ 				data: {
+ 					emp_id: empId
+ 				},
+ 				success: function(response) {
+ 					const result = JSON.parse(response);
+ 					if (result.status === "success") {
+ 						alert(result.message);
+ 						toggleButtons("1");
+ 					} else {
+ 						alert(result.message);
+ 					}
+ 				},
+ 				error: function() {
+ 					alert("Error occurred while clocking in.");
+ 				},
+ 			});
+ 		});
+
+ 		// Clock Out
+ 		clockOutBtn.click(function() {
+ 			$.ajax({
+ 				url: "<?php echo base_url('Setting/clock_out'); ?>",
+ 				type: "POST",
+ 				data: {
+ 					emp_id: empId
+ 				}, // Pass employee ID to backend
+ 				success: function(response) {
+ 					const result = JSON.parse(response);
+ 					if (result.status === "success") {
+ 						alert(result.message);
+ 						toggleButtons("0");
+ 					} else {
+ 						alert(result.message);
+ 					}
+ 				},
+ 				error: function() {
+ 					alert("Error occurred while clocking out.");
+ 				},
+ 			});
+ 		});
+
+ 		// Check Clock-In Status
+ 		function checkClockInStatus() {
+ 			$.ajax({
+ 				url: "<?php echo base_url('Setting/check_status'); ?>",
+ 				type: "GET",
+ 				success: function(response) {
+ 					const result = JSON.parse(response);
+ 					if (result.status === "1") {
+ 						toggleButtons("1");
+ 					} else {
+ 						toggleButtons("0");
+ 					}
+ 				},
+ 				error: function() {
+ 					alert("Error occurred while checking status.");
+ 				},
+ 			});
+ 		}
+
+ 		// Toggle Buttons
+ 		function toggleButtons(status) {
+ 			if (status === "1") {
+ 				clockInBtn.hide();
+ 				clockOutBtn.show();
+ 			} else {
+ 				clockInBtn.show();
+ 				clockOutBtn.hide();
+ 			}
+ 		}
+
+ 	});
+ </script>
