@@ -138,6 +138,17 @@ public function employe_list()
 public function add_employe()
 {
 	$data = $this->login_details();
+   $data['pagename'] = "Add New Employee";	
+	$data['company_list'] = $this->Hr_model->get_active_company();
+	$data['dept_value'] = $this->Hr_model->get_active_dept();
+	$data['design_value'] = $this->Hr_model->get_active_design();
+	$data['salarybk_value'] = $this->Hr_model->get_active_salarybk(); 
+    //   print_r($data['slbk_value']); die();
+	$this->load->view('add_employe', $data);
+}
+public function edit_employee()
+{
+	$data = $this->login_details();
 	$data['id'] = $this->input->get('id');
 	if (!empty($data['id'])) {
 		$data['pagename'] = "Edit Employee Details";
@@ -147,11 +158,13 @@ public function add_employe()
 	$data['company_list'] = $this->Hr_model->get_active_company();
 	$data['dept_value'] = $this->Hr_model->get_active_dept();
 	$data['design_value'] = $this->Hr_model->get_active_design();
+	$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
 	// $data['hq_value'] = $this->Hr_model->get_active_hq();
 	// $data['emp_list'] = $this->Hr_model->get_Active_emp();
 	$data['edit_value'] = $this->Hr_model->get_emp_dtl($data['id']);
-    //   print_r($data['design_value']); die();
-	$this->load->view('add_employe', $data);
+	$data['slbk_value'] = $this->Hr_model->get_salarybk($data['id']);
+    //   print_r($data['slbk_value']); die();
+	$this->load->view('edit_employee', $data);
 }
 
 public function insert_emp()
@@ -160,29 +173,61 @@ public function insert_emp()
 		return;
 	}
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if ($data = $this->Hr_model->insert_emp()) {
-
-			if ($data == 1) {
-				$info = array(
-					'status' => 'success',
-					'message' => 'Employee has been Added successfully!'
-				);
-			} else if ($data == 2) {
-				$info = array(
-					'status' => 'success',
-					'message' => 'Employee data Updated Successfully'
-				);
-			}
+		if ($this->Hr_model->insert_emp()) {
+			$info = array(
+				'status' => 'success',
+				'message' => 'Employee has been added successfully!'
+			);
 		} else {
 			$info = array(
 				'status' => 'error',
-				'message' => 'Some problem Occurred!! please try again'
+				'message' => 'Some problem occurred! Please try again'
 			);
 		}
 
 		echo json_encode($info);
 	}
 }
+
+public function update_emp()
+{
+	if ($this->ajax_login() === false) {
+		return;
+	}
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if ($this->Hr_model->update_emp()) {
+			$info = array(
+				'status' => 'success',
+				'message' => 'Employee data updated successfully!'
+			);
+		} else {
+			$info = array(
+				'status' => 'error',
+				'message' => 'Some problem occurred! Please try again'
+			);
+		}
+
+		echo json_encode($info);
+	}
+}
+public function delete_slarybk(){
+	$data = $this->login_details();
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	  if ($data = $this->Hr_model->delete_slarybk()) {
+		$info = array(
+		  'status' => 'success',
+		  'message' => 'Salary has been Deleted successfully!'
+		);
+	  } else {
+		$info = array(
+		  'status' => 'error',
+		  'message' => 'Some problem Occurred!! please try again'
+		);
+	  }
+	  echo json_encode($info);
+	}
+  }
+
 
 public function check_emp_history()
 {

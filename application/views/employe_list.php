@@ -117,7 +117,7 @@
 														<i class="fa fa-eye"></i>
 													</button>
 
-													<a href="<?php echo base_url('HrDept/add_employe?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<a href="<?php echo base_url('HrDept/edit_employee?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<button class="btn btn-danger btn-action delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 
 												</td>

@@ -52,7 +52,7 @@
 <script src="<?php // echo base_url("assets/dist/js/pages/dashboard.js")?>"></script>
 <script src="<?php echo base_url("assets/plugins/jquery/jquery.js")?>"></script> 
 
-<script src="<?php echo base_url("assets/dist/js/adminlte.min.js")?>"></script> 
+<script src="<?php // echo base_url("assets/dist/js/adminlte.min.js")?>"></script> 
 <script src="<?php echo base_url("assets/plugins/sweetalert2/sweetalert.min.js")?>"></script> 
 
 <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js")?>"></script>
