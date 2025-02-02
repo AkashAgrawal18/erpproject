@@ -23,7 +23,12 @@ class Report extends CI_Controller
 		$data['pagename'] = 'Employee Detail';
 		$id = $this->input->get('id');
 		$data['id'] = $id;
-		$data['emp_att_del'] = $this->Report_model->get_empatt_detail($data['id']);
+		if (!empty($this->input->post('from_month'))) {
+			$data['from_month'] = $this->input->post('from_month');
+		} else {
+			$data['from_month'] = date('m-Y');
+		}
+		$data['emp_att_del'] = $this->Report_model->get_empatt_detail($data['id'],$data['from_month']);
 		// echo "<pre>"; print_r($data['emp_att_del']);die();
 		$this->load->view('emp_attd_detail', $data);
 	}

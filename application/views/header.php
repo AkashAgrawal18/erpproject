@@ -188,3 +188,5 @@
 		</nav>
 		<!-- /.navbar -->
 		<?php $this->view('sidebar') ?>
+
+		

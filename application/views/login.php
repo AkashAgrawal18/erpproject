@@ -16,13 +16,14 @@
 	<link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
 </head>
 
-<body style="background: url('<?php echo base_url('uploads/user/logo4.jpg'); ?>') no-repeat center center; background-size: cover;" class="hold-transition login-page">
+<body style="background: url('<?php echo base_url('uploads/user/logo42e.jpg'); ?>') no-repeat center center; background-size: cover;" class="hold-transition login-page">
 
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="../../index2.html" style="color: white;"><b>Digital</b>Shakha</a>
+			<a href="../../index2.html"  ><b>Digital</b>Shakha</a>
 		</div>
 		<!-- /.login-logo -->
+		 <div class="container">
 		<div class="card">
 			<div class="card-body login-card-body">
 				<div class="row">
@@ -85,6 +86,7 @@
 			</div>
 			<!-- /.login-card-body -->
 		</div>
+	</div>
 	</div>
 	<!-- /.login-box -->
 

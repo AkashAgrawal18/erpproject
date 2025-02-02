@@ -99,7 +99,9 @@ class Hr_model extends CI_model
 
 	public function get_emp_list()
 	{
-		$this->db->where('m_login_type!=', 1);
+		// $this->db->where('m_login_type!=', 1);
+		$this->db->where('m_dept_type', 2);
+		$this->db->join('master_department_tbl design', 'design.m_dept_id  = master_employee_tbl.m_emp_design', 'left');
 		$res = $this->db->get('master_employee_tbl')->result();
 		return $res;
 	}
@@ -140,8 +142,7 @@ class Hr_model extends CI_model
 
 	public function insert_emp()
 	{
-
-		$emp_id = $this->input->post('m_emp_id');
+ 
 
 		if ($this->input->post('is_esic_applicable')) {
 			$is_esic_applicable = 1;
@@ -178,6 +179,7 @@ class Hr_model extends CI_model
 			"m_emp_dtype" => 		$this->input->post('m_emp_dtype'),
 			"m_emp_rest" => 		$this->input->post('m_emp_rest'),
 			"m_emp_salary" => 		$this->input->post('m_emp_salary') ?: '',
+			"m_emp_gross" => 		$this->input->post('m_emp_gross') ?: '',
 			"m_emp_epfno" => 		$this->input->post('m_emp_epfno') ?: '',
 			"m_emp_esicno" => 		$this->input->post('m_emp_esicno') ?: '',
 			"m_emp_accno" => 		$this->input->post('m_emp_accno') ?: '',
@@ -232,10 +234,15 @@ class Hr_model extends CI_model
 			 
 		   }
 		 }
-	   return $set;
 
-  
-	}
+		//  $data2 = array(  
+        //     "m_emp_salary" => 1, 
+        //  );
+        //  $this->db->where('m_emp_id', $last_id);
+        //  $this->db->update('master_employee_tbl', $data2); 
+		 return true;
+		} 
+	
 
 	public function update_emp()
 {
@@ -266,6 +273,7 @@ class Hr_model extends CI_model
         "m_emp_dtype"        => $this->input->post('m_emp_dtype'),
         "m_emp_rest"         => $this->input->post('m_emp_rest'),
         "m_emp_salary"       => $this->input->post('m_emp_salary') ?: '',
+        "m_emp_gross"       => $this->input->post('m_emp_gross') ?: '',
         "m_emp_epfno"        => $this->input->post('m_emp_epfno') ?: '',
         "m_emp_esicno"       => $this->input->post('m_emp_esicno') ?: '',
         "m_emp_accno"        => $this->input->post('m_emp_accno') ?: '',
@@ -319,9 +327,12 @@ class Hr_model extends CI_model
             }
 			// print_r($salary_data); die(); 
         }
-    
-
-    return 1;
+		// $data2 = array(  
+        //     "m_emp_salary" => 100, 
+        //  );
+        //  $this->db->where('m_emp_id', $last_id);
+        //  $this->db->update('master_employee_tbl', $data2); 
+		 return true;
 }
 
 	public function delete_emp()

@@ -31,21 +31,13 @@
 								<thead>
 									<tr>
 										<th>Sno.</th>
-										<th>EmpCode</th>
-										<th>Login ID</th>
+										<th>EmpCode</th> 
 										<th>EmpName</th>
-										<th>DOJ</th>
-										<?php if ($this->session->userdata('user_type') == 1 || $this->session->userdata('user_type') != 3 && $this->session->userdata('user_dept') == 1) {
-											echo '<th>GSalary</th>
-                            <th>EPF No</th>
-                            <th>ESIC No</th>';
-										} ?>
-										<th>Pan No</th>
-										<th>Mobile No</th>
-										<th>BankAccNo</th>
-										<!-- <th>Company</th> -->
-										<!-- <th>Dept</th> -->
-										<!-- <th>Desig</th> -->
+										<th>DOJ</th>  
+										<th>Mobile No</th> 
+										<th>Email</th> 
+										<th>Desig</th>
+										<th>Status</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -58,26 +50,17 @@
 									?>
 											<tr>
 												<td><?php echo $i; ?></td>
-												<td><?php echo $value->m_emp_code; ?></td>
-												<td><?php echo $value->m_emp_id; ?></td>
+												<td><?php echo $value->m_emp_code; ?></td> 
 												<td><?php echo $value->m_emp_name; ?></td>
-												<td><?= date('d-m-Y h:i', strtotime($value->m_emp_doj)); ?></td>
-												<?php if ($this->session->userdata('user_type') == 1 || $this->session->userdata('user_type') != 3 && $this->session->userdata('user_dept') == 1) {
-													echo ' <td>' . $value->m_emp_gross_salary . '</td>
-                                                <td>' . $value->m_emp_epfno . '</td>
-                                                <td>' . $value->m_emp_esicno . '</td>';
-												} ?>
-												<td><?php echo $value->m_emp_panno; ?></td>
+												<td><?= date('d-m-Y', strtotime($value->m_emp_doj)); ?></td> 
 												<td><?php echo $value->m_emp_mobile; ?></td>
-												<td><?php echo $value->m_emp_accno; ?></td>
-												<!-- <td><?php echo $value->m_company_name; ?></td> -->
-												<!-- <td><?php echo $value->m_dept_name; ?></td> -->
-												<!-- <td><?php echo $value->m_design_name; ?></td> -->
+												<td><?php echo $value->m_emp_email; ?></td>  
+												<td><?php echo $value->m_dept_name; ?></td>
 
-												<!-- <td><?php if ($value->m_HrDept_status == 1) echo "Active";
+												<td><?php if ($value->m_emp_status == 1) echo "Active";
 															else {
 																echo "In-Active";
-															} ?></td>  -->
+															} ?></td> 
 
 												<td class="wd-30">
 

@@ -134,3 +134,4 @@
 <?php $this->view('footer');
 $this->view('js/profile_js');
 ?>
+ <?php $this->view('js/js_custom') ?>

@@ -32,28 +32,28 @@
 						<div class="card-body">
 							<form method="post" action="#" id="frm-emp-create" enctype="mutipart/form-data">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Employee Code</label>
 													<input type="text" name="m_emp_code" id="m_emp_code" class="form-control">
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Employee Name <span class="text-danger">*</span></label>
 													<input type="text" name="m_emp_name" id="m_emp_name" class="form-control" required="">
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Father Name <span class="text-danger">*</span></label>
 													<input type="text" name="m_emp_fhname" id="m_emp_fhname" class="form-control" required=''>
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Department <span class="text-danger">*</span></label>
 													<select name="m_emp_dept" id="m_emp_dept" class="form-control select2" required>
@@ -76,7 +76,7 @@
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Designation <span class="text-danger">*</span></label>
 													<select name="m_emp_design" id="m_emp_design" class="form-control select2" required>
@@ -99,7 +99,7 @@
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Company</label>
 													<select name="m_emp_company" id="m_emp_company" class="form-control select2">
@@ -119,45 +119,45 @@
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Date Of Birth <span class="text-danger">*</span></label>
 													<input type="date" name="m_emp_dob" id="m_emp_dob" max="<?= date('Y-m-d', strtotime(date('Y-m-d') . '- 15 years')) ?>" class="form-control" required>
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Date Of Joining <span class="text-danger">*</span></label>
 													<input type="date" name="m_emp_doj" id="m_emp_doj" max="<?= date('Y-m-d') ?>" class="form-control" required>
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Mobile Number <span class="text-danger">*</span></label>
 													<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_mobile" id="m_emp_mobile" class="form-control mobilevali" placeholder="Enter Mobile Number" required="">
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Alt Mobile <span class="text-danger">*</span></label>
 													<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_altmobile" id="m_emp_altmobile" class="form-control mobilevali" placeholder="Enter Phone Number" required>
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Email id</label>
 													<input type="email" name="m_emp_email" id="m_emp_email" class="form-control" placeholder="Enter Your Email id">
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Alt Email id</label>
 													<input type="email" name="m_emp_altemail" id="m_emp_altemail" class="form-control" placeholder="Enter Your Email id">
 												</div>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Duty Shift</label>
 													<select name="m_emp_dshift" id="m_emp_dshift" class="form-control select2">
@@ -167,7 +167,7 @@
 
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Duty Type</label>
 													<select name="m_emp_dtype" id="m_emp_dtype" class="form-control select2">
@@ -178,7 +178,7 @@
 
 												</div>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Rest Day</label>
 													<select name="m_emp_rest" id="m_emp_rest" class="form-control select2">
@@ -194,14 +194,7 @@
 
 												</div>
 											</div>
-											<!-- 
-											<div class="col-md-4" id="">
-												<div class="form-group">
-													<label>Date of Leave</label>
-													<input type="date" name="m_emp_dol" id="m_emp_dol" class="form-control">
-												</div>
-											</div> -->
-											<div class="col-md-4" id="">
+											<div class="col-md-2" id="">
 												<div class="form-group">
 													<label>Status</label>
 													<select name="m_emp_status" id="m_emp_status" class="form-control select2">
@@ -210,117 +203,84 @@
 													</select>
 												</div>
 											</div>
-
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="row">
-
-											<div class="col-sm-12 text-center">
-												<?php if ($this->session->userdata('user_type') == 1 || $this->session->userdata('user_type') != 3 && $this->session->userdata('user_dept') == 1) {
-													echo '<a class="nav-top-btn nabtn active" id="Salary">Salary</a>
-                                                <a class="nav-top-btn nabtn" id="Statuatory">Statuatory</a>';
-												} ?>
-												<!-- <a class="btn btn-sm " id="Prev_emp">Previous Emp</a>
-                                                <a class="btn btn-sm " id="Address">Address</a>
-                                                <a class="btn btn-sm " id="Login_dtl">Login Details</a>
-                                                <a class="btn btn-sm " id="Skills">Skills </a> -->
-											</div>
-
-											<div class="container-fluid">
-												<div class="navlink-container">
-
-													<div class="row Prev_emp">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Previous Employer</label>
-																<input type="text" name="m_emp_prev_empr" id="m_emp_prev_empr" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Previous Department</label>
-																<input type="text" name="m_emp_prev_dept" id="m_emp_prev_dept" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Previous Designation</label>
-																<input type="text" name="m_emp_prev_design" id="m_emp_prev_design" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Prev. Employement Duration</label>
-																<input type="text" name="m_emp_prev_duration" id="m_emp_prev_duration" class="form-control">
-															</div>
-														</div>
-													</div>
-
-													<div class="row Address">
-														<div class="col-md-12">
-															<div class="form-group">
-																<label>Local Address</label>
-																<textarea name="m_emp_laddress" id="m_emp_laddress" class="form-control"> </textarea>
-															</div>
-														</div>
-														<div class="col-md-12">
-															<div class="form-group">
-																<label>Permanent Address</label>
-																<textarea name="m_emp_paddress" id="m_emp_paddress" class="form-control"> </textarea>
-															</div>
-														</div>
-
-													</div>
-
-													<div class="row Login_dtl">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Password</label>
-																<input type="text" name="m_emp_password" id="m_emp_password" class="form-control">
-															</div>
-
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Login Type</label>
-																<select name="m_emp_login_type" id="m_emp_login_type" class="form-control">
-																	<option value="1">Security Guard</option>
-																	<option value="2">Ticket Counter</option>
-																	<option value="3">PRO (leads)</option>
-																</select>
-
-															</div>
-
-														</div>
-													</div>
-
-													<div class="row Skills">
-														<div class="col-md-12">
-															<div class="form-group">
-																<label>Qualification</label>
-																<textarea name="m_emp_qualification" id="m_emp_qualification" class="form-control"> </textarea>
-															</div>
-														</div>
-													</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Password</label>
+													<input type="text" name="m_emp_password" id="m_emp_password" class="form-control">
 												</div>
 
-
-
-
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Login Type</label>
+													<select name="m_emp_login_type" id="m_emp_login_type" class="form-control">
+														<option value="1">Admin</option>
+														<option value="2">Userr</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Actual Salary</label>
+													<input type="text" name="m_emp_salary" id="m_emp_salary" readonly class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Gross Salary</label>
+													<input type="text" name="m_emp_gross" id="m_emp_gross" readonly class="form-control">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Previous Employer</label>
+													<input type="text" name="m_emp_prev_empr" id="m_emp_prev_empr" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Previous Department</label>
+													<input type="text" name="m_emp_prev_dept" id="m_emp_prev_dept" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Previous Designation</label>
+													<input type="text" name="m_emp_prev_design" id="m_emp_prev_design" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Prev. Employement Duration</label>
+													<input type="text" name="m_emp_prev_duration" id="m_emp_prev_duration" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Local Address</label>
+													<textarea name="m_emp_laddress" id="m_emp_laddress" class="form-control"> </textarea>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Permanent Address</label>
+													<textarea name="m_emp_paddress" id="m_emp_paddress" class="form-control"> </textarea>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Qualification</label>
+													<textarea name="m_emp_qualification" id="m_emp_qualification" class="form-control"> </textarea>
+												</div>
 											</div>
 										</div>
 									</div>
-
 
 								</div>
 								<!---------------5th row completed--------------->
 
-
+								<h3>Salary Mode</h3>
 								<div class="row mb-3" id="row">
-									<div class="col-sm-12">
-										<h3>Salary Mode</h3>
-									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label>Name</label>
@@ -333,20 +293,17 @@
 														$op = '';
 													}
 												?>
-													<option value="<?php echo $dkey->m_dept_id; ?>" <?= $op ?>><?php echo $dkey->m_dept_name; ?>
-													</option>
+													<option value="<?php echo $dkey->m_dept_id; ?>" <?= $op ?>><?php echo $dkey->m_dept_name; ?></option>
 												<?php
 												}
-
 												?>
-
 											</select>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label>Type</label>
-											<select name="m_amounttype[]" id="m_amounttype" class="form-control">
+											<select name="m_amounttype[]" id="m_amounttype" class="form-control amountType">
 												<option value="1">Add On</option>
 												<option value="2">Deduction</option>
 											</select>
@@ -355,15 +312,16 @@
 									<div class="col-md-2">
 										<div class="form-group">
 											<label>Amount *</label>
-											<input type="text" name="m_amount[]" class="form-control" id="m_amount">
+											<input type="number" name="m_amount[]" class="form-control amount" value="0">
 										</div>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2 mt-4">
 										<div class="form-group">
 											<button type="button" name="addRowButton" id="addRowButton" class="btn btn-success add_more" title="Add More">+</button>
 										</div>
 									</div>
 								</div>
+
 								<div id="repeat_div"></div>
 								<div class="row">
 									<div class="col-md-6">
@@ -404,7 +362,7 @@
 
 <?php $this->view('footer')  ?>
 <?php $this->view('js/js_hr') ?>
-
+<?php $this->view('js/js_custom') ?>
 
 <script>
 	$(document).ready(function() {
@@ -414,11 +372,10 @@
 		$('#addRowButton').on('click', function() {
 			i++;
 
-			var newRow = `<div class="row mb-3" id="row${i}">
+			var newRow = `<div class="row mb-3 dynamic-row" id="row${i}">
             <div class="col-md-2">
-                <div class="form-group">
-                    <label>Name</label>
-                    <select name="m_sbreakup_id[]" class="form-control select2" required>
+                <div class="form-group"> 
+                    <select name="m_sbreakup_id[]" class="form-control select2 category" required>
                         <?php foreach ($salarybk_value as $dkey) { ?>
                             <option value="<?php echo $dkey->m_dept_id; ?>"><?php echo $dkey->m_dept_name; ?></option>
                         <?php } ?>
@@ -426,18 +383,16 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="form-group">
-                    <label>Type</label>
-                    <select name="m_amounttype[]" class="form-control">
+                <div class="form-group"> 
+                    <select name="m_amounttype[]" class="form-control amountType">
                         <option value="1">Add On</option>
                         <option value="2">Deduction</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="form-group">
-                    <label>Amount *</label>
-                    <input type="text" name="m_amount[]" class="form-control">
+                <div class="form-group"> 
+                    <input type="number" name="m_amount[]" class="form-control amount" value="0">
                 </div>
             </div>
             <div class="col-md-2">
@@ -448,13 +403,47 @@
         </div>`;
 
 			$("#repeat_div").append(newRow);
-
-
+			calculateSalary();  
 		});
-
-		// Handle Remove Row button click
-		$(document).on('click', '.removeRowButton', function() {
+ 
+		$(document).on('click', '.removeRowButton', function() { 
+			calculateSalary();
+ 
 			$(this).closest('.row').remove();
 		});
+ 
+		$(document).on('input blur', '.amount', function() {
+			calculateSalary();
+		});
+ 
+		$(document).on('change', '.amountType', function() {
+			calculateSalary();
+		});
+ 
+		calculateSalary();  
+
+		function calculateSalary() {
+			let grossSalary = 0;
+			let totalDeductions = 0;
+ 
+			$('.row.mb-3').each(function() {
+				let amount = parseFloat($(this).find('.amount').val()) || 0;
+				let type = $(this).find('.amountType').val();  
+ 
+				if (type == "1" || type == "2") {  
+					grossSalary += amount;
+				}
+ 
+				if (type == "2") {
+					totalDeductions += amount;
+				}
+			});
+ 
+			let actualSalary = grossSalary - totalDeductions;
+ 
+			$('#m_emp_gross').val(grossSalary.toFixed(2));
+			$('#m_emp_salary').val(actualSalary.toFixed(2));
+		}
+
 	});
 </script>

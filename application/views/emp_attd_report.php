@@ -34,7 +34,6 @@ $logged_user_type = $this->session->userdata('user_type');
 							</div>
 						</div>
 					</form>
-
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -72,12 +71,19 @@ $logged_user_type = $this->session->userdata('user_type');
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_emp_name; ?></td>
-												<td><?= date('m-Y', strtotime($value->m_date)); ?></td>
-												<td><?php echo $value->attendance_count; ?></td>
+												<td><?= date('M-Y', strtotime($value->m_date)); ?></td>
+												<td>
+													<?php
+													$month = date('m', strtotime($value->m_date));  
+													$year = date('Y', strtotime($value->m_date));  
+													$total_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+													echo $total_days;  
+													?>
+												</td>
 												<td><?php echo $value->present_count; ?></td>
 												<td><?php echo $value->absent_count; ?></td>
-												<td><?php echo $value->m_status; ?></td>
-												<td><?php echo $value->m_status; ?></td>
+												<td> </td>
+												<td> </td>
 												<td class="wd-30">
 
 													<a href="<?php echo base_url('Report/emp_att_detail?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="View" data-toggle="tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
@@ -109,3 +115,4 @@ $logged_user_type = $this->session->userdata('user_type');
 
 
 <?php $this->view('footer')  ?>
+<?php $this->view('js/js_custom') ?>
