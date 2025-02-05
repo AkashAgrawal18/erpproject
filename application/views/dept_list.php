@@ -12,8 +12,8 @@ if ($pgtype == 1) {
 	$relink = "salaryBreakup_list";
 	$headname = "";
 } else if ($pgtype == 4) {
-	$relink = "company_list";
-	$headname = "Company";
+	$relink = "shift_roster_list";
+	$headname = "Shift Roster";
 }
 ?>
 
@@ -45,10 +45,22 @@ if ($pgtype == 1) {
 									<tr>
 										<th style="width: 5%">#</th>
 										<th><?= $headname ?> Name</th>
-										<th><?= $headname ?> <?= $pgtype == 3 ? 'Type' : 'Code' ?></th>
+
+										<?php if ($pgtype == 1 || $pgtype == 2) { ?>
+											<th><?= $headname ?> Code</th>
+										<?php } elseif ($pgtype == 3) { ?>
+											<th><?= $headname ?> Type</th>
+										<?php } ?>
+
+										<?php if ($pgtype == 4) { ?>
+											<th>Start Time</th>
+											<th>End Time</th>
+										<?php } ?>
+
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
+
 								</thead>
 								<tbody>
 									<?php
@@ -60,7 +72,17 @@ if ($pgtype == 1) {
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_dept_name; ?></td>
-												<td><?php echo $value->m_dept_code; ?></td>
+
+												<?php if ($pgtype == 1 || $pgtype == 2) { ?>
+													<td><?php echo $value->m_dept_code; ?></td>
+												<?php } elseif ($pgtype == 3) { ?>
+													<td><?php echo $value->m_dept_type; ?></td>
+												<?php } ?>
+
+												<?php if ($pgtype == 4) { ?>
+													<td><?php echo $value->m_start_time; ?></td>
+													<td><?php echo $value->m_end_time; ?></td>
+												<?php } ?>
 												<td>
 													<?php
 													if (!empty($value->m_dept_status == 1)) {
@@ -114,11 +136,15 @@ if ($pgtype == 1) {
 									$pgtype = $edit_value->m_dept_type;
 									$code = $edit_value->m_dept_code;
 									$status = $edit_value->m_dept_status;
+									$starttime = $edit_value->m_start_time;
+									$endtime = $edit_value->m_end_time;
 								} else {
 									$id = '';
 									$title = '';
 									$code = '';
 									$status = 1;
+									$starttime = '';
+									$endtime = '';
 								} ?>
 								<div class="row">
 									<div class="col-md-12">
@@ -126,16 +152,26 @@ if ($pgtype == 1) {
 											<div class="form-group">
 												<label><?= $headname ?> type<span class="text-danger">*</span></label>
 												<select name="m_dept_code" id="m_dept_code" class="form-control" required>
-													<option value="addon" <?php if($code == 'addon') echo 'selected'?>>Add On</option>
-													<option value="deduction" <?php if($code == 'deduction') echo 'selected'?>>Deduction</option>
+													<option value="addon" <?php if ($code == 'addon') echo 'selected'; ?>>Add On</option>
+													<option value="deduction" <?php if ($code == 'deduction') echo 'selected'; ?>>Deduction</option>
 												</select>
+											</div>
+										<?php } elseif ($pgtype == 4) { ?>
+											<div class="form-group">
+												<label> Start Time<span class="text-danger">*</span></label>
+												<input type="time" name="m_start_time" id="m_start_time" class="form-control" placeholder="Enter start time" required value="<?= $starttime ?>">
+											</div>
+											<div class="form-group">
+												<label> End Time<span class="text-danger">*</span></label>
+												<input type="time" name="m_end_time" id="m_end_time" class="form-control" placeholder="Enter end time" required value="<?= $endtime ?>">
 											</div>
 										<?php } else { ?>
 											<div class="form-group">
-												<label><?= $headname ?> code<span class="text-danger">*</span></label>
-												<input type="text" name="m_dept_code" id="m_dept_code" class="form-control" placeholder="Enter code" required="" value="<?= $code ?>">
+												<label><?= $headname ?> Code<span class="text-danger">*</span></label>
+												<input type="text" name="m_dept_code" id="m_dept_code" class="form-control" placeholder="Enter code" required value="<?= $code ?>">
 											</div>
 										<?php } ?>
+
 									</div>
 								</div>
 								<div class="row">

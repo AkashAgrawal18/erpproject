@@ -48,18 +48,37 @@
   								<p>Designation</p>
   							</a>
   						</li>
-  						<li class="nav-item">
-  							<a href="<?php echo base_url('HrDept/company_list'); ?>" class="nav-link">
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/shift_roster_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
-  								<p>Company</p>
+  								<p>Shift Roster</p>
   							</a>
   						</li>
+  						 
   						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Salary Breakup</p>
   							</a>
   						</li>
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/holiday_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Holidays</p>
+  							</a>
+						  </li>
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/store_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Stores</p>
+  							</a>
+						  </li>
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/leave_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Leaves</p>
+  							</a>
+						  </li>
   						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/employe_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
@@ -74,6 +93,29 @@
   						</li>
   					</ul>
   				</li>
+
+				  <li class="nav-item">
+  					<a href="#" class="nav-link">
+  						<i class="nav-icon fas fa-box"></i>
+  						<p>Category<i class="fas fa-angle-left right"></i>
+  						</p>
+  					</a>
+  					<ul class="nav nav-treeview">
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/category_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Category</p>
+  							</a>
+  						</li> 
+						  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/sub_category_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Sub Category</p>
+  							</a>
+  						</li> 
+  					</ul>
+  				</li>
+
 				  <li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-boxes"></i>

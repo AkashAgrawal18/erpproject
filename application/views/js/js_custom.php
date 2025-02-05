@@ -36,7 +36,7 @@
  					const result = JSON.parse(response);
  					if (result.status === "success") {
  						alert(result.message);
- 						toggleButtons("1");
+ 						toggleButtons("0");
  					} else {
  						alert(result.message);
  					}
@@ -59,7 +59,7 @@
  					const result = JSON.parse(response);
  					if (result.status === "success") {
  						alert(result.message);
- 						toggleButtons("0");
+ 						toggleButtons("1");
  					} else {
  						alert(result.message);
  					}
@@ -91,7 +91,7 @@
 
  		// Toggle Buttons
  		function toggleButtons(status) {
- 			if (status === "1") {
+ 			if (status === "0") {
  				clockInBtn.hide();
  				clockOutBtn.show();
  			} else {

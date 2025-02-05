@@ -82,11 +82,11 @@ class Setting extends CI_Controller
 			return;
 		}
 		$status = $this->Setting_model->get_last_status($empId);
-		if ($status && $status->m_status == '1') {
+		if ($status && $status->m_status == '0') {
 			echo json_encode(['status' => 'error', 'message' => 'Already clocked in.']);
 			return;
 		}
-		if ($status && $status->m_status == '0') {
+		if ($status && $status->m_status == '1') {
 			echo json_encode(['status' => 'error', 'message' => 'You have already clocked out today. You cannot clock in again today.']);
 			return;
 		}
@@ -94,7 +94,7 @@ class Setting extends CI_Controller
 			'm_emp_id' => $empId,
 			'm_date' => date('Y-m-d'),
 			'm_time_in' => date('H:i:s'),
-			'm_status' => '1',
+			'm_status' => '0',
 			'm_updated_by' => date('Y-m-d H:i:s')
 		];
 		if ($this->Setting_model->insert_attendance($data)) {
@@ -114,13 +114,13 @@ class Setting extends CI_Controller
 		}
 
 		$status = $this->Setting_model->get_last_status($empId);
-		if (!$status || $status->m_status != '1') {
+		if (!$status || $status->m_status != '0') {
 			echo json_encode(['status' => 'error', 'message' => 'Not clocked in or already clocked out.']);
 			return;
 		}
 		$data = [
 			'm_time_out' => date('H:i:s'),
-			'm_status' => '0',
+			'm_status' => '1',
 			'm_updated_on' => date('Y-m-d H:i:s')
 		];
 		if ($this->Setting_model->update_attendance($empId, $data)) {
@@ -141,7 +141,7 @@ class Setting extends CI_Controller
 		if ($status) {
 			echo json_encode(['status' => $status->m_status]);
 		} else {
-			echo json_encode(['status' => '0']);
+			echo json_encode(['status' => '1']);
 		}
 	}
 
