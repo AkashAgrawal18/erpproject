@@ -86,13 +86,11 @@ class Hr_model extends CI_model
 		$res = $this->db->get('master_department_tbl dept')->result();
 		return $res;
 	}
-	public function get_active_company()
+	public function get_active_store()
 	{
-		$this->db->select('dept.m_dept_name,dept.m_dept_id');
-		$this->db->where('m_dept_type', 4);
-		$this->db->where('m_dept_status', 1);
-		$this->db->order_by('m_dept_name');
-		$res = $this->db->get('master_department_tbl dept')->result();
+		$this->db->select('*');
+		$this->db->where('m_str_status', 1);
+		$res = $this->db->get('master_store_tbl')->result();
 		return $res;
 	}
 	//=========================================== dept ===============================================//
@@ -436,7 +434,9 @@ class Hr_model extends CI_model
 			"m_emp_doj" => 			$this->input->post('m_emp_doj'),
 			"m_emp_dob" => 			$this->input->post('m_emp_dob'),
 			"m_emp_mobile" => 		$this->input->post('m_emp_mobile'),
-			"m_emp_company" => 		$this->input->post('m_emp_company'),
+			"m_emp_store" => 		$this->input->post('m_emp_store'),
+			"m_emp_monthly" => 		$this->input->post('m_emp_monthly') ?: '',
+			"m_emp_yearly" => 		$this->input->post('m_emp_yearly') ?: '',
 			"m_emp_dept" => 		$this->input->post('m_emp_dept') ?: '',
 			"m_emp_design" => 		$this->input->post('m_emp_design') ?: '',
 			"m_emp_altmobile" =>	$this->input->post('m_emp_altmobile'),
@@ -529,7 +529,9 @@ class Hr_model extends CI_model
 			"m_emp_doj"          => $this->input->post('m_emp_doj'),
 			"m_emp_dob"          => $this->input->post('m_emp_dob'),
 			"m_emp_mobile"       => $this->input->post('m_emp_mobile'),
-			"m_emp_company"      => $this->input->post('m_emp_company'),
+			"m_emp_store"      => $this->input->post('m_emp_store'),
+			"m_emp_monthly" => 		$this->input->post('m_emp_monthly') ?: '',
+			"m_emp_yearly" => 		$this->input->post('m_emp_yearly') ?: '',
 			"m_emp_dept"         => $this->input->post('m_emp_dept') ?: '',
 			"m_emp_design"       => $this->input->post('m_emp_design') ?: '',
 			"m_emp_altmobile"    => $this->input->post('m_emp_altmobile'),

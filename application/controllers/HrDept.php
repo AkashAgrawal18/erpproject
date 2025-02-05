@@ -434,7 +434,7 @@ class HrDept extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Add New Employee";
-		// $data['company_list'] = $this->Hr_model->get_active_company();
+		$data['store_list'] = $this->Hr_model->get_active_store();
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
@@ -450,7 +450,7 @@ class HrDept extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Employee";
 		}
-		// $data['company_list'] = $this->Hr_model->get_active_company();
+		$data['store_list'] = $this->Hr_model->get_active_store(); 
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();

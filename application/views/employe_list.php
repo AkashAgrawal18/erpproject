@@ -75,7 +75,7 @@
 														data-emp-altemail="<?= $value->m_emp_altemail; ?>"
 														data-emp-laddress="<?= $value->m_emp_laddress; ?>"
 														data-emp-paddress="<?= $value->m_emp_paddress; ?>"
-														data-emp-company="<?= $value->m_emp_company; ?>"
+														data-emp-store="<?= $value->m_emp_store; ?>"
 														data-emp-dob="<?= $value->m_emp_dob; ?>"
 														data-emp-doj="<?= $value->m_emp_doj; ?>"
 														data-emp-dol="<?= $value->m_emp_dol; ?>"
@@ -156,7 +156,7 @@
 						<p><strong>Alt Mobile:</strong> <span id="empaltemail">N/A</span></p>
 						<p><strong>Local Address:</strong> <span id="empladdress">N/A</span></p>
 						<p><strong>Permanent Address:</strong> <span id="empaddress">N/A</span></p>
-						<p><strong>Company:</strong> <span id="empcompany">N/A</span></p>
+						<p><strong>Store:</strong> <span id="empstore">N/A</span></p>
 
 					</div>
 					<div class="col-sm-4">
@@ -218,7 +218,7 @@
 		var ealtemail = $(this).data('emp-altemail');
 		var eladdress = $(this).data('emp-laddress');
 		var epaddress = $(this).data('emp-paddress');
-		var ecompany = $(this).data('emp-company');
+		var estore = $(this).data('emp-store');
 		var edob = $(this).data('emp-dob');
 		var edoj = $(this).data('emp-doj');
 		var edol = $(this).data('emp-dol');
@@ -247,7 +247,7 @@
 		$('#empaltemail').text(ealtemail);
 		$('#empladdress').text(eladdress);
 		$('#empaddress').text(epaddress);
-		$('#empcompany').text(ecompany);
+		$('#empstore').text(estore);
 		$('#empdob').text(edob);
 		$('#empdoj').text(edoj);
 		$('#empdol').text(edol);

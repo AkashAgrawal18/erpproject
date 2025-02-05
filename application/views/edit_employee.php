@@ -38,7 +38,7 @@
 							$doj          = $edit_value->m_emp_doj;
 							$dob          = $edit_value->m_emp_dob;
 							$mobile           = $edit_value->m_emp_mobile;
-							$company              = $edit_value->m_emp_company;
+							$store              = $edit_value->m_emp_store;
 							$dept              = $edit_value->m_emp_dept;
 							$design              = $edit_value->m_emp_design;
 							$altmobile              = $edit_value->m_emp_altmobile;
@@ -73,6 +73,8 @@
 							$login_type            = $edit_value->m_emp_login_type;
 							$salmode            = $edit_value->m_emp_salmode;
 							$m_emp_status  =  $edit_value->m_emp_status;
+							$monthly    = $edit_value->m_emp_monthly;
+							$yearly    = $edit_value->m_emp_yearly;
 						} else {
 							$id = '';
 							$code = '';
@@ -81,7 +83,7 @@
 							$doj = '';
 							$dob = '';
 							$mobile = '';
-							$company = '';
+							$store = '';
 							$dept = '';
 							$design = '';
 							$altmobile = '';
@@ -116,6 +118,8 @@
 							$login_type = '';
 							$salmode = '';
 							$m_emp_status = '';
+							$monthly = '';
+							$yearly = '';
 						}
 						?>
 						<div class="card-body">
@@ -191,16 +195,16 @@
 
 											<div class="col-md-2">
 												<div class="form-group">
-													<label>Company</label>
-													<select name="m_emp_company" id="m_emp_company" class="form-control select2">
-														<?php if (!empty($company_list)) {
-															foreach ($company_list as $key) {
-																if ($company == $key->m_dept_id) {
+													<label>Store</label>
+													<select name="m_emp_store" id="m_emp_store" class="form-control select2">
+														<?php if (!empty($store_list)) {
+															foreach ($store_list as $key) {
+																if ($store == $key->m_str_id) {
 																	$op = 'selected';
 																} else {
 																	$op = '';
 																}
-																echo '<option value="' . $key->m_dept_id . '" ' . $op . '>' . $key->m_dept_name . '</option>';
+																echo '<option value="' . $key->m_str_id . '" ' . $op . '>' . $key->m_str_name . '</option>';
 															}
 														} ?>
 
@@ -345,6 +349,18 @@
 											</div>
 											<div class="col-md-2">
 												<div class="form-group">
+													<label>No.Of Leaves Monthly</label>
+													<input type="number" name="m_emp_monthly" id="m_emp_monthly" class="form-control"  value="<?= $monthly ?>">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>No.Of Leaves yearly</label> 
+													<input type="number" name="m_emp_yearly" id="m_emp_yearly" class="form-control"  value="<?= $yearly ?>">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
 													<label>Actual Salary</label>
 													<input type="number" name="m_emp_salary" id="m_emp_salary" readonly class="form-control" value="<?= $salary ?>">
 												</div>
@@ -355,13 +371,13 @@
 													<input type="number" name="m_emp_gross" id="m_emp_gross" readonly class="form-control" value="<?= $grosssalary ?>">
 												</div>
 											</div>
-											<div class="col-md-3">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Previous Employer</label>
 													<input type="text" name="m_emp_prev_empr" id="m_emp_prev_empr" class="form-control" value="<?= $prev_empr ?>">
 												</div>
 											</div>
-											<div class="col-md-3">
+											<div class="col-md-2">
 												<div class="form-group">
 													<label>Previous Department</label>
 													<input type="text" name="m_emp_prev_dept" id="m_emp_prev_dept" class="form-control" value="<?= $prev_dept ?>">
