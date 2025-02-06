@@ -29,7 +29,6 @@ $logged_user_type = $this->session->userdata('user_type');
 									<a href="<?php echo site_url('Report/emp_att_detail?id=') . $id; ?>">
 										<button class="btn btn-danger" type="button"><i class="fa fa-rotate"></i></button>
 									</a>
-									<!-- <button class="btn btn-success" type="submit" name="Excel" value="2">Export</button>  -->
 								</div>
 							</div>
 						</div>
@@ -53,63 +52,65 @@ $logged_user_type = $this->session->userdata('user_type');
 				<div class="col-md-12">
 					<div class="card">
 						<!-- /.card-header -->
-						<div class="card-body">
-							<table id="dept_tbl" class="table table-bordered datatable">
+						<div class="card-body" style="overflow-x:scroll;width:100% ;">
+							<?php
+							$from_month = $this->input->post('from_month') ?? date('Y-m');
+							$daysInMonth = date('t', strtotime($from_month));
+							?>
+
+							<table class="table display table-striped table-bordered">
 								<thead>
 									<tr>
-										<th style="width: 5%">#</th>
-										<th>Date</th>
-										<th>TimeIn</th>
-										<th>TimeOut</th>
-										<th>Status</th>
-										<th>Remark</th>
-										<th>Leave</th>
-										<th style="width: 15%">Action</th>
+										<th>Employee ID</th>
+										<?php
+										for ($i = 1; $i <= $daysInMonth; $i++) {
+											echo '<th>' . $i . '</th>';
+										}
+										?>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
 									if (!empty($emp_att_del)) {
-										$month = date('m', strtotime($emp_att_del[0]->m_date));  
-										$year = date('Y', strtotime($emp_att_del[0]->m_date));  
-										$total_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);  
-										$attendance_data = [];
-										foreach ($emp_att_del as $value) {
-											$attendance_data[date('Y-m-d', strtotime($value->m_date))] = $value;
+										echo "<tr>";
+										echo "<td>" . htmlspecialchars($emp_att_del[0]->m_emp_id) . "</td>";
+
+										for ($i = 1; $i <= $daysInMonth; $i++) {
+											$todaydate = date('Y-m-d', strtotime($from_month . '-' . $i));
+											$status = "-"; // Default status
+
+											foreach ($emp_att_del as $record) {
+												if ($record->m_date == $todaydate) {
+													switch ($record->m_status) {
+														case 1:
+															$status = '<i class="fa fa-check" aria-hidden="true"></i>'; // Present
+															break;
+														case 2:
+															$status = '<i class="fa fa-times" aria-hidden="true"></i>'; // Absent
+															break;
+														case 3:
+															$status = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'; // Leave
+															break;
+														case 4:
+															$status = '<i class="fa fa-star-half-o" aria-hidden="true"></i>'; // Half-day
+															break;
+														default:
+															$status = '-';
+													}
+													break;
+												}
+											}
+											echo "<td><a href='" . base_url("Report/view_detail/" . $emp_att_del[0]->m_emp_id . "?from_date=" . $todaydate . "&to_date=" . $todaydate) . "' title='Click to view detail'>" . $status . "</a></td>";
 										}
- 
-										for ($day = 1; $day <= $total_days; $day++) {
-											$current_date = date('Y-m-d', strtotime("$year-$month-$day"));  
-									?>
-											<tr>
-												<td><?php echo $day; ?></td>  
-												<td><?= date('d-m-Y', strtotime($current_date)); ?></td>  
-
-												<?php if (isset($attendance_data[$current_date])) {
-													$value = $attendance_data[$current_date]; ?>
-
-													<td><?php echo $value->m_time_in; ?></td>
-													<td><?php echo $value->m_time_out; ?></td>
-													<td><?php echo $value->m_status; ?></td>
-													<td><?php echo $value->m_remark; ?></td>
-
-												<?php } else { ?>
-													<td>-</td>
-													<td>-</td>
-													<td>-</td>
-													<td>-</td>
-												<?php } ?>
-
-												<td> </td>
-												<td> </td>
-											</tr>
-									<?php
-										}
+										echo "</tr>";
+									} else {
+										echo "<tr><td colspan='" . ($daysInMonth + 1) . "'>No data available</td></tr>";
 									}
 									?>
 								</tbody>
-
 							</table>
+
+
 						</div>
 						<!-- /.card-body -->
 

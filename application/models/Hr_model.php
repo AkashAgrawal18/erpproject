@@ -93,6 +93,14 @@ class Hr_model extends CI_model
 		$res = $this->db->get('master_store_tbl')->result();
 		return $res;
 	}
+	public function get_active_shiftroster(){
+		$this->db->select('dept.m_dept_name,dept.m_dept_id');
+		$this->db->where('m_dept_type', 4);
+		$this->db->where('m_dept_status', 1);
+		$this->db->order_by('m_dept_name');
+		$res = $this->db->get('master_department_tbl dept')->result();
+		return $res;
+	}
 	//=========================================== dept ===============================================//
 	//========================== Category  =============================//
 

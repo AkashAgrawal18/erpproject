@@ -20,7 +20,7 @@ $logged_user_type = $this->session->userdata('user_type');
 						<div class="row">
 							<div class="col-sm-6">
 								<label class="form-check-label">Month</label>
-								<input type="month" name="from_month" value="<?php echo $from_month; ?>">
+								<input type="month" name="from_month" value="<?php echo isset($from_month) ? date('Y-m', strtotime('01-' . $from_month)) : date('Y-m'); ?>">
 							</div>
 
 							<div class="col-sm-4">
@@ -34,6 +34,7 @@ $logged_user_type = $this->session->userdata('user_type');
 							</div>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -74,10 +75,10 @@ $logged_user_type = $this->session->userdata('user_type');
 												<td><?= date('M-Y', strtotime($value->m_date)); ?></td>
 												<td>
 													<?php
-													$month = date('m', strtotime($value->m_date));  
-													$year = date('Y', strtotime($value->m_date));  
+													$month = date('m', strtotime($value->m_date));
+													$year = date('Y', strtotime($value->m_date));
 													$total_days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-													echo $total_days;  
+													echo $total_days;
 													?>
 												</td>
 												<td><?php echo $value->present_count; ?></td>

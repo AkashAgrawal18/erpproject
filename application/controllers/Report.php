@@ -8,29 +8,32 @@ class Report extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = 'EMP Attendance Report';
+	
 		if (!empty($this->input->post('from_month'))) {
-			$data['from_month'] = $this->input->post('from_month');
+			$data['from_month'] = date('m-Y', strtotime($this->input->post('from_month')));
 		} else {
 			$data['from_month'] = date('m-Y');
 		}
+	
 		$data['emp_att'] = $this->Report_model->get_emp_attd($data['from_month']);
-		// echo "<pre>";print_r($data['emp_att']);die();
+		
 		$this->load->view('emp_attd_report', $data);
 	}
+	
 	public function emp_att_detail()
 	{
 		$data = $this->login_details();
 		$data['pagename'] = 'Employee Detail';
 		$id = $this->input->get('id');
-		$data['id'] = $id;
+		$data['id'] = $id;	
 		if (!empty($this->input->post('from_month'))) {
-			$data['from_month'] = $this->input->post('from_month');
+			$data['from_month'] = date('m-Y', strtotime($this->input->post('from_month')));
 		} else {
 			$data['from_month'] = date('m-Y');
 		}
 		$data['emp_att_del'] = $this->Report_model->get_empatt_detail($data['id'],$data['from_month']);
 		// echo "<pre>"; print_r($data['emp_att_del']);die();
-		$this->load->view('emp_attd_detail', $data);
+		$this->load->view('emp_attd_detail_copy', $data);
 	}
 	//    --------------------emp salary----------------------------------   
 	public function emp_salary_list() {

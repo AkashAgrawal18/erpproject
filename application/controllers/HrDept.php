@@ -436,6 +436,7 @@ class HrDept extends CI_Controller
 		$data['pagename'] = "Add New Employee";
 		$data['store_list'] = $this->Hr_model->get_active_store();
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
+		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
 		//   print_r($data['slbk_value']); die();
@@ -453,6 +454,7 @@ class HrDept extends CI_Controller
 		$data['store_list'] = $this->Hr_model->get_active_store(); 
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
+		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
 		// $data['hq_value'] = $this->Hr_model->get_active_hq();
 		// $data['emp_list'] = $this->Hr_model->get_Active_emp();

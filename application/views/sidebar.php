@@ -53,14 +53,7 @@
   								<i class="far fa-circle nav-icon"></i>
   								<p>Shift Roster</p>
   							</a>
-  						</li>
-  						 
-  						<li class="nav-item">
-  							<a href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>" class="nav-link">
-  								<i class="far fa-circle nav-icon"></i>
-  								<p>Salary Breakup</p>
-  							</a>
-  						</li>
+  						</li> 
 						  <li class="nav-item">
   							<a href="<?php echo base_url('HrDept/holiday_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
@@ -83,12 +76,6 @@
   							<a href="<?php echo base_url('HrDept/employe_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Employees</p>
-  							</a>
-  						</li>
-						  <li class="nav-item">
-  							<a href="<?php echo base_url('Report/emp_salary_list'); ?>" class="nav-link">
-  								<i class="far fa-circle nav-icon"></i>
-  								<p>Employees Salary</p>
   							</a>
   						</li>
   					</ul>
@@ -119,11 +106,17 @@
 				  <li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-boxes"></i>
-  						<p>Report<i class="fas fa-angle-left right"></i>
+  						<p>Finance<i class="fas fa-angle-left right"></i>
   						</p>
   					</a>
-  					<ul class="nav nav-treeview">
-  						<li class="nav-item">
+  					<ul class="nav nav-treeview">  						
+					  <li class="nav-item">
+  							<a href="<?php echo base_url('Report/emp_salary_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Employees Salary</p>
+  							</a>
+  						</li>
+						  <li class="nav-item">
   							<a href="<?php echo base_url('Report/emp_attd_report'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>EMP Attendance Report</p>
@@ -132,6 +125,7 @@
   					</ul>
   				</li>
 
+				 
   				<li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-database"></i>
@@ -141,6 +135,12 @@
   						</p>
   					</a>
   					<ul class="nav nav-treeview">
+					  <li class="nav-item">
+  							<a href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Salary Breakup</p>
+  							</a>
+  						</li>
   						<li class="nav-item">
   							<a href="<?php echo base_url('Master/state_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>

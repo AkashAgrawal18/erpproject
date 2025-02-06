@@ -160,11 +160,20 @@
 											<div class="col-md-2">
 												<div class="form-group">
 													<label>Duty Shift</label>
-													<select name="m_emp_dshift" id="m_emp_dshift" class="form-control select2">
-														<option value="General">General</option>
-														<option value="GST-12%">GST-12%</option>
-													</select>
-
+													<select name="m_emp_dshift" id="m_emp_dshift" class="form-control select2" required>
+												<?php
+												foreach ($shift_value as $skey) {
+													if ($m_emp_dshift == $skey->m_dept_id) {
+														$op = 'selected';
+													} else {
+														$op = '';
+													}
+												?>
+													<option value="<?php echo $skey->m_dept_id; ?>" <?= $op ?>><?php echo $skey->m_dept_name; ?></option>
+												<?php
+												}
+												?>
+											</select> 
 												</div>
 											</div>
 											<div class="col-md-2">
