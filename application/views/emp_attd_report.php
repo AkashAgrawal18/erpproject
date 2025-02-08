@@ -83,7 +83,7 @@ $logged_user_type = $this->session->userdata('user_type');
 												</td>
 												<td><?php echo $value->present_count; ?></td>
 												<td><?php echo $value->absent_count; ?></td>
-												<td> </td>
+												<td> <?php echo $value->leave_count; ?></td>
 												<td> </td>
 												<td class="wd-30">
 

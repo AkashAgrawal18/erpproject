@@ -75,7 +75,7 @@ $logged_user_type = $this->session->userdata('user_type');
 												<td><?php echo $value->attendance_count; ?></td>
 												<td><?php echo $value->present_count; ?></td>
 												<td><?php echo $value->absent_count; ?></td>
-												<td><?php echo 0; ?></td>
+												<td><?php echo $value->leave_count; ?></td>
 												<td><?php echo $value->payable_salary; ?></td>
 												 
 											</tr>
