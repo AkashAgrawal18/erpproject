@@ -150,6 +150,18 @@ class Master extends CI_Controller
 			echo json_encode($info);
 		}
 	}
+
+	public function get_city(){ 
+		$data = $this->login_details();
+		 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		   $m_state = $this->input->post('m_state');
+	   
+		   if ($data = $this->Master_model->get_city($m_state)) {
+			 echo json_encode($data);
+		   }
+		 }
+		 }
+
 	//-------------------------- city ------------------------//
 
 	//==========================Details===========================//

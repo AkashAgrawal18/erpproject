@@ -35,6 +35,8 @@
 									$manager = $edit_value->m_str_manage_name;
 									$mobile = $edit_value->m_str_mobile;
 									$address = $edit_value->m_str_address;
+									$state = $edit_value->m_state;
+									$city = $edit_value->m_city;
 									$status = $edit_value->m_str_status;
 								} else {
 									$id = '';
@@ -45,6 +47,8 @@
 									$manager = '';
 									$mobile = '';
 									$address = '';
+									$state = '';
+									$city = '';
 									$status = '';
 								} ?>
 
@@ -84,6 +88,44 @@
 										<div class="form-group">
 											<label>Mobile<span class="text-danger">*</span> </label> 
 											<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_str_mobile" id="m_str_mobile" class="form-control mobilevali" placeholder="Enter Phone Number"  required value="<?= $mobile ?>">
+										</div>
+									</div>  
+									<div class="col-sm-3">
+										<div class="form-group">
+										<label>State<span class="text-danger">*</span></label>
+										<select name="m_state" id="m_state" class="form-control select2" required>
+												<?php
+												foreach ($get_active_state as $skey) {
+													if ($state == $skey->m_state_id) {
+														$op = 'selected';
+													} else {
+														$op = '';
+													}
+												?>
+													<option value="<?php echo $skey->m_state_id; ?>" <?= $op ?>><?php echo $skey->m_state_name; ?></option>
+												<?php
+												}
+												?>
+											</select> 
+										</div>
+									</div>  
+									<div class="col-sm-3">
+										<div class="form-group">
+										<label>City<span class="text-danger">*</span></label>
+										<select name="m_city" id="m_city" class="form-control select2" required>
+												<?php
+												foreach ($get_active_city as $skey) {
+													if ($city == $skey->m_city_id) {
+														$op = 'selected';
+													} else {
+														$op = '';
+													}
+												?>
+													<option value="<?php echo $skey->m_city_id; ?>" <?= $op ?>><?php echo $skey->m_city_name; ?></option>
+												<?php
+												}
+												?>
+											</select> 
 										</div>
 									</div>  
 									<div class="col-sm-3">
@@ -132,3 +174,4 @@
 <?php $this->view('footer')  ?>
 <?php $this->view('js/js_custom') ?>
 <?php $this->view('js/js_hr') ?>
+<?php $this->view('js/js_master') ?>

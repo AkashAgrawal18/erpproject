@@ -31,7 +31,8 @@
 									$empname = $edit_value->m_leav_empname;
 									$type = $edit_value->m_leav_type;
 									$duration = $edit_value->m_leav_duration;
-									$date = $edit_value->m_leav_date;
+									$fromdate = $edit_value->m_leav_fromdate;
+									$todate = $edit_value->m_leav_todate;
 									$absence = $edit_value->m_leav_absence;
 									$imgfile = $edit_value->m_leav_imgfile;
 									$status = $edit_value->m_leav_status;
@@ -40,7 +41,8 @@
 									$empname = '';
 									$type = '';
 									$duration = '';
-									$date = '';
+									$fromdate = '';
+									$todate = '';
 									$absence = '';
 									$imgfile = '';
 									$status = '';
@@ -73,25 +75,32 @@
 												<option value="1" <?php if ($type == 1) echo 'selected' ?>>casual</option>
 												<option value="2" <?php if ($type == 2) echo 'selected' ?>>Sick</option>
 												<option value="3" <?php if ($type == 3) echo 'selected' ?>>Unleave</option>
-											</select> 
+											</select>
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
-											<label>Duration </label>
+											<label>Duration</label>
 											<div class="d-flex">
-												<input type="radio" class="m-2" name="m_leav_duration" value="1" <?php if ($duration == 1) echo 'checked'; ?>> Full Day<br>
-												<input type="radio"  class="m-2" name="m_leav_duration" value="2" <?php if ($duration == 2) echo 'checked'; ?>> Multiple Day<br>
-												<input type="radio"  class="m-2" name="m_leav_duration" value="3" <?php if ($duration == 3) echo 'checked'; ?>> First Half<br>
-												<input type="radio"  class="m-2" name="m_leav_duration" value="4" <?php if ($duration == 4) echo 'checked'; ?>> Second Half
+												<input type="radio" class="m-2" name="m_leav_duration" value="1" <?php if ($duration == 1) echo 'checked'; ?> onclick="toggleToDate()"> Full Day<br>
+												<input type="radio" class="m-2" name="m_leav_duration" value="2" <?php if ($duration == 2) echo 'checked'; ?> onclick="toggleToDate()"> Multiple Day<br>
+												<input type="radio" class="m-2" name="m_leav_duration" value="3" <?php if ($duration == 3) echo 'checked'; ?> onclick="toggleToDate()"> Half Days<br>
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-3">
 										<div class="form-group">
-											<label>Date <span class="text-danger">*</span></label>
-											<input type="date" name="m_leav_date" id="m_leav_date" class="form-control" required
-												value="<?= !empty($date) ? $date : date('Y-m-d') ?>">
+											<label>From Date <span class="text-danger">*</span></label>
+											<input type="date" name="m_leav_fromdate" id="m_leav_fromdate" class="form-control" required
+												value="<?= !empty($fromdate) ? $fromdate : date('Y-m-d') ?>">
+										</div>
+									</div>
+
+									<div class="col-sm-3" id="toDateField" style="display: none;">
+										<div class="form-group">
+											<label>To Date</label>
+											<input type="date" name="m_leav_todate" id="m_leav_todate" class="form-control"
+												value="<?= !empty($todate) ? $todate : date('Y-m-d') ?>">
 										</div>
 									</div>
 
@@ -112,7 +121,7 @@
 									</div>
 
 									<div class="col-sm-12">
-									<div class="form-group">
+										<div class="form-group">
 											<?php
 											if (!empty($imgfile) && file_exists('uploads/leavefile/' . $imgfile)) {
 												$catepic = base_url('uploads/leavefile/' . $imgfile);
@@ -123,8 +132,8 @@
 											<label class="control-label">Image</label>
 											<input type="hidden" name="leaveimg" value="<?php echo $imgfile ?>">
 											<input type="file" style="height: 200px;" name="m_leav_imgfile" class="form-control">
-										</div> 
-									</div> 
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-3">
@@ -156,3 +165,19 @@
 <?php $this->view('footer')  ?>
 <?php $this->view('js/js_custom') ?>
 <?php $this->view('js/js_hr') ?>
+
+
+<script>
+	function toggleToDate() {
+		var multipleDayRadio = document.querySelector('input[name="m_leav_duration"][value="2"]');
+		var toDateField = document.getElementById('toDateField');
+
+		if (multipleDayRadio.checked) {
+			toDateField.style.display = 'block';
+		} else {
+			toDateField.style.display = 'none';
+		}
+	}
+
+	window.onload = toggleToDate;
+</script>

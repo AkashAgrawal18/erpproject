@@ -32,8 +32,7 @@
 										<th style="width: 5%">#</th>
 										<th>Name</th>
 										<th>Type</th>
-										<th>Duration</th>
-										<th>Date</th>
+										<th>Duration</th> 
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -67,14 +66,11 @@
 														} elseif ($value->m_leav_duration == 2) {
 															echo "Multiple Days";
 														} elseif ($value->m_leav_duration == 3) {
-															echo "First Half";
-														} elseif ($value->m_leav_duration == 4) {
-															echo "Second Half";
-														}
+															echo "Half Day";
+														}  
 													}
 													?>
-												</td>
-												<td><?php echo $value->m_leav_date; ?></td>
+												</td> 
 												<td>
 													<?php
 													if (!empty($value->m_leav_status == 1)) {

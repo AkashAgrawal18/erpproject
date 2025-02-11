@@ -63,7 +63,7 @@
 						  <li class="nav-item">
   							<a href="<?php echo base_url('HrDept/store_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
-  								<p>Stores</p>
+  								<p>Stores/factory</p>
   							</a>
 						  </li>
 						  <li class="nav-item">
@@ -84,18 +84,18 @@
 				  <li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-box"></i>
-  						<p>Category<i class="fas fa-angle-left right"></i>
+  						<p>Product<i class="fas fa-angle-left right"></i>
   						</p>
   					</a>
   					<ul class="nav nav-treeview">
   						<li class="nav-item">
-  							<a href="<?php echo base_url('HrDept/category_list'); ?>" class="nav-link">
+  							<a href="<?php echo base_url('Product/category_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Category</p>
   							</a>
   						</li> 
 						  <li class="nav-item">
-  							<a href="<?php echo base_url('HrDept/sub_category_list'); ?>" class="nav-link">
+  							<a href="<?php echo base_url('Product/sub_category_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Sub Category</p>
   							</a>
@@ -109,7 +109,13 @@
   						<p>Finance<i class="fas fa-angle-left right"></i>
   						</p>
   					</a>
-  					<ul class="nav nav-treeview">  						
+  					<ul class="nav nav-treeview">  	
+					  <li class="nav-item">
+  							<a href="<?php echo base_url('Report/emp_add_salary'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Add Salary</p>
+  							</a>
+  						</li>					
 					  <li class="nav-item">
   							<a href="<?php echo base_url('Report/emp_salary_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>

@@ -144,6 +144,17 @@ class Master_model extends CI_model
     $res = $this->db->get('master_city_tbl city')->result();
     return $res;
   }
+
+
+	public function get_city($m_state){
+		$sql = $this->db->join("master_state_tbl", "master_state_tbl.m_state_id= master_city_tbl.m_city_state");
+		if ($m_state != '') {
+			 $sql = $this->db->where('m_city_state', $m_state);
+		}
+		$sql = $this->db->get('master_city_tbl');
+		$res = $sql->result();
+		return $res;
+	}
   //=========================================== city ===============================================//
 
 

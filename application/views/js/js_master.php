@@ -312,6 +312,46 @@
 
     //===========================cashacc ===========================//
  
+		//---------------state wise city----------------------//
+		
+    //////////////////////////
+    $("#m_state").on('change', function() {
+        var m_state = $('#m_state :selected').val();
+
+        $('#m_city').find('option').not(':first').remove();
+
+
+
+        $.ajax({
+            url: "<?php echo site_url('Master/get_city') ?>",
+            type: "POST",
+            data: {
+                m_state: m_state
+            },
+            dataType: "JSON",
+            success: function(data) {
+
+                var selectm_state = $("#m_state").val();
+
+                var html = "";
+
+                $.each(data, function(index, value) {
+
+                    if (value.state == selectm_state) {
+                        var sel2 = 'selected';
+
+                    } else {
+                        var sel2 = '';
+
+                    }
+
+                    html += "<option value='" + value.m_city_id + "' " + sel2 + ">" + value.m_city_name + "</option>";
+                });
+                $("#m_city").append(html);
+            }
+        });
+    });
+
 
   });
 </script>

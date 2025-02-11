@@ -200,7 +200,10 @@ class HrDept extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Store";
 		}
+		$data['get_active_state'] = $this->Master_model->get_active_state();
+		$data['get_active_city'] = $this->Master_model->get_active_city();
 		$data['edit_value'] = $this->Hr_model->get_edit_store($data['id']);
+		// print_r($data['get_active_city']); die();
 		$this->load->view('store_add', $data);
 	}
 
@@ -322,96 +325,7 @@ class HrDept extends CI_Controller
 
 	//-----------------leaves------------------------------//
 
-	//-------------------------- category ------------------------//
-	public function category_list()
-	{
-		$data = $this->login_details();
-		$data['pagename'] = "Category List";
-		$data['cattype'] = 1;
-		$data['id'] = $this->input->get('id');
-		$data['all_value'] = $this->Hr_model->get_cate($data['cattype']);
-		$data['edit_value'] = $this->Hr_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
-	}
-
-	public function sub_category_list()
-	{
-		$data = $this->login_details();
-		$data['pagename'] = "Sub Category List";
-		$data['cattype'] = 2;
-		$data['id'] = $this->input->get('id');
-		$data['all_value'] = $this->Hr_model->get_cate($data['cattype']);
-		$data['all_subcate'] = $this->Hr_model->getsubcate();
-		$data['edit_value'] = $this->Hr_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
-	}
-
-	public function insert_cate()
-	{
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-			$dept_type = $this->input->post('m_dept_type');
-			switch ($dept_type) {
-				case 1:
-					$headname = "Category";
-					break;
-				case 2:
-					$headname = "Sub Category";
-					break;
-				default:
-					$headname = "Data";
-					break;
-			}
-
-			if ($data = $this->Hr_model->insert_cate()) {
-
-				if ($data == 1) {
-					$info = array(
-						'status' => 'success',
-						'message' => $headname . ' has been Added successfully!'
-					);
-				} else if ($data == 2) {
-					$info = array(
-						'status' => 'success',
-						'message' => $headname . ' Updated Successfully'
-					);
-				} else if ($data == 3) {
-					$info = array(
-						'status' => 'error',
-						'message' => $headname . ' with same name already exist'
-					);
-				}
-			} else {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Some problem Occurred!! please try again'
-				);
-			}
-			echo json_encode($info);
-		}
-	}
-
-	public function delete_cate()
-	{
-
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Hr_model->delete_cate()) {
-				$info = array(
-					'status' => 'success',
-					'message' => 'Data has been Deleted successfully!'
-				);
-			} else {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Some problem Occurred!! please try again'
-				);
-			}
-			echo json_encode($info);
-		}
-	}
-	//-----------------category------------------------------------//
-
-
+	
 	//-----------------employee------------------------------------//
 	public function employe_list()
 	{

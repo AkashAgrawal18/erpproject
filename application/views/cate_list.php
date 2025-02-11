@@ -50,7 +50,7 @@ if ($cattype == 1) {
 									$i = 1;
 									if (!empty($all_value)) {
 										foreach ($all_value as $value) {
-											$edit_link = site_url('HrDept/' . $relink . '?id=') . $value->m_cat_id;
+											$edit_link = site_url('Product/' . $relink . '?id=') . $value->m_cat_id;
 									?>
 											<tr>
 												<td><?php echo $i; ?></td>
@@ -194,7 +194,7 @@ if ($cattype == 1) {
 									</div>
 									<div class="col-md-6">
 										<div class="form-layout-submit">
-											<a href="<?php echo site_url('HrDept/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
+											<a href="<?php echo site_url('Product/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
 
 										</div>
 									</div>
