@@ -1,6 +1,6 @@
 <?php $this->view('header'); ?>
 
-<?php $logged_user_id = $this->session->userdata('user_design');
+<?php $logged_user_id = $this->session->userdata('user_id');
 $logged_user_type = $this->session->userdata('user_type');
 if ($pgtype == 1) {
 	$relink = "department_list";

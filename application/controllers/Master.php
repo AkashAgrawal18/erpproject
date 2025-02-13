@@ -164,6 +164,129 @@ class Master extends CI_Controller
 
 	//-------------------------- city ------------------------//
 
+
+	
+
+	//========================= perm ===========================//
+
+	public function perm_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = "All Permission list";
+		$data['id'] = $this->input->get('id');
+		$data['edit_value'] = $this->Master_model->get_edit_perm($data['id']);
+		$data['all_value'] = $this->Master_model->all_perm();
+		$this->load->view('perm_list', $data);
+	}
+
+	public function insert_perm()
+	{
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Master_model->insert_perm()) {
+
+				if ($data == 1) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Data has been Added successfully!'
+					);
+				} else if ($data == 2) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Data Updated Successfully'
+					);
+				}
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+
+	public function delete_perm()
+	{
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Master_model->delete_perm()) {
+				$info = array(
+					'status' => 'success',
+					'message' => 'Data has been Deleted successfully!'
+				);
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+	//========================= perm ===========================//
+
+
+	//========================= userperm ===========================//
+
+	public function userperm_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = "All Permission";
+		$data['userid'] = $this->session->userdata('user_id');
+		$data['user_dtl'] = $this->Login_model->user_details($data['userid']);
+		$data['edit_value'] = $this->Master_model->get_userperm_userId($data['userid']);
+		$data['all_value'] = $this->Master_model->all_perm();
+		// print_r($data['userid']); die();
+		$this->load->view('user_permission_list', $data);
+	}
+
+	public function insert_userperm()
+	{
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Master_model->insert_userperm()) {
+
+				if ($data == 1) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Data has been Added successfully!'
+					);
+				} else if ($data == 2) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Data Updated Successfully'
+					);
+				}
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+
+	//   public function delete_userperm(){
+
+	// 	if($_SERVER["REQUEST_METHOD"] == "POST"){
+	// 	  if($data = $this->Master_model->delete_userperm()){
+	// 	  $info = array( 'status'=>'success',
+	// 	  'message'=>'Data has been Deleted successfully!'
+	// 	  );
+	// 	  }else{ 
+	// 		$info = array( 'status'=>'error',
+	// 		  'message'=>'Some problem Occurred!! please try again'
+	// 		);
+	// 	  } 
+	// 	  echo json_encode($info);
+	// 	}
+	//   }
+	//========================= userperm ===========================//
+
+
+
 	//==========================Details===========================//
 	protected function login_details()
 	{

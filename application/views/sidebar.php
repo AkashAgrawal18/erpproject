@@ -1,4 +1,10 @@
   <!-- Main Sidebar Container -->
+  <?php
+	$logged_user_id = $this->session->userdata('user_id');
+	$logged_user_type = $this->session->userdata('user_type');
+
+
+	?>
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
   	<!-- Sidebar -->
   	<div class="sidebar">
@@ -48,30 +54,30 @@
   								<p>Designation</p>
   							</a>
   						</li>
-						  <li class="nav-item">
+  						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/shift_roster_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Shift Roster</p>
   							</a>
-  						</li> 
-						  <li class="nav-item">
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/holiday_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Holidays</p>
   							</a>
-						  </li>
-						  <li class="nav-item">
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/store_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Stores/factory</p>
   							</a>
-						  </li>
-						  <li class="nav-item">
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/leave_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Leaves</p>
   							</a>
-						  </li>
+  						</li>
   						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/employe_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
@@ -81,7 +87,7 @@
   					</ul>
   				</li>
 
-				  <li class="nav-item">
+  				<li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-box"></i>
   						<p>Product<i class="fas fa-angle-left right"></i>
@@ -89,49 +95,73 @@
   					</a>
   					<ul class="nav nav-treeview">
   						<li class="nav-item">
+  							<a href="<?php echo base_url('Product/product_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Product</p>
+  							</a>
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('Product/category_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Category</p>
   							</a>
-  						</li> 
-						  <li class="nav-item">
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('Product/sub_category_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Sub Category</p>
   							</a>
-  						</li> 
+  						</li>
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Product/product_package_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Product Package</p>
+  							</a>
+  						</li>
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Product/product_size_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Product Size</p>
+  							</a>
+  						</li>
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Product/product_brand_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Product Brand</p>
+  							</a>
+  						</li>
   					</ul>
   				</li>
 
-				  <li class="nav-item">
+  				<li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-boxes"></i>
   						<p>Finance<i class="fas fa-angle-left right"></i>
   						</p>
   					</a>
-  					<ul class="nav nav-treeview">  	
-					  <li class="nav-item">
+  					<ul class="nav nav-treeview">
+  						<li class="nav-item">
   							<a href="<?php echo base_url('Report/emp_add_salary'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Add Salary</p>
   							</a>
-  						</li>					
-					  <li class="nav-item">
+  						</li>
+  						<li class="nav-item">
   							<a href="<?php echo base_url('Report/emp_salary_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Employees Salary</p>
   							</a>
   						</li>
-						  <li class="nav-item">
+  						<li class="nav-item">
   							<a href="<?php echo base_url('Report/emp_attd_report'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>EMP Attendance Report</p>
   							</a>
-  						</li> 
+  						</li>
   					</ul>
   				</li>
 
-				 
+
   				<li class="nav-item">
   					<a href="#" class="nav-link">
   						<i class="nav-icon fas fa-database"></i>
@@ -141,7 +171,7 @@
   						</p>
   					</a>
   					<ul class="nav nav-treeview">
-					  <li class="nav-item">
+  						<li class="nav-item">
   							<a href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Salary Breakup</p>
@@ -159,12 +189,18 @@
   								<p>City</p>
   							</a>
   						</li>
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Master/userperm_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Permission</p>
+  							</a>
+  						</li>
   					</ul>
   				</li>
 
   				<li class="nav-item">
   					<a href="#" class="nav-link">
-					  <i class="nav-icon fas fa-box"></i>
+  						<i class="nav-icon fas fa-box"></i>
   						<p>
   							Setting
   							<i class="fas fa-angle-left right"></i>
@@ -198,6 +234,3 @@
   	</div>
   	<!-- /.sidebar -->
   </aside>
-
-
-  

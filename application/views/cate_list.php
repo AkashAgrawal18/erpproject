@@ -8,7 +8,17 @@ if ($cattype == 1) {
 } else if ($cattype == 2) {
 	$relink = "sub_category_list";
 	$headname = "Sub Category";
+} else if ($cattype == 3) {
+	$relink = "product_package_list";
+	$headname = "Product Package";
+} else if ($cattype == 4) {
+	$relink = "product_size_list";
+	$headname = "Product Size";
+} else if ($cattype == 5) {
+	$relink = "product_brand_list";
+	$headname = "Product Brand";
 }
+
 ?>
 
 
@@ -39,7 +49,9 @@ if ($cattype == 1) {
 									<tr>
 										<th style="width: 5%">#</th>
 										<th><?= $headname ?> Name</th>
-										<th> Image</th>
+										<?php if ($cattype == 1 || $cattype == 2) { ?>
+											<th><?= $headname ?> Image</th>
+										<?php }   ?>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -55,17 +67,18 @@ if ($cattype == 1) {
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_cat_name; ?></td>
-												<td>
-													<?php
-													$cat_img = 'uploads/cate/' . $value->m_cat_img;
-													if (!empty($value->m_cat_img) && file_exists($cat_img)) {
-													?>
-														<img src="<?php echo base_url($cat_img); ?>" alt="Category Image" class="card-img-top rounded" style="height: 30px; width: 30%;">
-													<?php } else { ?>
-														<img src="<?php echo base_url('uploads/cate/default.jpg'); ?>" alt="Default Image" class="card-img-top rounded" style="height: 30px; width: 30%;">
-													<?php } ?>
-												</td>
-
+												<?php if ($cattype == 1 || $cattype == 2) { ?>
+													<td>
+														<?php
+														$cat_img = 'uploads/cate/' . $value->m_cat_img;
+														if (!empty($value->m_cat_img) && file_exists($cat_img)) {
+														?>
+															<img src="<?php echo base_url($cat_img); ?>" alt="Category Image" class="card-img-top rounded" style="height: 30px; width: 30%;">
+														<?php } else { ?>
+															<img src="<?php echo base_url('uploads/cate/default.jpg'); ?>" alt="Default Image" class="card-img-top rounded" style="height: 30px; width: 30%;">
+														<?php } ?>
+													</td>
+												<?php } ?>
 												<td>
 													<?php
 													if (!empty($value->m_cat_status == 1)) {
@@ -138,27 +151,28 @@ if ($cattype == 1) {
 									</div>
 								</div>
 								<?php if ($cattype == 2) { ?>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label>Category Name<span class="text-danger">*</span></label> 
-											<select name="m_catsub_id" id="m_catsub_id" class="form-control select2">
-														<?php if (!empty($all_subcate)) {
-															foreach ($all_subcate as $key) {
-																if ($catsub == $key->m_cat_id) {
-																	$op = 'selected';
-																} else {
-																	$op = '';
-																}
-																echo '<option value="' . $key->m_cat_id . '" ' . $op . '>' . $key->m_cat_name . '</option>';
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Category Name<span class="text-danger">*</span></label>
+												<select name="m_catsub_id" id="m_catsub_id" class="form-control select2">
+													<?php if (!empty($all_subcate)) {
+														foreach ($all_subcate as $key) {
+															if ($catsub == $key->m_cat_id) {
+																$op = 'selected';
+															} else {
+																$op = '';
 															}
-														} ?>
+															echo '<option value="' . $key->m_cat_id . '" ' . $op . '>' . $key->m_cat_name . '</option>';
+														}
+													} ?>
 
-													</select> 
+												</select>
+											</div>
 										</div>
 									</div>
-								</div>
 								<?php }  ?>
+								<?php if ($cattype == 1 || $cattype == 2) { ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -175,6 +189,7 @@ if ($cattype == 1) {
 										</div>
 									</div>
 								</div>
+								<?php } ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

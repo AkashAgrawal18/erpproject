@@ -93,7 +93,8 @@ class Hr_model extends CI_model
 		$res = $this->db->get('master_store_tbl')->result();
 		return $res;
 	}
-	public function get_active_shiftroster(){
+	public function get_active_shiftroster()
+	{
 		$this->db->select('dept.m_dept_name,dept.m_dept_id');
 		$this->db->where('m_dept_type', 4);
 		$this->db->where('m_dept_status', 1);
@@ -247,12 +248,12 @@ class Hr_model extends CI_model
 		$s_data = array(
 			"m_leav_empname" => $this->input->post('m_leav_empname'),
 			"m_leav_type" => $this->input->post('m_leav_type'),
-			"m_leav_duration" => $this->input->post('m_leav_duration'), 
+			"m_leav_duration" => $this->input->post('m_leav_duration'),
 			"m_leav_absence" => $this->input->post('m_leav_absence'),
 			"m_leav_fromdate" => $this->input->post('m_leav_fromdate'),
 			"m_leav_todate" => $this->input->post('m_leav_todate'),
 			"m_leav_imgfile" => $m_leav_imgfile,
-			"m_leav_status" => $this->input->post('m_leav_status'), 
+			"m_leav_status" => $this->input->post('m_leav_status'),
 			"m_leav_date" => date('Y-m-d'),
 			"m_leav_addedon" => date('Y-m-d H:i'),
 		);
