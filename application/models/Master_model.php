@@ -218,6 +218,16 @@ class Master_model extends CI_model
 
 
   //===================== userperm =======================//
+	public function emp_list(){
+		$res = $this->db->select('*')->where('m_emp_id!=', 1)->get('master_employee_tbl')->result();
+    return $res;
+	}
+	public function user_details($id){
+	  $this->db->select('*');
+    $this->db->where('m_emp_id', $id);
+    $data = $this->db->get('master_employee_tbl');
+    return $data->row();
+	}
   public function all_userperm_list()
   {
     $res = $this->db->select('*')->get('master_user_permission_tbl')->result();

@@ -7,8 +7,11 @@
 	<section class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
-				<div class="col-sm-6">
+				<div class="col-sm-10">
 					<h1><?= $pagename ?></h1>
+				</div>
+				<div class="col-sm-2 text-right">
+				<a href="<?php echo site_url('Master/user_list') ?>" class="btn btn-sm btn-info btn-vsm"> Back</a>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->

@@ -228,16 +228,23 @@ class Master extends CI_Controller
 
 
 	//========================= userperm ===========================//
+	public function user_list(){
+		$data = $this->login_details();
+		$data['pagename'] = "All User Permission"; 
+		$data['user_dtl'] = $this->Master_model->emp_list(); 
+		// print_r($data['userid']); die();
+		$this->load->view('user_list', $data);	
+	}
 
 	public function userperm_list()
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "All Permission";
-		$data['userid'] = $this->session->userdata('user_id');
-		$data['user_dtl'] = $this->Login_model->user_details($data['userid']);
+		$data['userid']  = $this->input->get('id'); 
+		$data['user_dtl'] = $this->Master_model->user_details($data['userid']);
 		$data['edit_value'] = $this->Master_model->get_userperm_userId($data['userid']);
 		$data['all_value'] = $this->Master_model->all_perm();
-		// print_r($data['userid']); die();
+		// print_r($data['user_dtl']); die();
 		$this->load->view('user_permission_list', $data);
 	}
 

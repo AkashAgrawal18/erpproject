@@ -97,9 +97,12 @@ if ($pgtype == 1) {
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-													<button class="btn btn-danger btn-sm delete-dept" data-value="<?php echo $value->m_dept_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-
+													<?php if ($logged_user_type == 1 || has_perm($logged_user_id, 'HR', 'DPT', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php }
+													if ($logged_user_type == 1 || has_perm($logged_user_id, 'HR', 'DPT', 'Delete')) { ?>
+														<button class="btn btn-danger btn-sm delete-dept" data-value="<?php echo $value->m_dept_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php } ?>
 												</td>
 											</tr>
 									<?php
