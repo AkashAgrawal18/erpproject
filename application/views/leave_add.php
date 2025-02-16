@@ -35,7 +35,6 @@
 									$todate = $edit_value->m_leav_todate;
 									$absence = $edit_value->m_leav_absence;
 									$imgfile = $edit_value->m_leav_imgfile;
-									$status = $edit_value->m_leav_status;
 								} else {
 									$id = '';
 									$empname = '';
@@ -45,7 +44,6 @@
 									$todate = '';
 									$absence = '';
 									$imgfile = '';
-									$status = '';
 								} ?>
 
 								<div class="row">
@@ -72,9 +70,9 @@
 										<div class="form-group">
 											<label>Leave Type </label>
 											<select name="m_leav_type" id="m_leav_type" class="form-control" title="Select Status">
-												<option value="1" <?php if ($type == 1) echo 'selected' ?>>casual</option>
+												<option value="1" <?php if ($type == 1) echo 'selected' ?>>Casual</option>
 												<option value="2" <?php if ($type == 2) echo 'selected' ?>>Sick</option>
-												<option value="3" <?php if ($type == 3) echo 'selected' ?>>Unleave</option>
+												<option value="3" <?php if ($type == 3) echo 'selected' ?>>Earn</option>
 											</select>
 										</div>
 									</div>
@@ -104,15 +102,6 @@
 										</div>
 									</div>
 
-									<div class="col-sm-3">
-										<div class="form-group">
-											<label>Status</label>
-											<select name="m_leav_status" id="m_leav_status" class="form-control" title="Select Status">
-												<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
-												<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
-											</select>
-										</div>
-									</div>
 									<div class="col-sm-12">
 										<div class="form-group">
 											<label>Reason for Absence<span class="text-danger">*</span> </label>

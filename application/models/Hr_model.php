@@ -253,7 +253,7 @@ class Hr_model extends CI_model
 			"m_leav_fromdate" => $this->input->post('m_leav_fromdate'),
 			"m_leav_todate" => $this->input->post('m_leav_todate'),
 			"m_leav_imgfile" => $m_leav_imgfile,
-			"m_leav_status" => $this->input->post('m_leav_status'),
+			"m_leav_status" => 1,
 			"m_leav_date" => date('Y-m-d'),
 			"m_leav_addedon" => date('Y-m-d H:i'),
 		);
@@ -289,13 +289,13 @@ class Hr_model extends CI_model
 
 	public function get_Active_emp()
 	{
-		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where('is_out_of_job', 0)->get('master_employee_tbl')->result();
+		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where('m_emp_status', 1)->get('master_employee_tbl')->result();
 		return $res;
 	}
 
 	public function get_emp_design_list($design)
 	{
-		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where_in('m_emp_design', $design)->where('is_out_of_job', 0)->get('master_employee_tbl')->result();
+		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where_in('m_emp_design', $design)->where('m_emp_status', 1)->get('master_employee_tbl')->result();
 		return $res;
 	}
 
@@ -387,7 +387,7 @@ class Hr_model extends CI_model
 			// "m_emp_leadact" => 			$m_emp_leadact,
 			"is_esic_applicable" => $is_esic_applicable,
 			"is_tds_applicable" => 	$is_tds_applicable,
-			// "is_out_of_job" => 		$is_out_of_job,
+			// "m_emp_status" => 		$m_emp_status,
 			"is_epf_applicable" => 	$is_epf_applicable,
 			"m_login_type" => 2,
 

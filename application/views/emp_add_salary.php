@@ -55,10 +55,11 @@ $logged_user_type = $this->session->userdata('user_type');
 											<th>#</th>
 											<th>Employee</th>
 											<th>Salary</th>
-											<th>Total Days</th>
+											<th>Perday Salary</th>
+											<th>Working Days</th>
 											<th>Present</th>
-											<th>Absent</th>
 											<th>Leave</th>
+											<th>Absent</th>
 											<th>Payable</th>
 										</tr>
 									</thead>
@@ -67,33 +68,38 @@ $logged_user_type = $this->session->userdata('user_type');
 										$i = 1;
 										if (!empty($emp_att)) {
 											foreach ($emp_att as $key => $value) {
-												// Ensure emp_salary has matching index
-												$salaryData = isset($emp_salary[$key]) ? $emp_salary[$key] : null;
+												$absent_count = ($value->working_days - $value->present_count - $value->leave_count);
+												$perday_sal = ($value->m_emp_salary/$value->working_days);
+												$payable_amt = (($value->working_days - $absent_count)* $perday_sal);
 										?>
 												<tr data-changed="false">
 													<td><?php echo $i; ?></td>
 													<td>
 														<?php echo htmlspecialchars($value->m_emp_name); ?>
-														<input type="hidden" name="emp_id[]" value="<?php echo $value->m_emp_id; ?>">
+														<input type="hidden" name="m_salinst_empid[]" value="<?= $value->m_emp_id; ?>">
+														<input type="hidden" name="m_salinst_date" value="<?= $from_month; ?>">
 													</td>
 													<td>
-														<input type="number" class="form-control salary" name="salary[]" value="<?php echo $value->m_emp_salary; ?>" step="0.01">
+														<input type="number" class="form-control m_salinst_salary" name="m_salinst_salary[]" value="<?= $value->m_emp_salary; ?>" step="0.01" readonly>
 													</td>
 													<td>
-														<input type="number" class="form-control total_days" name="total_days[]" value="<?php echo $value->attendance_count; ?>" readonly>
+														<input type="number" class="form-control parday_sal" name="parday_salary[]" value="<?= round($perday_sal,2); ?>" step="0.01" readonly>
 													</td>
 													<td>
-														<input type="number" class="form-control present" name="present[]" value="<?php echo $salaryData ? $salaryData->m_salinst_prdays : 0; ?>">
+														<input type="number" class="form-control m_salinst_totaldays" name="m_salinst_totaldays[]" value="<?= $value->working_days; ?>" readonly>
 													</td>
 													<td>
-														<input type="number" class="form-control absent" name="absent[]"
-															value="<?php echo $salaryData ? $salaryData->m_salinst_absent : 0; ?>" readonly>
+														<input type="number" class="form-control m_salinst_prdays" name="m_salinst_prdays[]" value="<?= $value->present_count; ?>">
 													</td>
 													<td>
-														<input type="number" class="form-control leave" name="leave[]" value="<?php echo $salaryData ? $salaryData->m_salinst_lvdays : 0; ?>">
+														<input type="number" class="form-control m_salinst_lvdays" name="m_salinst_lvdays[]" value="<?= $value->leave_count; ?>">
 													</td>
 													<td>
-														<input type="number" class="form-control payable" name="payable[]" value="<?php echo $salaryData ? $salaryData->m_salinst_payable : 0; ?>" step="0.01" readonly>
+														<input type="number" class="form-control m_salinst_absent" name="m_salinst_absent[]"
+															value="<?= $absent_count ?>" readonly>
+													</td>
+													<td>
+														<input type="number" class="form-control m_salinst_payable" name="m_salinst_payable[]" value="<?= round($payable_amt,2) ?>" step="0.01" readonly>
 													</td>
 												</tr>
 										<?php

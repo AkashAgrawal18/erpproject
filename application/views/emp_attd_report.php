@@ -1,10 +1,38 @@
 <?php $this->view('header'); ?>
 
-<?php $logged_user_id = $this->session->userdata('user_design');
-$logged_user_type = $this->session->userdata('user_type');
+<?php $user_id = $this->session->userdata('user_design');
+$user_type = $this->session->userdata('user_type');
 
 ?>
+<style>
+	.table td,
+	.table th {
+		padding: .3rem !important;
+	}
 
+	.profile-img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+	}
+
+	.circular-timer {
+		width: 100px;
+		height: 100px;
+		border: 4px solid #007bff;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+		
+	}
+
+	.activity-timeline {
+		border-left: 2px solid #007bff;
+		padding-left: 10px;
+	}
+</style>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -26,9 +54,7 @@ $logged_user_type = $this->session->userdata('user_type');
 							<div class="col-sm-4">
 								<div class="form-group">
 									<button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-									<a href="<?php echo site_url('Report/emp_attd_report'); ?>">
-										<button class="btn btn-danger" type="button"><i class="fa fa-rotate"></i></button>
-									</a>
+									<a class="btn btn-danger" href="<?= site_url('Report/emp_attd_report'); ?>"><i class="fa fa-refresh"></i></a>
 								</div>
 							</div>
 						</div>
@@ -49,10 +75,16 @@ $logged_user_type = $this->session->userdata('user_type');
 						<!-- /.card-header -->
 						<div class="card-body" style="overflow-x:scroll;width:100% ;">
 							<?php
-							$from_month = $this->input->post('from_month') ?? date('Y-m');
-							$daysInMonth = date('t', strtotime($from_month));
+							$daysInMonth = date('t', strtotime('01-' . $from_month));
 							?>
-
+							<div class="d-block">
+								<span class="mx-1"><i class="fa fa-check" aria-hidden="true" style="color:#0c3eff"></i> Present </span> |
+								<span class="mx-1"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red"></i> Late </span> |
+								<span class="mx-1"><i class="fa fa-star" aria-hidden="true" style="color: #FFD700"></i> Holiday </span> |
+								<span class="mx-1"><i class="fa fa-plane" aria-hidden="true" style="color:red"></i> Leave </span> |
+								<span class="mx-1"><i class="fa fa-star-half" aria-hidden="true" style="color:#0c3eff"></i> Half Day </span> |
+								<span class="mx-1"><i class="fa fa-times" aria-hidden="true" style="color:#969698"></i> Absent </span>
+							</div>
 							<table class="table display table-striped table-bordered">
 								<thead>
 									<tr>
@@ -67,40 +99,36 @@ $logged_user_type = $this->session->userdata('user_type');
 								<tbody>
 									<?php
 									if (!empty($emp_att_del)) {
-										$grouped_data = [];
-										foreach ($emp_att_del as $record) {
-											$grouped_data[$record->m_emp_id][] = $record;
-										}
-										foreach ($grouped_data as $emp_id => $attendance_records) {
-											echo "<tr>";
-											echo "<td>" . $attendance_records[0]->m_emp_name . "</td>";
-											for ($i = 1; $i <= $daysInMonth; $i++) {
-												$todaydate = date('Y-m-d', strtotime($from_month . '-' . $i));
-												$status = "-"; // Default status
+										foreach ($emp_att_del as $emp_att) {
+											echo "<tr>
+											<td>" . $emp_att->m_emp_name . "</td>";
 
-												foreach ($attendance_records as $record) {
-													if ($record->m_date == $todaydate) {
-														switch ($record->m_status) {
-															case 1:
-																$status = '<i class="fa fa-check" aria-hidden="true"></i>'; // Present
-																break;
-															case 2:
-																$status = '<i class="fa fa-times" aria-hidden="true"></i>'; // Absent
-																break;
-															case 3:
-																$status = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'; // Leave
-																break;
-															case 4:
-																$status = '<i class="fa fa-star-half-o" aria-hidden="true"></i>'; // Half-day
-																break;
-															default:
-																$status = '-';
-														}
+											foreach ($emp_att->attdn_status as $record) {
+												switch ($record->status) {
+													case 1:
+														$status = '<span title="Click to see detail" onclick="attd_detail_fun(`' . $record->attd_id . '`,`1`)"><i class="fa fa-check" aria-hidden="true" style="color:#0c3eff"></i></span>'; // Present
 														break;
-													}
+													case 2:
+														$status = '<span title="Click to see detail" onclick="attd_detail_fun(`' . $record->attd_id . '`,`1`)"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>'; // Missing log
+														break;
+													case 3:
+														$status = '<span title="' . $record->attd_id . '"><i class="fa fa-star" aria-hidden="true" style="color: #FFD700"></i></span>'; // Holiday
+														break;
+													case 4:
+														$status = '<span title="Click to see detail" onclick="attd_detail_fun(`' . $record->attd_id . '`,`2`)"><i class="fa fa-plane" aria-hidden="true" style="color:red"></i></span>'; // Leave
+														break;
+													case 6:
+														$status = '<span title="Click to see detail" onclick="attd_detail_fun(`' . $record->attd_id . '`,`2`)"><i class="fa fa-star-half" aria-hidden="true" style="color:#0c3eff"></i></span>'; // Half-day
+														break;
+													case 5:
+														$status = '<i class="fa fa-times" aria-hidden="true" style="color:#969698"></i>'; // Absent
+														break;
+													default:
+														$status = '-';
 												}
-												echo "<td><a href='" . base_url("Report/view_detail/" . $emp_id . "?from_date=" . $todaydate . "&to_date=" . $todaydate) . "' title='Click to view detail'>" . $status . "</a></td>";
+												echo "<td>" . $status . "</td>";
 											}
+
 											echo "</tr>";
 										}
 									} else {
@@ -126,6 +154,29 @@ $logged_user_type = $this->session->userdata('user_type');
 </div>
 <!-- /.content-wrapper -->
 
+<!-- Modal -->
+
+<div class="modal" id="attendanceModal" aria-modal="true" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="attendanceModalLabel">Attendance Details</h4>
+				<button type="button" id="attendanceModalclose" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="attd_dtlbody">
+				<!-- Profile Section -->
+			
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+
 
 <?php $this->view('footer')  ?>
 <?php $this->view('js/js_custom') ?>
+<?php $this->view('js/js_hr') ?>

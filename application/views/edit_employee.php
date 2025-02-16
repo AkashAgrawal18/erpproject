@@ -293,25 +293,25 @@
 														<option value="none" <?php if ($rest == "none") {
 																					echo 'selected';
 																				} ?>>None</option>
-														<option value="mon" <?php if ($rest == "mon") {
+														<option value="1" <?php if ($rest == "2") {
 																				echo 'selected';
 																			} ?>>Mon</option>
-														<option value="tue" <?php if ($rest == "tue") {
+														<option value="2" <?php if ($rest == "2") {
 																				echo 'selected';
 																			} ?>>Tue</option>
-														<option value="wed" <?php if ($rest == "wed") {
+														<option value="3" <?php if ($rest == "3") {
 																				echo 'selected';
 																			} ?>>Wed</option>
-														<option value="thu" <?php if ($rest == "thu") {
+														<option value="4" <?php if ($rest == "4") {
 																				echo 'selected';
 																			} ?>>Thu</option>
-														<option value="fri" <?php if ($rest == "fri") {
+														<option value="5" <?php if ($rest == "5") {
 																				echo 'selected';
 																			} ?>>Fri</option>
-														<option value="sat" <?php if ($rest == "sat") {
+														<option value="6" <?php if ($rest == "6") {
 																				echo 'selected';
 																			} ?>>Sat</option>
-														<option value="sun" <?php if ($rest == "sun") {
+														<option value="7" <?php if ($rest == "7") {
 																				echo 'selected';
 																			} ?>>Sun</option>
 

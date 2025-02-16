@@ -192,13 +192,13 @@
 													<label>Rest Day</label>
 													<select name="m_emp_rest" id="m_emp_rest" class="form-control select2">
 														<option value="none">None</option>
-														<option value="mon">Mon</option>
-														<option value="tue">Tue</option>
-														<option value="wed">Wed</option>
-														<option value="thu">Thu</option>
-														<option value="fri">Fri</option>
-														<option value="sat">Sat</option>
-														<option value="sun">Sun</option>
+														<option value="1">Mon</option>
+														<option value="2">Tue</option>
+														<option value="3">Wed</option>
+														<option value="4">Thu</option>
+														<option value="5">Fri</option>
+														<option value="6">Sat</option>
+														<option value="7">Sun</option>
 													</select>
 
 												</div>

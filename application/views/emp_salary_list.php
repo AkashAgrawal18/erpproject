@@ -12,15 +12,32 @@ $logged_user_type = $this->session->userdata('user_type');
 	<section class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					<h1><?= $pagename ?></h1>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					<form method="post" action="<?php echo site_url('Report/emp_salary_list') ?>">
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<label class="form-check-label">Month</label>
 								<input type="month" name="from_month" value="<?php echo $from_month; ?>">
+							</div>
+							<div class="col-sm-4">
+								<label class="form-check-label">Employee</label>
+								<select name="emp_id" id="emp_id" >
+								<option value="">All Employee</option>
+									<?php if (!empty($emp_list)) {
+										foreach ($emp_list as $key) {
+											if ($emp_id == $key->m_emp_id) {
+												$op = 'selected';
+											} else {
+												$op = '';
+											}
+											echo '<option value="' . $key->m_emp_id . '" ' . $op . '>' . $key->m_emp_name . '</option>';
+										}
+									} ?>
+
+								</select>
 							</div>
 
 							<div class="col-sm-4">
@@ -58,7 +75,7 @@ $logged_user_type = $this->session->userdata('user_type');
 										<th>Present</th>
 										<th>Absent</th>
 										<th>Leave</th>
-										<th>Payable</th> 
+										<th>Payable</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -71,13 +88,13 @@ $logged_user_type = $this->session->userdata('user_type');
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_emp_name; ?></td>
-												<td><?php echo $value->m_emp_salary; ?></td>
-												<td><?php echo $value->attendance_count; ?></td>
-												<td><?php echo $value->present_count; ?></td>
-												<td><?php echo $value->absent_count; ?></td>
-												<td><?php echo $value->leave_count; ?></td>
-												<td><?php echo $value->payable_salary; ?></td>
-												 
+												<td><?php echo $value->m_salinst_salary; ?></td>
+												<td><?php echo $value->m_salinst_totaldays; ?></td>
+												<td><?php echo $value->m_salinst_prdays; ?></td>
+												<td><?php echo $value->m_salinst_absent; ?></td>
+												<td><?php echo $value->m_salinst_lvdays; ?></td>
+												<td><?php echo $value->m_salinst_payable; ?></td>
+
 											</tr>
 									<?php
 											$i++;
