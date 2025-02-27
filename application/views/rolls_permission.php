@@ -27,7 +27,7 @@
 								<thead>
 									<tr>
 										<th style="width: 5%">#</th>
-										<th>Employee Name</th>
+										<th>Title</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -37,14 +37,14 @@
 									$i = 1;
 									if (!empty($user_dtl)) {
 										foreach ($user_dtl as $value) {
-											$edit_link = site_url('Master/userperm_list?id=') . $value->m_emp_id;
+											$edit_link = site_url('Master/userperm_list?id=') . $value->m_dept_id;
 									?>
 											<tr>
 												<td><?php echo $i; ?></td>
-												<td><?php echo $value->m_emp_name; ?></td>
+												<td><?php echo $value->m_dept_name; ?></td>
 												<td>
 													<?php
-													if (!empty($value->m_emp_status == 1)) {
+													if (!empty($value->m_dept_status == 1)) {
 													?>
 														<a class="btn btn-success btn-sm" title="Active" data-toggle="Active">Active</a>
 													<?php

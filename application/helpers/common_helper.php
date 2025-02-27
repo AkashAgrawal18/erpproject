@@ -72,6 +72,9 @@ if (! function_exists('has_perm')) {
      $CI->db->where('m_userperm_submodule',$submodule);
     }
     if (!empty($field)){
+			if($field == 'List'){
+        $CI->db->where('m_userperm_list',1);
+      }
       if($field == 'Edit'){
         $CI->db->where('m_userperm_edit',1);
       }

@@ -225,6 +225,8 @@
 				var relink = "salaryBreakup_list";
 			} else if (pgtype == 4) {
 				var relink = "shift_roster_list";
+			}else if (pgtype == 5) {
+				var relink = "roll_list";
 			}
 
 			$.ajax({

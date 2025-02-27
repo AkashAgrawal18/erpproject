@@ -2,6 +2,7 @@
 
 <?php $logged_user_id = $this->session->userdata('user_design');
 $logged_user_type = $this->session->userdata('user_type');
+$roll_id = $this->session->userdata('roll_id');
 if ($cattype == 1) {
 	$relink = "category_list";
 	$headname = "Category";
@@ -93,9 +94,12 @@ if ($cattype == 1) {
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
+												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'PDT', 'Edit')) { ?>
 													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php } ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'PDT', 'Delete')) { ?>
 													<button class="btn btn-danger btn-sm delete-cate" data-value="<?php echo $value->m_cat_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-
+                                                    <?php } ?>
 												</td>
 											</tr>
 									<?php

@@ -228,12 +228,12 @@ class Master extends CI_Controller
 
 
 	//========================= userperm ===========================//
-	public function user_list(){
+	public function rolls_permission(){
 		$data = $this->login_details();
-		$data['pagename'] = "All User Permission"; 
-		$data['user_dtl'] = $this->Master_model->emp_list(); 
-		// print_r($data['userid']); die();
-		$this->load->view('user_list', $data);	
+		$data['pagename'] = "All Rolls Permission"; 
+		$data['user_dtl'] = $this->Master_model->rolls_permission_list(); 
+		// print_r($data['user_dtl']); die();
+		$this->load->view('rolls_permission', $data);	
 	}
 
 	public function userperm_list()

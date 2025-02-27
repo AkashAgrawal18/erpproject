@@ -1,5 +1,6 @@
 <?php $this->view('header') ?>
-
+<?php $roll_id = $this->session->userdata('roll_id');
+$logged_user_type = $this->session->userdata('user_type'); ?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -25,6 +26,8 @@
 				<div class="card">
 					 
 						<div class="card-body">
+				<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'STRFCT', 'Add')) { ?>
+
 							<form method="post" action="#" id="frm-add-store">
 								<?php if (!empty($edit_value)) {
 									$id = $edit_value->m_str_id;
@@ -158,6 +161,7 @@
 									</div>
 								</div>
 							</form>
+							<?php } ?>
 						</div>
 						<!-- /.card-body -->
 					</div>

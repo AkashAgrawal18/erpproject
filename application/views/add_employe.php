@@ -1,5 +1,6 @@
 <?php $this->view('header'); ?>
-
+<?php $roll_id = $this->session->userdata('roll_id');
+$logged_user_type = $this->session->userdata('user_type'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -30,6 +31,7 @@
 					<div class="card">
 
 						<div class="card-body">
+						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Add')) { ?>
 							<form method="post" action="#" id="frm-emp-create" enctype="mutipart/form-data">
 								<div class="row">
 									<div class="col-md-12">
@@ -111,6 +113,25 @@
 																	$op = '';
 																}
 																echo '<option value="' . $key->m_str_id . '" ' . $op . '>' . $key->m_str_name . '</option>';
+															}
+														} ?>
+
+													</select>
+
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Roll</label>
+													<select name="m_emp_roll" id="m_emp_roll" class="form-control select2">
+														<?php if (!empty($roll_value)) {
+															foreach ($roll_value as $key) {
+																if ($company == $key->m_dept_id) {
+																	$op = 'selected';
+																} else {
+																	$op = '';
+																}
+																echo '<option value="' . $key->m_dept_id . '" ' . $op . '>' . $key->m_dept_name . '</option>';
 															}
 														} ?>
 
@@ -362,6 +383,7 @@
 								</div>
 
 							</form>
+							<?php } ?>
 						</div>
 						<!-- /.card-body -->
 					</div>

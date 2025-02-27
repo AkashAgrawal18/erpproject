@@ -1,6 +1,6 @@
 <?php $this->view('header'); ?>
 
-<?php $logged_user_id = $this->session->userdata('user_id');
+<?php $roll_id = $this->session->userdata('roll_id');
 $logged_user_type = $this->session->userdata('user_type');
 if ($pgtype == 1) {
 	$relink = "department_list";
@@ -14,6 +14,9 @@ if ($pgtype == 1) {
 } else if ($pgtype == 4) {
 	$relink = "shift_roster_list";
 	$headname = "Shift Roster";
+} else if ($pgtype == 5) {
+	$relink = "roll_list";
+	$headname = "Rolls";
 }
 ?>
 
@@ -97,10 +100,10 @@ if ($pgtype == 1) {
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-													<?php if ($logged_user_type == 1 || has_perm($logged_user_id, 'HR', 'DPT', 'Edit')) { ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'DPT', 'Edit')) { ?>
 														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php }
-													if ($logged_user_type == 1 || has_perm($logged_user_id, 'HR', 'DPT', 'Delete')) { ?>
+													if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'DPT', 'Delete')) { ?>
 														<button class="btn btn-danger btn-sm delete-dept" data-value="<?php echo $value->m_dept_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>

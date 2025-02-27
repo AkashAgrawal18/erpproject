@@ -1,6 +1,7 @@
 <?php $this->view('header'); ?>
 
-
+<?php $roll_id = $this->session->userdata('roll_id');
+$logged_user_type = $this->session->userdata('user_type'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -97,10 +98,12 @@
 														data-emp-addedon="<?= $value->m_emp_added_on; ?>">
 														<i class="fa fa-eye"></i>
 													</button>
-
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Edit')) { ?>
 													<a href="<?php echo base_url('HrDept/edit_employee?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php } ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Delete')) { ?>
 													<button class="btn btn-danger btn-action delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-
+													<?php } ?>
 												</td>
 											</tr>
 									<?php

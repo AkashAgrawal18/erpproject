@@ -1,5 +1,6 @@
 <?php $this->view('header') ?>
-
+<?php $roll_id = $this->session->userdata('roll_id');
+$logged_user_type = $this->session->userdata('user_type'); ?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -55,9 +56,12 @@
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-
+												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Edit')) { ?>
 													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php } ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Delete')) { ?>
 													<button class="btn btn-danger btn-sm delete-state" data-value="<?php echo $value->m_state_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php } ?>
 												</td>
 											</tr>
 									<?php
@@ -86,6 +90,7 @@
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
+						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Add')) { ?>
 							<form method="post" action="#" id="frm-add-state">
 								<?php if (!empty($edit_value)) {
 									$id = $edit_value->m_state_id;
@@ -132,6 +137,7 @@
 									</div>
 								</div>
 							</form>
+							<?php } ?>
 						</div>
 						<!-- /.card-body -->
 					</div>

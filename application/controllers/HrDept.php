@@ -49,6 +49,15 @@ class HrDept extends CI_Controller
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
 		$this->load->view('dept_list', $data);
 	}
+	public function roll_list(){
+		$data = $this->login_details();
+		$data['pagename'] = "Roll List";
+		$data['pgtype'] = 5;
+		$data['id'] = $this->input->get('id');
+		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
+		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
+		$this->load->view('dept_list', $data);	
+	}
 
 	public function insert_dept()
 	{
@@ -67,6 +76,9 @@ class HrDept extends CI_Controller
 					break;
 				case 4:
 					$headname = "Shift Roster";
+					break;
+				case 5:
+					$headname = "Rolls";
 					break;
 
 				default:
@@ -353,6 +365,7 @@ class HrDept extends CI_Controller
 		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
+		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
 		$this->load->view('add_employe', $data);
 	}
@@ -374,6 +387,7 @@ class HrDept extends CI_Controller
 		// $data['emp_list'] = $this->Hr_model->get_Active_emp();
 		$data['edit_value'] = $this->Hr_model->get_emp_dtl($data['id']);
 		$data['slbk_value'] = $this->Hr_model->get_salarybk($data['id']);
+		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
 		$this->load->view('edit_employee', $data);
 	}

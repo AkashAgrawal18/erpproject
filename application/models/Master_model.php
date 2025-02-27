@@ -218,9 +218,14 @@ class Master_model extends CI_model
 
 
   //===================== userperm =======================//
-	public function emp_list(){
-		$res = $this->db->select('*')->where('m_emp_id!=', 1)->get('master_employee_tbl')->result();
-    return $res;
+	 
+	public function rolls_permission_list(){
+		$this->db->select('dept.m_dept_name,dept.m_dept_id,dept.m_dept_status');
+		$this->db->where('m_dept_type', 5);
+		$this->db->where('m_dept_status', 1);
+		$this->db->order_by('m_dept_name');
+		$res = $this->db->get('master_department_tbl dept')->result();
+		return $res;
 	}
 	public function user_details($id){
 	  $this->db->select('*');

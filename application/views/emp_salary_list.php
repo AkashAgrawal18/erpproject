@@ -1,6 +1,6 @@
 <?php $this->view('header'); ?>
 
-<?php $logged_user_id = $this->session->userdata('user_design');
+<?php $roll_id = $this->session->userdata('roll_id');
 $logged_user_type = $this->session->userdata('user_type');
 
 ?>
@@ -16,15 +16,17 @@ $logged_user_type = $this->session->userdata('user_type');
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-8">
+				<?php if ($logged_user_type == 1 || has_perm($roll_id, 'FNC', 'EMPSLR', 'Filter')) { ?>
+
 					<form method="post" action="<?php echo site_url('Report/emp_salary_list') ?>">
 						<div class="row">
 							<div class="col-sm-4">
 								<label class="form-check-label">Month</label>
-								<input type="month" name="from_month" value="<?php echo $from_month; ?>">
+								<input type="month" class="form-control" name="from_month" value="<?php echo $from_month; ?>">
 							</div>
 							<div class="col-sm-4">
 								<label class="form-check-label">Employee</label>
-								<select name="emp_id" id="emp_id" >
+								<select name="emp_id" class="form-control" id="emp_id" >
 								<option value="">All Employee</option>
 									<?php if (!empty($emp_list)) {
 										foreach ($emp_list as $key) {
@@ -41,17 +43,17 @@ $logged_user_type = $this->session->userdata('user_type');
 							</div>
 
 							<div class="col-sm-4">
-								<div class="form-group">
+								<div class="form-group mt-4">
 									<button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
 									<a href="<?php echo site_url('Report/emp_salary_list') ?>">
-										<button class="btn btn-danger" type="button"><i class="fa fa-rotate"></i></button>
+										<button class="btn btn-danger" type="button"><i class="fa fa-redo"></i></button>
 									</a>
 									<!-- <button class="btn btn-success" type="submit" name="Excel" value="2">Export</button>  -->
 								</div>
 							</div>
 						</div>
 					</form>
-
+<?php }?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -65,6 +67,7 @@ $logged_user_type = $this->session->userdata('user_type');
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body">
+						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'FNC', 'EMPSLR', 'List')) { ?>
 							<table id="dept_tbl" class="table table-bordered datatable">
 								<thead>
 									<tr>
@@ -104,6 +107,7 @@ $logged_user_type = $this->session->userdata('user_type');
 
 								</tbody>
 							</table>
+							<?php } ?>
 						</div>
 						<!-- /.card-body -->
 

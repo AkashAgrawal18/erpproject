@@ -1,6 +1,7 @@
 <?php $this->view('header') ?>
 
-
+<?php $roll_id = $this->session->userdata('roll_id');
+$logged_user_type = $this->session->userdata('user_type'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -85,8 +86,12 @@
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
+												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Edit')) { ?>
 													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php } ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Edit')) { ?>
 													<button class="btn btn-danger btn-sm delete-leave" data-value="<?php echo $value->m_leav_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php } ?>
 												</td>
 											</tr>
 									<?php
