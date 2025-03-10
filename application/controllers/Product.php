@@ -206,7 +206,82 @@ class Product extends CI_Controller
 	}
 
 	//-----------------product------------------------------------//
+	//---------------batch---------------------------------------//
+ 
+	public function batch_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = "Batch List";
+		$data['all_value'] = $this->Product_model->get_all_batch();
+		$this->load->view('batch_list', $data);
+	}
+	public function batch_add()
+	{
+		$data = $this->login_details(); 
+		$data['id'] = $this->input->get('id');
+		if (!empty($data['id'])) {
+			$data['pagename'] = "Edit Batch Detail";
+		} else {
+			$data['pagename'] = "Add New Batch";
+		}
+		$data['pro_value'] = $this->Product_model->get_all_product(); 
+		$data['edit_value'] = $this->Product_model->get_edit_batch($data['id']);
+		$this->load->view('batch_add', $data);
+	}
 
+	public function insert_batch()
+	{
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Product_model->insert_batch()) {
+
+				if ($data == 1) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Batch has been Added successfully!'
+					);
+				} else if ($data == 2) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Batch Updated Successfully'
+					);
+				}
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+
+	public function delete_batch()
+	{
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Product_model->delete_batch()) {
+
+				$info = array(
+					'status' => 'success',
+					'message' => 'Batch has been Deleted successfully!'
+				);
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+	//---------------batch---------------------------------------//
+
+   //-------------stock--------------------------------//
+   public function stock_list(){
+	$data = $this->login_details();
+	$data['pagename'] = "Stock List"; 
+	$data['all_value'] = $this->Product_model->get_all_batch();
+	$this->load->view('stock_list', $data);
+   }
 
 
 	//==========================Details===========================//

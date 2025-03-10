@@ -154,6 +154,22 @@
   							</a>
   						</li>
 						<?PHP } ?>
+						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT','PDTSIZE','List')) { ?>  
+  						<li class="nav-item">
+  							<a class="nav-link"  href="<?php echo base_url('Product/batch_list'); ?>" >
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Batch</p>
+  							</a>
+  						</li>
+						  <?PHP } ?>
+						  <?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT','PDTSIZE','List')) { ?>  
+  						<li class="nav-item">
+  							<a class="nav-link"  href="<?php echo base_url('Product/stock_list'); ?>" >
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Stock</p>
+  							</a>
+  						</li>
+						  <?PHP } ?>
   					</ul>
   				</li>
 				  <?PHP } ?>
