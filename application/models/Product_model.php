@@ -266,5 +266,12 @@ class Product_model extends CI_model
 		return $this->db->delete('master_batch_tbl');
 	}
 	
+	public function get_stock_list(){
+		$this->db->select('*');
+		$this->db->order_by('m_pro_id', 'asc');
+		$this->db->join('master_batch_tbl', 'master_batch_tbl.m_batch_pro_id = master_product_tbl.m_pro_id', 'left');
+		$res = $this->db->get('master_product_tbl')->result();
+		return $res;	
+	}
 
 }	

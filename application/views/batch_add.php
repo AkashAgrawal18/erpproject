@@ -88,8 +88,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									</div> 
 										<div class="col-sm-3">
 										<div class="form-group">
-											<label> Expiry Date <span class="text-danger">*</span></label> 
-											<input type="date" name="m_batch_expiry_date"   value="<?= !empty($epxdate) ? $epxdate : date('Y-m-d') ?>" required class="form-control"> 										 
+											<label> Expiry Period(In-Month) <span class="text-danger">*</span></label> 
+											<input type="number" name="m_batch_expiry_date"   value="<?= $epxdate; ?>" required class="form-control"> 										 
 										</div>
 									</div> 
 								 

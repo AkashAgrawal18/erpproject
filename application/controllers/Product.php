@@ -279,11 +279,72 @@ class Product extends CI_Controller
    public function stock_list(){
 	$data = $this->login_details();
 	$data['pagename'] = "Stock List"; 
-	$data['all_value'] = $this->Product_model->get_all_batch();
+	$data['all_value'] = $this->Product_model->get_stock_list();
 	$this->load->view('stock_list', $data);
    }
+//----------------warehouse---------------------------------//
+ 
+public function warehouse_list()
+{
+	$data = $this->login_details();
+	$data['pagename'] = "Warehouse List";
+	$data['id'] = $this->input->get('id');
+	$data['all_value'] = $this->Warehouse_model->get_all_warehouse();
+	$data['edit_value'] = $this->Warehouse_model->get_edit_warehouse($data['id']);
+	$this->load->view('warehouse_list', $data);
+}
 
+public function insert_warehouse()
+{
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if ($data = $this->Warehouse_model->insert_warehouse()) {
 
+			if ($data == 1) {
+				$info = array(
+					'status' => 'success',
+					'message' => 'Warehouse has been Added successfully!'
+				);
+			} else if ($data == 2) {
+				$info = array(
+					'status' => 'success',
+					'message' => 'Warehouse Updated Successfully'
+				);
+			} else if ($data == 3) {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Warehouse with same name already exist'
+				);
+			}
+		} else {
+			$info = array(
+				'status' => 'error',
+				'message' => 'Some problem Occurred!! please try again'
+			);
+		}
+		echo json_encode($info);
+	}
+}
+
+public function delete_warehouse()
+{
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if ($data = $this->Warehouse_model->delete_warehouse()) {
+
+			$info = array(
+				'status' => 'success',
+				'message' => 'Warehouse has been Deleted successfully!'
+			);
+		} else {
+			$info = array(
+				'status' => 'error',
+				'message' => 'Some problem Occurred!! please try again'
+			);
+		}
+		echo json_encode($info);
+	}
+}
+
+//--------------warehouse-----------------------//
 	//==========================Details===========================//
 	protected function login_details()
 	{

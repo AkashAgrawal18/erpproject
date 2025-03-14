@@ -28,10 +28,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 								<thead>
 									<tr>
 										<th style="width: 5%">#</th>
-										<th>Batch Number</th>
 										<th>Product </th>
-										<th>Quntity</th> 
-										<th>Expiry Date</th> 
+										<th>Available Quntity</th> 
+										<th>Opening Bal</th>
+										<th>Closing</th>
 										<th>Status</th>
 										<!-- <th style="width: 15%">Action</th> -->
 									</tr>
@@ -41,18 +41,17 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									$i = 1;
 									if (!empty($all_value)) {
 										foreach ($all_value as $value) {
-											$edit_link = site_url('Product/batch_add?id=') . $value->m_batch_id;
+											 
 									?>
 											<tr>
 												<td><?php echo $i; ?></td>
-												<td><?php echo $value->m_batch_number; ?></td>
 												<td><?php echo $value->m_pro_name; ?></td>
-												<td><?php echo $value->m_batch_quantity; ?></td>
-												<td><?php echo date('d-m-Y', strtotime($value->m_batch_expiry_date)); ?></td>
-												  
-												<td>
+												<td><?php echo !empty($value->m_batch_quantity) ? $value->m_batch_quantity : '0' ?></td>
+												 <td> <?php echo '0' ?></td>
+												 <td> <?php echo '0' ?></td>
+												 <td>
 													<?php
-													if (!empty($value->m_batch_status == 1)) {
+													if (!empty($value->m_pro_status == 1)) {
 													?>
 														<a class="btn btn-success btn-sm" title="Active" data-toggle="Active">Active</a>
 													<?php
@@ -63,12 +62,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													}
 													?>
 												</td>
-												<!-- <td title="Action" style="white-space: nowrap;">
 											 
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-batch" data-value="<?php echo $value->m_batch_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-													<?PHP } ?>
-												</td> -->
 											</tr>
 									<?php
 											$i++;
