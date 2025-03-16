@@ -76,7 +76,7 @@ class Report extends CI_Controller
 		$data['from_month'] = $this->input->post('from_month') ?: date('Y-m');
 		$data['emp_id'] = $this->input->post('emp_id') ?: '';
 
-		$data['emp_list'] = $this->Hr_model->get_Active_emp();
+		$data['emp_list'] = $this->Employee_model->get_Active_emp();
 		$data['emp_att'] = $this->Report_model->get_emp_salary($data['emp_id'], $data['from_month']);
 		// echo "<pre>";print_r($data['emp_att']);die();
 		$this->load->view('emp_salary_list', $data);

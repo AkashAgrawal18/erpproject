@@ -36,6 +36,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									$quantity = $edit_value->m_batch_quantity;
 									$bdate = $edit_value->m_batch_date;
 									$epxdate = $edit_value->m_batch_expiry_date; 
+									$bwareid = $edit_value->m_batch_ware_id; 
 									$status = $edit_value->m_batch_status;
 								} else {
 									$id = '';
@@ -44,7 +45,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									$quantity = '';
 									$bdate = '';
 									$epxdate = ''; 
-									$status = '';
+									$bwareid = '';
+ 									$status = '';
 								} ?>
 
 								<div class="row">
@@ -67,6 +69,25 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 															$op = '';
 														}
 														echo '<option value="' . $key->m_pro_id . '" ' . $op . '>' . $key->m_pro_name . '</option>';
+													}
+												} ?>
+
+											</select>
+										</div>
+									</div> 
+
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label>Warehouse  <span class="text-danger">*</span></label> 
+											<select name="m_batch_ware_id" id="m_batch_ware_id" class="form-control select2" required>
+												<?php if (!empty($ware_value)) {
+													foreach ($ware_value as $row) {
+														if ($bwareid == $row->m_ware_id) {
+															$op = 'selected';
+														} else {
+															$op = '';
+														}
+														echo '<option value="' . $row->m_ware_id . '" ' . $op . '>' . $row->m_ware_name . '</option>';
 													}
 												} ?>
 

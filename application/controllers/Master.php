@@ -174,8 +174,8 @@ class Master extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "All Permission list";
 		$data['id'] = $this->input->get('id');
-		$data['edit_value'] = $this->Master_model->get_edit_perm($data['id']);
-		$data['all_value'] = $this->Master_model->all_perm();
+		$data['edit_value'] = $this->Permission_model->get_edit_perm($data['id']);
+		$data['all_value'] = $this->Permission_model->all_perm();
 		$this->load->view('perm_list', $data);
 	}
 
@@ -183,7 +183,7 @@ class Master extends CI_Controller
 	{
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Master_model->insert_perm()) {
+			if ($data = $this->Permission_model->insert_perm()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -210,7 +210,7 @@ class Master extends CI_Controller
 	{
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Master_model->delete_perm()) {
+			if ($data = $this->Permission_model->delete_perm()) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Data has been Deleted successfully!'
@@ -231,7 +231,7 @@ class Master extends CI_Controller
 	public function rolls_permission(){
 		$data = $this->login_details();
 		$data['pagename'] = "All Rolls Permission"; 
-		$data['user_dtl'] = $this->Master_model->rolls_permission_list(); 
+		$data['user_dtl'] = $this->Permission_model->rolls_permission_list(); 
 		// print_r($data['user_dtl']); die();
 		$this->load->view('rolls_permission', $data);	
 	}
@@ -241,9 +241,9 @@ class Master extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "All Permission";
 		$data['userid']  = $this->input->get('id'); 
-		$data['user_dtl'] = $this->Master_model->user_details($data['userid']);
-		$data['edit_value'] = $this->Master_model->get_userperm_userId($data['userid']);
-		$data['all_value'] = $this->Master_model->all_perm();
+		$data['user_dtl'] = $this->Permission_model->user_details($data['userid']);
+		$data['edit_value'] = $this->Permission_model->get_userperm_userId($data['userid']);
+		$data['all_value'] = $this->Permission_model->all_perm();
 		// print_r($data['user_dtl']); die();
 		$this->load->view('user_permission_list', $data);
 	}
@@ -252,7 +252,7 @@ class Master extends CI_Controller
 	{
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Master_model->insert_userperm()) {
+			if ($data = $this->Permission_model->insert_userperm()) {
 
 				if ($data == 1) {
 					$info = array(
