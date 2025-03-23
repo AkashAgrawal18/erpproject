@@ -258,9 +258,52 @@
   							</a>
   						</li>
 						<?php } ?>
+						
   					</ul>
   				</li>
 				  <?php } ?>
+
+				  <li class="nav-item">
+  					<a href="#" class="nav-link  <?php if ($this->uri->segment(1) == 'Invoices') {  echo 'active';   } ?>">
+  						<i class="nav-icon fas fa-box"></i>
+  						<p>
+  							Billing & Invoices
+  							<i class="fas fa-angle-left right"></i>
+  						</p>
+  					</a>
+  					<ul class="nav nav-treeview">
+					  <?php if ($logged_user_type == 1) { ?> 
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('factories'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Factories</p>
+  							</a>
+  						</li>
+						<?php } ?>
+					  <?php if ($logged_user_type == 1) { ?> 
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Invoice/list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Invoices</p>
+  							</a>
+  						</li>
+						<?php } ?>
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Setting'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Test 1</p>
+  							</a>
+  						</li>
+
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Logout'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Test 2</p>
+  							</a>
+  						</li>
+  					</ul>
+  				</li>
+
   				<li class="nav-item">
   					<a href="#" class="nav-link  <?php if ($this->uri->segment(1) == 'Setting') {  echo 'active';   } ?>">
   						<i class="nav-icon fas fa-box"></i>
