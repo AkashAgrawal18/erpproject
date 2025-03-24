@@ -152,7 +152,7 @@
   								<i class="far fa-circle nav-icon"></i>
   								<p>Product Brand</p>
   							</a>
-  						</li>
+  						</li> 
 						<?PHP } ?>
 						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT','PDTSIZE','List')) { ?>  
   						<li class="nav-item">
