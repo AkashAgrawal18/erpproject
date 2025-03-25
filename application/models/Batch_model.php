@@ -28,7 +28,7 @@ class Batch_model extends CI_model
 			"m_batch_pro_id" => $this->input->post('m_batch_pro_id'),
 			"m_batch_quantity" => $this->input->post('m_batch_quantity'),
 			"m_batch_date" => $this->input->post('m_batch_date'),
-			"m_batch_expiry_date" => $this->input->post('m_batch_expiry_date'),
+			"m_batch_expiry" => $this->input->post('m_batch_expiry'),
 			"m_batch_ware_id" => $this->input->post('m_batch_ware_id'), 
 			"m_batch_status" => $this->input->post('m_batch_status'), 
 			"m_batch_addedon" => date('Y-m-d H:i'),

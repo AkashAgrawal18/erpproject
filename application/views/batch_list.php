@@ -53,7 +53,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<td><?php echo $value->m_pro_name; ?></td>
 												<td><?php echo $value->m_batch_quantity; ?></td>
 												<td><?php echo date('d-m-Y', strtotime($value->m_batch_date)); ?></td>
-												<td><?php echo $value->m_batch_expiry_date; echo '-Month'; ?></td>
+												<td><?php echo $value->m_batch_expiry; echo '-Month'; ?></td>
 												  
 												<td>
 													<?php

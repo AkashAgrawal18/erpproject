@@ -35,7 +35,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									$bproid = $edit_value->m_batch_pro_id;								
 									$quantity = $edit_value->m_batch_quantity;
 									$bdate = $edit_value->m_batch_date;
-									$epxdate = $edit_value->m_batch_expiry_date; 
+									$epxdate = $edit_value->m_batch_expiry; 
 									$bwareid = $edit_value->m_batch_ware_id; 
 									$status = $edit_value->m_batch_status;
 								} else {
@@ -110,7 +110,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<div class="col-sm-3">
 										<div class="form-group">
 											<label> Expiry Period(In-Month) <span class="text-danger">*</span></label> 
-											<input type="number" name="m_batch_expiry_date"   value="<?= $epxdate; ?>" required class="form-control"> 										 
+											<input type="number" name="m_batch_expiry"   value="<?= $epxdate; ?>" required class="form-control"> 										 
 										</div>
 									</div> 
 								 
