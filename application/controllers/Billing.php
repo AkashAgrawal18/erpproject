@@ -93,7 +93,8 @@ public function stock_transfer_list()
 		}
 		$data['batch_value'] = $this->Billing_model->get_batch_list();
 		$data['entity_value'] = $this->Billing_model->get_all_entity();
-		$data['edit_value'] = $this->Billing_model->get_all_entity($data['id']);
+		$data['warehouse_value'] = $this->Billing_model->get_all_warehouse();
+		$data['edit_value'] = $this->Billing_model->get_all_stocktransf($data['id']);
 		$this->load->view('stock_transfe_add', $data);
 	}
 

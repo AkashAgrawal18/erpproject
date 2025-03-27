@@ -56,5 +56,45 @@ class Billing_model extends CI_model
 	return $res;
  }
 
+ public function get_all_warehouse(){
+	$this->db->select('*');
+	$this->db->order_by('m_ware_id', 'desc');
+	$res = $this->db->get('master_warehouses_tbl')->result();
+	return $res;
+ }
+
+ public function insert_stock_transfe()
+ { 
+	 $s_data = array(
+		 "stk_trans_batch" =>  implode(',', $this->input->post('stk_trans_batch')),
+		 "stk_trans_from" => $this->input->post('stk_trans_from'),
+		 "stk_trans_to" => $this->input->post('stk_trans_to'),
+		 "stk_trans_entity" => $this->input->post('stk_trans_entity'),
+		 "stk_trans_qty" =>  $this->input->post('stk_trans_qty'),
+		 "stk_trans_date" => $this->input->post('stk_trans_date'), 
+		 "stk_trans_remark" => $this->input->post('stk_trans_remark'), 
+		 "stk_trans_status" => $this->input->post('stk_trans_status'), 
+		 "stk_trans_addedon" => date('Y-m-d H:i'),
+	 );
+	//  print_r($s_data); die();
+	 $id = $this->input->post('stk_trans_id');
+	 if (!empty($id)) {
+		 $this->db->where('stk_trans_id', $id)->update('stock_transfers', $s_data);
+		 return 2;
+	 } else {
+		 $this->db->insert('stock_transfers', $s_data);
+		 return 1;
+	 }
+ }
+
+ public function get_all_stocktransf(){
+	
+ }
+
+ public function delete_stock_transfe()
+ {
+	 $this->db->where('stk_trans_id', $this->input->post('delete_id'));
+	 return $this->db->delete('stock_transfers');
+ }
 
 }

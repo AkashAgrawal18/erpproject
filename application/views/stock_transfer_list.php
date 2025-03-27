@@ -27,14 +27,14 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body">
-							<table id="entity_tbl" class="table table-bordered datatable">
+							<table id="stocktrans_tbl" class="table table-bordered datatable">
 								<thead>
 									<tr>
 										<th style="width: 5%">#</th>
-										<th>Entity Name</th>
-										<th>Type </th>
-										<th>Mobile</th> 
-										<th>Address</th>  
+										<th>Date</th>
+										<th>Entity </th>
+										<th>Batch</th> 
+										<th>Qulity</th> 
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -71,7 +71,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?PHP } ?>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-entity" data-value="<?php echo $value->m_entity_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<button class="btn btn-danger btn-sm delete-stocktrans" data-value="<?php echo $value->m_entity_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?PHP } ?>
 												</td>
 											</tr>
