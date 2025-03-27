@@ -96,7 +96,7 @@ public function stock_transfer_list()
 		$data['warehouse_value'] = $this->Billing_model->get_all_warehouse();
 		$data['edit_value'] = $this->Billing_model->get_all_stocktransf($data['id']);
 		$this->load->view('stock_transfe_add', $data);
-	}
+	} 
 
 	public function insert_stock_transfe()
 	{

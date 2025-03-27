@@ -46,7 +46,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										$stk_trans_entity = '';
 										$stk_trans_date = '';
 										$stk_trans_remark = '';
-										$stk_trans_status = '';
+										$stk_trans_status = ''; 
 										$stk_trans_batch = array('');
 										$stk_trans_qty = '';
 									} ?>

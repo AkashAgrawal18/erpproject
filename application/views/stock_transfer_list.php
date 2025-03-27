@@ -39,7 +39,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 15%">Action</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody> 
 									<?php
 									$i = 1;
 									if (!empty($all_value)) {

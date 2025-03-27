@@ -186,7 +186,7 @@ $("form#frm-add-stocktrans").submit(function(e) {
 									icon: "error",
 									timer: 5000,
 								});
-							}
+							} 
 						},
 						error: function(jqXHR, status, err) {
 							clkbtn.prop('disabled', false);

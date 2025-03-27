@@ -88,7 +88,7 @@ class Billing_model extends CI_model
  }
 
  public function get_all_stocktransf(){
-	
+	 
  }
 
  public function delete_stock_transfe()
