@@ -271,20 +271,28 @@
   							<i class="fas fa-angle-left right"></i>
   						</p>
   					</a>
-  					<ul class="nav nav-treeview">
+  					<ul class="nav nav-treeview">					  
 					  <?php if ($logged_user_type == 1) { ?> 
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Billing/entity_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Entities </p>
+  							</a>
+  						</li>
+						<?php } ?>
+						<?php if ($logged_user_type == 1) { ?> 
+  						<li class="nav-item">
+  							<a href="<?php echo base_url('Billing/stock_transfer_list'); ?>" class="nav-link">
+  								<i class="far fa-circle nav-icon"></i>
+  								<p>Stock Transfer </p>
+  							</a>
+  						</li>
+						<?php } ?>
+						<?php if ($logged_user_type == 1) { ?> 
   						<li class="nav-item">
   							<a href="<?php echo base_url('factories'); ?>" class="nav-link">
   								<i class="far fa-circle nav-icon"></i>
   								<p>Factories</p>
-  							</a>
-  						</li>
-						<?php } ?>
-					  <?php if ($logged_user_type == 1) { ?> 
-  						<li class="nav-item">
-  							<a href="<?php echo base_url('Invoice/list'); ?>" class="nav-link">
-  								<i class="far fa-circle nav-icon"></i>
-  								<p>Invoices</p>
   							</a>
   						</li>
 						<?php } ?>

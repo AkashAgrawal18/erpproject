@@ -140,8 +140,8 @@ class HrDept extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "Holidays List";
 		$data['id'] = $this->input->get('id');
-		$data['all_value'] = $this->Holiday_model->get_all_holiday();
-		$data['edit_value'] = $this->Holiday_model->get_edit_holiday($data['id']);
+		$data['all_value'] = $this->Hr_model->get_all_holiday();
+		$data['edit_value'] = $this->Hr_model->get_edit_holiday($data['id']);
 		$this->load->view('holiday_list', $data);
 	}
 
@@ -149,7 +149,7 @@ class HrDept extends CI_Controller
 	public function insert_holiday()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Holiday_model->insert_holiday()) {
+			if ($data = $this->Hr_model->insert_holiday()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -175,7 +175,7 @@ class HrDept extends CI_Controller
 	public function delete_holiday()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Holiday_model->delete_holiday()) {
+			if ($data = $this->Hr_model->delete_holiday()) {
 
 				$info = array(
 					'status' => 'success',
@@ -200,7 +200,7 @@ class HrDept extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Stores List";
-		$data['all_value'] = $this->Store_model->get_all_store();
+		$data['all_value'] = $this->Hr_model->get_all_store();
 		$this->load->view('store_list', $data);
 	}
 	public function store_add()
@@ -214,7 +214,7 @@ class HrDept extends CI_Controller
 		}
 		$data['get_active_state'] = $this->Master_model->get_active_state();
 		$data['get_active_city'] = $this->Master_model->get_active_city();
-		$data['edit_value'] = $this->Store_model->get_edit_store($data['id']);
+		$data['edit_value'] = $this->Hr_model->get_edit_store($data['id']);
 		// print_r($data['get_active_city']); die();
 		$this->load->view('store_add', $data);
 	}
@@ -222,7 +222,7 @@ class HrDept extends CI_Controller
 	public function insert_store()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Store_model->insert_store()) {
+			if ($data = $this->Hr_model->insert_store()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -248,7 +248,7 @@ class HrDept extends CI_Controller
 	public function delete_store()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Store_model->delete_store()) {
+			if ($data = $this->Hr_model->delete_store()) {
 
 				$info = array(
 					'status' => 'success',
@@ -272,13 +272,13 @@ class HrDept extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Leaves List";
-		$data['all_value'] = $this->Leave_model->get_all_leave();
+		$data['all_value'] = $this->Hr_model->get_all_leave();
 		$this->load->view('leave_list', $data);
 	}
 	public function leave_add()
 	{
 		$data = $this->login_details();
-		$data['pagename'] = "Leave List";
+		 
 		$data['id'] = $this->input->get('id');
 		if (!empty($data['id'])) {
 			$data['pagename'] = "Edit Leave Detail";
@@ -286,14 +286,14 @@ class HrDept extends CI_Controller
 			$data['pagename'] = "Add New Leave";
 		}
 		$data['emp_value'] = $this->Employee_model->get_emp_list();
-		$data['edit_value'] = $this->Leave_model->get_edit_leave($data['id']);
+		$data['edit_value'] = $this->Hr_model->get_edit_leave($data['id']);
 		$this->load->view('leave_add', $data);
 	}
 
 	public function insert_leave()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Leave_model->insert_leave()) {
+			if ($data = $this->Hr_model->insert_leave()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -319,7 +319,7 @@ class HrDept extends CI_Controller
 	public function delete_leave()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Leave_model->delete_leave()) {
+			if ($data = $this->Hr_model->delete_leave()) {
 
 				$info = array(
 					'status' => 'success',

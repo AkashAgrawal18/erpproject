@@ -212,7 +212,7 @@ class Product extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Batch List";
-		$data['all_value'] = $this->Batch_model->get_all_batch();
+		$data['all_value'] = $this->Product_model->get_all_batch();
 		$this->load->view('batch_list', $data);
 	}
 	public function batch_add()
@@ -225,15 +225,15 @@ class Product extends CI_Controller
 			$data['pagename'] = "Add New Batch";
 		}
 		$data['pro_value'] = $this->Product_model->get_all_product(); 
-		$data['ware_value'] = $this->Warehouse_model->get_all_warehouse(); 
-		$data['edit_value'] = $this->Batch_model->get_edit_batch($data['id']);
+		$data['ware_value'] = $this->Product_model->get_all_warehouse(); 
+		$data['edit_value'] = $this->Product_model->get_edit_batch($data['id']);
 		$this->load->view('batch_add', $data);
 	}
 
 	public function insert_batch()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Batch_model->insert_batch()) {
+			if ($data = $this->Product_model->insert_batch()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -259,7 +259,7 @@ class Product extends CI_Controller
 	public function delete_batch()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Batch_model->delete_batch()) {
+			if ($data = $this->Product_model->delete_batch()) {
 
 				$info = array(
 					'status' => 'success',
@@ -290,15 +290,15 @@ public function warehouse_list()
 	$data = $this->login_details();
 	$data['pagename'] = "Warehouse List";
 	$data['id'] = $this->input->get('id');
-	$data['all_value'] = $this->Warehouse_model->get_all_warehouse();
-	$data['edit_value'] = $this->Warehouse_model->get_edit_warehouse($data['id']);
+	$data['all_value'] = $this->Product_model->get_all_warehouse();
+	$data['edit_value'] = $this->Product_model->get_edit_warehouse($data['id']);
 	$this->load->view('warehouse_list', $data);
 }
 
 public function insert_warehouse()
 {
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if ($data = $this->Warehouse_model->insert_warehouse()) {
+		if ($data = $this->Product_model->insert_warehouse()) {
 
 			if ($data == 1) {
 				$info = array(
@@ -329,7 +329,7 @@ public function insert_warehouse()
 public function delete_warehouse()
 {
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if ($data = $this->Warehouse_model->delete_warehouse()) {
+		if ($data = $this->Product_model->delete_warehouse()) {
 
 			$info = array(
 				'status' => 'success',
