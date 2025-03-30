@@ -1,1 +1,8 @@
 ALTER TABLE `master_batch_tbl` ADD `m_batch_ware_id` INT NOT NULL AFTER `m_batch_pro_id`;
+-- 28-03-25 change --
+ALTER TABLE `master_batch_tbl` ADD `m_batch_mrp` DECIMAL(10,2) NOT NULL AFTER `m_batch_price`;
+ALTER TABLE `master_batch_tbl` ADD `m_batch_price` DECIMAL(10,2) NOT NULL AFTER `m_batch_quantity`;
+ALTER TABLE `master_store_tbl` ADD `m_str_type` TINYINT(1) NOT NULL COMMENT '1-store,2-warehouse' AFTER `m_str_id`;
+-- 29-03-25 change --
+UPDATE `master_city_tbl` SET `m_city_state`= 35 WHERE `m_city_state` = 36;
+-- 28-03-25 change --

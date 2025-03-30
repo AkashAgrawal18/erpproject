@@ -105,11 +105,18 @@ class Product_model extends CI_model
 		
 	//========================== Product  =============================//
 
-	public function get_all_product()
+	public function get_all_product($status = '')
 	{
-		$this->db->select('*');
-		$this->db->order_by('m_pro_id', 'desc');
+		if (!empty($status)) {
+			$this->db->where('m_pro_status', $status);
+		}
+		$this->db->select('master_product_tbl.*,cate.m_cat_name as category_name,subcate.m_cat_name as subcategory_name,pkg.m_cat_name as package_name,size.m_cat_name as size_name,brand.m_cat_name as brand_name');
 		$this->db->join('master_cate_tbl as cate', 'master_product_tbl.m_pro_cate = cate.m_cat_id');
+		$this->db->join('master_cate_tbl as subcate', 'master_product_tbl.m_pro_subcate = subcate.m_cat_id');
+		$this->db->join('master_cate_tbl as pkg', 'master_product_tbl.m_pro_pack = pkg.m_cat_id');
+		$this->db->join('master_cate_tbl as size', 'master_product_tbl.m_pro_size = size.m_cat_id');
+		$this->db->join('master_cate_tbl as brand', 'master_product_tbl.m_pro_brand = brand.m_cat_id');
+		$this->db->order_by('m_pro_id', 'desc');
 		$res = $this->db->get('master_product_tbl')->result();
 		return $res;
 	}
@@ -159,7 +166,7 @@ class Product_model extends CI_model
 			"m_pro_size" => $this->input->post('m_pro_size'),
 			"m_pro_brand" => $this->input->post('m_pro_brand'),
 			"m_pro_pic" => $m_pro_pic,
-			"m_pro_price" => $this->input->post('m_pro_price'),
+			// "m_pro_price" => $this->input->post('m_pro_price'),
 			"m_pro_desc" => $this->input->post('m_pro_desc'),
 			"m_pro_status" => $this->input->post('m_pro_status'), 
 			"m_pro_addedon" => date('Y-m-d H:i'),
@@ -248,6 +255,9 @@ class Product_model extends CI_model
 			"m_batch_expiry" => $this->input->post('m_batch_expiry'),
 			"m_batch_ware_id" => $this->input->post('m_batch_ware_id'), 
 			"m_batch_status" => $this->input->post('m_batch_status'), 
+			"m_batch_mrp" => $this->input->post('m_batch_mrp'), 
+			"m_batch_price" => $this->input->post('m_batch_price'), 
+			"m_batch_balqty" => $this->input->post('m_batch_quantity'), 
 			"m_batch_addedon" => date('Y-m-d H:i'),
 		);
 		$id = $this->input->post('m_batch_id');
@@ -266,54 +276,8 @@ class Product_model extends CI_model
 		return $this->db->delete('master_batch_tbl');
 	}
 
-	//////////////////////////////batch///////////////////////////////
-
 	
-  //========================== Warehouse  =============================//
-  public function get_all_warehouse()
-  {
-    $this->db->select('*');
-    $this->db->order_by('m_ware_id','desc');
-    $res = $this->db->get('master_warehouses_tbl')->result();
-    return $res;
-  }
-  public function get_edit_warehouse($edid)
-  {
-    $this->db->select('*');
-    $this->db->where('m_ware_id', $edid);
-    $res = $this->db->get('master_warehouses_tbl')->row();
-    return $res;
-  }
-  public function insert_warehouse()
-  {
-    $id = $this->input->post('m_ware_id');
-    $name = $this->input->post('m_ware_name');
-    $check = $this->db->where('m_ware_name', $name)->where('m_ware_id !=', $id)->get('master_warehouses_tbl')->num_rows();
-    if ($check > 0) {
-      return 3;
-    }
-    $s_data = array(
-      "m_ware_name" => $name,
-      "m_ware_location" => $this->input->post('m_ware_location'),
-      "m_ware_status" => $this->input->post('m_ware_status'), 
-			"m_ware_addedon"=> date('Y-m-d H:i'),
-    );
-    if (!empty($id)) {
-      $this->db->where('m_ware_id', $id)->update('master_warehouses_tbl', $s_data);
-      return 2;
-    } else {
-      $this->db->insert('master_warehouses_tbl', $s_data);
-      return 1;
-    }
-  }
-
-  public function delete_warehouse()
-  {
-    $this->db->where('m_ware_id', $this->input->post('delete_id'));
-    return $this->db->delete('master_warehouses_tbl');
-  }
-  //========================== Warehouse  =============================//
-
+	//////////////////////////////batch///////////////////////////////
 
 	
 	public function get_stock_list(){

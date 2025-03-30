@@ -1,4 +1,4 @@
-<?php $this->view('header'); ?>
+<?php $this->view('Includes/header'); ?>
 
 <?php $user_id = $this->session->userdata('user_design');
 $user_type = $this->session->userdata('user_type');
@@ -177,6 +177,6 @@ $user_type = $this->session->userdata('user_type');
 
 
 
-<?php $this->view('footer')  ?>
+<?php $this->view('Includes/footer')  ?>
 <?php $this->view('js/js_custom') ?>
 <?php $this->view('js/js_hr') ?>

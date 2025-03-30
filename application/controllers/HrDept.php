@@ -13,7 +13,7 @@ class HrDept extends CI_Controller
 		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
 
-		$this->load->view('dept_list', $data);
+		$this->load->view('Hr/dept_list', $data);
 	}
 
 	public function designation_list()
@@ -25,7 +25,7 @@ class HrDept extends CI_Controller
 		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
 
-		$this->load->view('dept_list', $data);
+		$this->load->view('Hr/dept_list', $data);
 	}
 
 	public function salaryBreakup_list()
@@ -37,7 +37,7 @@ class HrDept extends CI_Controller
 		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
 
-		$this->load->view('dept_list', $data);
+		$this->load->view('Hr/dept_list', $data);
 	}
 	public function shift_roster_list()
 	{
@@ -47,16 +47,17 @@ class HrDept extends CI_Controller
 		$data['id'] = $this->input->get('id');
 		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
-		$this->load->view('dept_list', $data);
+		$this->load->view('Hr/dept_list', $data);
 	}
-	public function roll_list(){
+	public function role_list()
+	{
 		$data = $this->login_details();
-		$data['pagename'] = "Roll List";
+		$data['pagename'] = "Roles List";
 		$data['pgtype'] = 5;
 		$data['id'] = $this->input->get('id');
 		$data['all_value'] = $this->Hr_model->get_dept($data['pgtype']);
 		$data['edit_value'] = $this->Hr_model->get_dept_dtl($data['id']);
-		$this->load->view('dept_list', $data);	
+		$this->load->view('Hr/dept_list', $data);
 	}
 
 	public function insert_dept()
@@ -78,7 +79,7 @@ class HrDept extends CI_Controller
 					$headname = "Shift Roster";
 					break;
 				case 5:
-					$headname = "Rolls";
+					$headname = "Roles";
 					break;
 
 				default:
@@ -142,7 +143,7 @@ class HrDept extends CI_Controller
 		$data['id'] = $this->input->get('id');
 		$data['all_value'] = $this->Hr_model->get_all_holiday();
 		$data['edit_value'] = $this->Hr_model->get_edit_holiday($data['id']);
-		$this->load->view('holiday_list', $data);
+		$this->load->view('Hr/holiday_list', $data);
 	}
 
 
@@ -193,92 +194,18 @@ class HrDept extends CI_Controller
 
 	//--------------holiday---------------------//
 
-
-
-	//--------------store---------------------//
-	public function store_list()
-	{
-		$data = $this->login_details();
-		$data['pagename'] = "Stores List";
-		$data['all_value'] = $this->Hr_model->get_all_store();
-		$this->load->view('store_list', $data);
-	}
-	public function store_add()
-	{
-		$data = $this->login_details(); 
-		$data['id'] = $this->input->get('id');
-		if (!empty($data['id'])) {
-			$data['pagename'] = "Edit Store Detail";
-		} else {
-			$data['pagename'] = "Add New Store";
-		}
-		$data['get_active_state'] = $this->Master_model->get_active_state();
-		$data['get_active_city'] = $this->Master_model->get_active_city();
-		$data['edit_value'] = $this->Hr_model->get_edit_store($data['id']);
-		// print_r($data['get_active_city']); die();
-		$this->load->view('store_add', $data);
-	}
-
-	public function insert_store()
-	{
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Hr_model->insert_store()) {
-
-				if ($data == 1) {
-					$info = array(
-						'status' => 'success',
-						'message' => 'Store has been Added successfully!'
-					);
-				} else if ($data == 2) {
-					$info = array(
-						'status' => 'success',
-						'message' => 'Store Updated Successfully'
-					);
-				}
-			} else {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Some problem Occurred!! please try again'
-				);
-			}
-			echo json_encode($info);
-		}
-	}
-
-	public function delete_store()
-	{
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Hr_model->delete_store()) {
-
-				$info = array(
-					'status' => 'success',
-					'message' => 'Store has been Deleted successfully!'
-				);
-			} else {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Some problem Occurred!! please try again'
-				);
-			}
-			echo json_encode($info);
-		}
-	}
-
-	//-----------------store------------------------------//
-
-	
 	//--------------Leaves---------------------//
 	public function leave_list()
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Leaves List";
 		$data['all_value'] = $this->Hr_model->get_all_leave();
-		$this->load->view('leave_list', $data);
+		$this->load->view('Hr/leave_list', $data);
 	}
 	public function leave_add()
 	{
 		$data = $this->login_details();
-		 
+
 		$data['id'] = $this->input->get('id');
 		if (!empty($data['id'])) {
 			$data['pagename'] = "Edit Leave Detail";
@@ -287,7 +214,7 @@ class HrDept extends CI_Controller
 		}
 		$data['emp_value'] = $this->Employee_model->get_emp_list();
 		$data['edit_value'] = $this->Hr_model->get_edit_leave($data['id']);
-		$this->load->view('leave_add', $data);
+		$this->load->view('Hr/leave_add', $data);
 	}
 
 	public function insert_leave()
@@ -337,7 +264,7 @@ class HrDept extends CI_Controller
 
 	//-----------------leaves------------------------------//
 
-	
+
 	//-----------------employee------------------------------------//
 	public function employe_list()
 	{
@@ -353,7 +280,7 @@ class HrDept extends CI_Controller
 		}
 
 		$data['emp_value'] = $this->Employee_model->get_emp_list($data['from_date'], $data['to_date']);
-		$this->load->view('employe_list', $data);
+		$this->load->view('Hr/employe_list', $data);
 	}
 
 	public function add_employe()
@@ -367,7 +294,7 @@ class HrDept extends CI_Controller
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
 		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
-		$this->load->view('add_employe', $data);
+		$this->load->view('Hr/add_employe', $data);
 	}
 	public function edit_employee()
 	{
@@ -378,7 +305,7 @@ class HrDept extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Employee";
 		}
-		$data['store_list'] = $this->Hr_model->get_active_store(); 
+		$data['store_list'] = $this->Hr_model->get_active_store();
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
@@ -389,7 +316,7 @@ class HrDept extends CI_Controller
 		$data['slbk_value'] = $this->Employee_model->get_salarybk($data['id']);
 		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
-		$this->load->view('edit_employee', $data);
+		$this->load->view('Hr/edit_employee', $data);
 	}
 
 	public function insert_emp()
@@ -572,6 +499,88 @@ class HrDept extends CI_Controller
 		// ));
 		exit;
 	}
+
+	//    --------------------emp salary----------------------------------   
+	public function emp_add_salary()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = 'Add Salary';
+
+		$data['from_month'] = $this->input->post('from_month') ?: date('Y-m');
+		$data['emp_att'] = $this->Report_model->get_emp_add_salary($data['from_month']);
+		// echo "<pre>";print_r($data['emp_att']);die();
+		$this->load->view('Hr/emp_add_salary', $data);
+	}
+	public function insert_salary()
+	{
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$salinst_empid = $this->input->post('m_salinst_empid');
+			$salinst_salary = $this->input->post('m_salinst_salary');
+			$salinst_totaldays = $this->input->post('m_salinst_totaldays');
+			$salinst_prdays = $this->input->post('m_salinst_prdays');
+			$salinst_lvdays = $this->input->post('m_salinst_lvdays');
+			$salinst_absent = $this->input->post('m_salinst_absent');
+			$salinst_payable = $this->input->post('m_salinst_payable');
+
+			if (empty($salinst_empid)) {
+				echo json_encode(['status' => 'error', 'message' => 'No modified data found!']);
+				return;
+			}
+			$success = true;
+
+			foreach ($salinst_empid as $key => $emp_id) {
+				// Check if record already exists
+				$existing_salary = $this->Report_model->get_salary_by_emp_id($emp_id, $this->input->post('m_salinst_date'));
+
+				$data = [
+					'm_salinst_empid' => $emp_id,
+					'm_salinst_salary' => $salinst_salary[$key],
+					'm_salinst_totaldays' => $salinst_totaldays[$key],
+					'm_salinst_prdays' => $salinst_prdays[$key],
+					'm_salinst_absent' => $salinst_lvdays[$key],
+					'm_salinst_lvdays' => $salinst_absent[$key],
+					'm_salinst_payable' => $salinst_payable[$key],
+					'm_salinst_date' => date('Y-m-d', strtotime($this->input->post('m_salinst_date'))),
+					'm_salinst_status' => 1,
+					'm_salinst_addedon' => date('Y-m-d'),
+				];
+
+				if ($existing_salary) {
+					// If employee salary exists, update it
+					$update_status = $this->Report_model->update_salary($emp_id, $data);
+					if (!$update_status) {
+						$success = false;
+					}
+				} else {
+					// If employee salary does not exist, insert new record
+					$insert_status = $this->Report_model->insert_salary($data);
+					if (!$insert_status) {
+						$success = false;
+					}
+				}
+			}
+
+			if ($success) {
+				echo json_encode(['status' => 'success', 'message' => 'Salary data processed successfully!']);
+			} else {
+				echo json_encode(['status' => 'error', 'message' => 'Failed to process some salary data.']);
+			}
+		}
+	}
+
+	public function emp_salary_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = 'Employee Salary';
+		$data['from_month'] = $this->input->post('from_month') ?: date('Y-m');
+		$data['emp_id'] = $this->input->post('emp_id') ?: '';
+
+		$data['emp_list'] = $this->Employee_model->get_Active_emp();
+		$data['emp_att'] = $this->Report_model->get_emp_salary($data['emp_id'], $data['from_month']);
+		// echo "<pre>";print_r($data['emp_att']);die();
+		$this->load->view('Hr/emp_salary_list', $data);
+	}
+
 	//==========================Details===========================//
 	protected function login_details()
 	{

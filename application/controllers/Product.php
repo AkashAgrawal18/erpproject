@@ -12,7 +12,7 @@ class Product extends CI_Controller
 		$data['id'] = $this->input->get('id');
 		$data['all_value'] = $this->Product_model->get_cate($data['cattype']);
 		$data['edit_value'] = $this->Product_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
+		$this->load->view('Product/cate_list', $data);
 	}
 
 	public function sub_category_list()
@@ -24,7 +24,7 @@ class Product extends CI_Controller
 		$data['all_value'] = $this->Product_model->get_cate($data['cattype']);
 		$data['all_subcate'] = $this->Product_model->getsubcate();
 		$data['edit_value'] = $this->Product_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
+		$this->load->view('Product/cate_list', $data);
 	}
 	public function product_package_list()
 	{
@@ -35,7 +35,7 @@ class Product extends CI_Controller
 		$data['all_value'] = $this->Product_model->get_cate($data['cattype']);
 		$data['all_subcate'] = $this->Product_model->getsubcate();
 		$data['edit_value'] = $this->Product_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
+		$this->load->view('Product/cate_list', $data);
 	}
 	public function product_size_list()
 	{
@@ -46,7 +46,7 @@ class Product extends CI_Controller
 		$data['all_value'] = $this->Product_model->get_cate($data['cattype']);
 		$data['all_subcate'] = $this->Product_model->getsubcate();
 		$data['edit_value'] = $this->Product_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
+		$this->load->view('Product/cate_list', $data);
 	}
 	public function product_brand_list()
 	{
@@ -57,7 +57,7 @@ class Product extends CI_Controller
 		$data['all_value'] = $this->Product_model->get_cate($data['cattype']);
 		$data['all_subcate'] = $this->Product_model->getsubcate();
 		$data['edit_value'] = $this->Product_model->get_cate_dtl($data['id']);
-		$this->load->view('cate_list', $data);
+		$this->load->view('Product/cate_list', $data);
 	}
 
 	public function insert_cate()
@@ -140,7 +140,7 @@ class Product extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "Product List";
 		$data['all_value'] = $this->Product_model->get_all_product();
-		$this->load->view('product_list', $data);
+		$this->load->view('Product/product_list', $data);
 	}
 	public function product_add()
 	{
@@ -157,7 +157,7 @@ class Product extends CI_Controller
 		$data['size_value'] = $this->Product_model->get_size_list();
 		$data['brand_value'] = $this->Product_model->get_brand_list();
 		$data['edit_value'] = $this->Product_model->get_edit_product($data['id']);
-		$this->load->view('product_add', $data);
+		$this->load->view('Product/product_add', $data);
 	}
 
 	public function insert_product()
@@ -213,7 +213,7 @@ class Product extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "Batch List";
 		$data['all_value'] = $this->Product_model->get_all_batch();
-		$this->load->view('batch_list', $data);
+		$this->load->view('Product/batch_list', $data);
 	}
 	public function batch_add()
 	{
@@ -224,10 +224,10 @@ class Product extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Batch";
 		}
-		$data['pro_value'] = $this->Product_model->get_all_product(); 
-		$data['ware_value'] = $this->Product_model->get_all_warehouse(); 
+		$data['pro_value'] = $this->Product_model->get_all_product(1); 
+		$data['ware_value'] = $this->Hr_model->get_all_store(2,1);
 		$data['edit_value'] = $this->Product_model->get_edit_batch($data['id']);
-		$this->load->view('batch_add', $data);
+		$this->load->view('Product/batch_add', $data);
 	}
 
 	public function insert_batch()
@@ -283,69 +283,7 @@ class Product extends CI_Controller
 	$data['all_value'] = $this->Product_model->get_stock_list();
 	$this->load->view('stock_list', $data);
    }
-//----------------warehouse---------------------------------//
- 
-public function warehouse_list()
-{
-	$data = $this->login_details();
-	$data['pagename'] = "Warehouse List";
-	$data['id'] = $this->input->get('id');
-	$data['all_value'] = $this->Product_model->get_all_warehouse();
-	$data['edit_value'] = $this->Product_model->get_edit_warehouse($data['id']);
-	$this->load->view('warehouse_list', $data);
-}
 
-public function insert_warehouse()
-{
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if ($data = $this->Product_model->insert_warehouse()) {
-
-			if ($data == 1) {
-				$info = array(
-					'status' => 'success',
-					'message' => 'Warehouse has been Added successfully!'
-				);
-			} else if ($data == 2) {
-				$info = array(
-					'status' => 'success',
-					'message' => 'Warehouse Updated Successfully'
-				);
-			} else if ($data == 3) {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Warehouse with same name already exist'
-				);
-			}
-		} else {
-			$info = array(
-				'status' => 'error',
-				'message' => 'Some problem Occurred!! please try again'
-			);
-		}
-		echo json_encode($info);
-	}
-}
-
-public function delete_warehouse()
-{
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if ($data = $this->Product_model->delete_warehouse()) {
-
-			$info = array(
-				'status' => 'success',
-				'message' => 'Warehouse has been Deleted successfully!'
-			);
-		} else {
-			$info = array(
-				'status' => 'error',
-				'message' => 'Some problem Occurred!! please try again'
-			);
-		}
-		echo json_encode($info);
-	}
-}
-
-//--------------warehouse-----------------------//
 	//==========================Details===========================//
 	protected function login_details()
 	{

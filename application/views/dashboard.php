@@ -1,4 +1,4 @@
- <?php $this->view('header') ?>
+ <?php $this->view('Includes/header') ?>
 
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -97,7 +97,7 @@
  </div>
  <!-- /.content-wrapper -->
 
- <?php $this->view('footer') ?>
+ <?php $this->view('Includes/footer') ?>
 
  <?php $this->view('js/js_custom') ?>
 

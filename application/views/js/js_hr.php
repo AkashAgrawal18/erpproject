@@ -225,8 +225,8 @@
 				var relink = "salaryBreakup_list";
 			} else if (pgtype == 4) {
 				var relink = "shift_roster_list";
-			}else if (pgtype == 5) {
-				var relink = "roll_list";
+			} else if (pgtype == 5) {
+				var relink = "role_list";
 			}
 
 			$.ajax({
@@ -332,10 +332,17 @@
 			var clkbtn = $("#btn-add-store");
 			clkbtn.prop('disabled', true);
 			var formData = new FormData(this);
+			let pgtype = $('#m_str_type').val();
+			let pglink = '';
+			if (pgtype == 1) {
+				pglink = "<?php echo site_url('General/store_list'); ?>";
+			} else {
+				pglink = "<?php echo site_url('General/warehouse_list'); ?>";
 
+			}
 			$.ajax({
 				type: "POST",
-				url: "<?php echo site_url('HrDept/insert_store'); ?>",
+				url: "<?php echo site_url('General/insert_store'); ?>",
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -347,7 +354,7 @@
 							timer: 1000,
 						});
 						setTimeout(function() {
-							window.location = "<?php echo site_url('HrDept/store_list'); ?>";
+							window.location = pglink;
 						}, 1000);
 					} else {
 						clkbtn.prop('disabled', false);
@@ -385,7 +392,7 @@
 
 					$.ajax({
 						type: "POST",
-						url: "<?php echo site_url('HrDept/delete_store'); ?>",
+						url: "<?php echo site_url('General/delete_store'); ?>",
 						data: {
 							delete_id: dlt_id
 						},
@@ -857,9 +864,9 @@
 		//===========================product===========================//
 
 
-			//===========================batch===========================//
+		//===========================batch===========================//
 
-			$("form#frm-add-batch").submit(function(e) {
+		$("form#frm-add-batch").submit(function(e) {
 			e.preventDefault();
 			var clkbtn = $("#btn-add-batch");
 			clkbtn.prop('disabled', true);

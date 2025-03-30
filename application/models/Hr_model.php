@@ -158,9 +158,15 @@ class Hr_model extends CI_model
 
 	//========================== store  =============================//
 
-	public function get_all_store()
+	public function get_all_store($type='',$status='')
 	{
 		$this->db->select('*');
+		if (!empty($type)) {
+			$this->db->where('m_str_type', $type);
+		}
+		if (!empty($status)) {
+			$this->db->where('m_str_status', $status);
+		}
 		$this->db->order_by('m_str_id', 'desc');
 		$res = $this->db->get('master_store_tbl')->result();
 		return $res;
@@ -178,10 +184,11 @@ class Hr_model extends CI_model
 		$s_data = array(
 			"m_str_name" => $this->input->post('m_str_name'),
 			"m_str_code" => $this->input->post('m_str_code'),
-			"m_str_opening_time" => $this->input->post('m_str_opening_time'),
-			"m_str_closing_time" => $this->input->post('m_str_closing_time'),
-			"m_str_manage_name" => $this->input->post('m_str_manage_name'),
-			"m_str_mobile" => $this->input->post('m_str_mobile'),
+			"m_str_type" => $this->input->post('m_str_type'),
+			"m_str_opening_time" => $this->input->post('m_str_opening_time') ?:'',
+			"m_str_closing_time" => $this->input->post('m_str_closing_time') ?:'',
+			"m_str_manage_name" => $this->input->post('m_str_manage_name') ?:'',
+			"m_str_mobile" => $this->input->post('m_str_mobile') ?:'',
 			"m_str_address" => $this->input->post('m_str_address'),
 			"m_state" => $this->input->post('m_state'),
 			"m_city" => $this->input->post('m_city'),

@@ -1,4 +1,4 @@
-<?php $this->view('header') ?>
+<?php $this->view('Includes/header') ?>
 
 
 <div class="content-wrapper">
@@ -131,7 +131,7 @@
 
 
 
-<?php $this->view('footer');
+<?php $this->view('Includes/footer');
 $this->view('js/profile_js');
 ?>
  <?php $this->view('js/js_custom') ?>

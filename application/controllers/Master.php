@@ -12,7 +12,7 @@ class Master extends CI_Controller
 		$data['id'] = $this->input->get('id');
 		$data['all_value'] = $this->Master_model->get_all_state();
 		$data['edit_value'] = $this->Master_model->get_edit_state($data['id']);
-		$this->load->view('state_list', $data);
+		$this->load->view('Masters/state_list', $data);
 	}
 
 	public function insert_state()
@@ -76,7 +76,7 @@ class Master extends CI_Controller
 		$data['all_value'] = $this->Master_model->get_all_city();
 		$data['edit_value'] = $this->Master_model->get_edit_city($data['id']);
 
-		$this->load->view('city_list', $data);
+		$this->load->view('Masters/city_list', $data);
 	}
 
 	public function insert_city()
@@ -176,7 +176,7 @@ class Master extends CI_Controller
 		$data['id'] = $this->input->get('id');
 		$data['edit_value'] = $this->Permission_model->get_edit_perm($data['id']);
 		$data['all_value'] = $this->Permission_model->all_perm();
-		$this->load->view('perm_list', $data);
+		$this->load->view('Masters/perm_list', $data);
 	}
 
 	public function insert_perm()
@@ -230,10 +230,10 @@ class Master extends CI_Controller
 	//========================= userperm ===========================//
 	public function rolls_permission(){
 		$data = $this->login_details();
-		$data['pagename'] = "All Rolls Permission"; 
+		$data['pagename'] = "All Roles Permission"; 
 		$data['user_dtl'] = $this->Permission_model->rolls_permission_list(); 
 		// print_r($data['user_dtl']); die();
-		$this->load->view('rolls_permission', $data);	
+		$this->load->view('Masters/rolls_permission', $data);	
 	}
 
 	public function userperm_list()
@@ -245,7 +245,7 @@ class Master extends CI_Controller
 		$data['edit_value'] = $this->Permission_model->get_userperm_userId($data['userid']);
 		$data['all_value'] = $this->Permission_model->all_perm();
 		// print_r($data['user_dtl']); die();
-		$this->load->view('user_permission_list', $data);
+		$this->load->view('Masters/user_permission_list', $data);
 	}
 
 	public function insert_userperm()
