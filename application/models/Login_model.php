@@ -12,7 +12,7 @@ class Login_model extends CI_model
 			return 'not_found';
 		}
 		
-		$sql2 = $this->db->select('m_emp_id,m_login_type,m_emp_design,m_emp_roll')
+		$sql2 = $this->db->select('m_emp_id,m_login_type,m_emp_store,m_emp_roll')
 		->where('m_emp_email', $this->input->post('login_email'))
 		->where('m_emp_password', $pass)
 		->get('master_employee_tbl');

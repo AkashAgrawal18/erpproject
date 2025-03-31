@@ -28,7 +28,7 @@ class Login extends CI_Controller
             'user_id' => $data[0]->m_emp_id,
             'roll_id' => $data[0]->m_emp_roll,
             'user_type' => $data[0]->m_login_type,
-            'designation' => $data[0]->m_emp_design,
+            'user_store' => $data[0]->m_emp_store,
           );
           // print_r($usrdata); die(); 
           $this->session->set_userdata($usrdata);

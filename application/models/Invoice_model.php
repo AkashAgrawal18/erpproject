@@ -172,10 +172,12 @@ class Invoice_model extends CI_Model
         $resitem = $this->db->get('invoice_items_tbl')->result();
 
         $this->db->select('invoice_tbl.*,entities.m_entity_name,m_entity_mobile,m_entity_type');
-        $this->db->join('master_entities_tbl entities', 'entities.m_entity_id = m_inv_entity', 'left'); $this->db->where('m_inv_id', $id);
+        $this->db->join('master_entities_tbl entities', 'entities.m_entity_id = m_inv_entity', 'left');
+        $this->db->where('m_inv_id', $id);
         $res = $this->db->get('invoice_tbl')->row();
-
-        $res->item_data = $resitem;
+        if (!empty($resitem)) {
+            $res->item_data = $resitem;
+        }
         return $res;
     }
 
@@ -185,7 +187,7 @@ class Invoice_model extends CI_Model
         $this->db->from('invoice_tbl');
         $this->db->join('master_store_tbl store', 'store.m_str_id = m_inv_store', 'left');
         $this->db->join('master_entities_tbl entities', 'entities.m_entity_id = m_inv_entity', 'left');
-        
+
         if (!empty($from_date)) {
             $this->db->where('DATE_FORMAT(m_inv_date, "%Y-%m-%d") >=', $from_date);
         }
@@ -251,15 +253,15 @@ class Invoice_model extends CI_Model
         if (!empty($m_inv_id)) {
             $s_data['m_inv_updatedby'] = $this->session->userdata('user_id');
             $s_data['m_inv_updatedon'] = date('Y-m-d H:i');
-			$this->db->where('m_inv_id', $m_inv_id)->update('invoice_tbl', $s_data);
-			$invoice_id = $m_inv_id;
-		} else {
+            $this->db->where('m_inv_id', $m_inv_id)->update('invoice_tbl', $s_data);
+            $invoice_id = $m_inv_id;
+        } else {
             $s_data['m_inv_no'] = $inv_spo;
             $s_data['m_inv_addedby'] = $this->session->userdata('user_id');
             $s_data['m_inv_addedon'] = date('Y-m-d H:i');
-			$this->db->insert('invoice_tbl', $s_data);
-			$invoice_id = $this->db->insert_id();
-		}
+            $this->db->insert('invoice_tbl', $s_data);
+            $invoice_id = $this->db->insert_id();
+        }
 
         $inv_item_id = $this->input->post('inv_item_id');
         $inv_item_stcktrans = $this->input->post('inv_item_stcktrans');
@@ -276,7 +278,7 @@ class Invoice_model extends CI_Model
         foreach ($inv_item_batch as $key => $cau) {
             $si_data = array(
                 "inv_item_invoice" => $invoice_id,
-                "inv_item_stcktrans" => $inv_item_stcktrans[$key]?:0,
+                "inv_item_stcktrans" => $inv_item_stcktrans[$key] ?: 0,
                 "inv_item_batch" => $cau,
                 "inv_item_product" => $inv_item_product[$key],
                 "inv_item_qty" => $inv_item_qty[$key],

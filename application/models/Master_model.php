@@ -7,7 +7,7 @@ class Master_model extends CI_model
   public function get_all_state()
   {
     $this->db->select('*');
-    $this->db->order_by('m_state_id','desc');
+    $this->db->order_by('m_state_id', 'desc');
     $res = $this->db->get('master_state_tbl')->result();
     return $res;
   }
@@ -29,7 +29,7 @@ class Master_model extends CI_model
     $s_data = array(
       "m_state_name" => $name,
       "m_state_country" => 1,
-      "m_state_status" => $this->input->post('m_state_status'), 
+      "m_state_status" => $this->input->post('m_state_status'),
     );
     if (!empty($id)) {
       $this->db->where('m_state_id', $id)->update('master_state_tbl', $s_data);
@@ -54,7 +54,7 @@ class Master_model extends CI_model
   {
     $this->db->select('*');
     $this->db->join('master_state_tbl', 'master_state_tbl.m_state_id = master_city_tbl.m_city_state', 'left');
-    $this->db->order_by('m_city_id','desc');
+    $this->db->order_by('m_city_id', 'desc');
     $res = $this->db->get('master_city_tbl')->result();
     return $res;
   }
@@ -78,8 +78,8 @@ class Master_model extends CI_model
     }
     $s_data = array(
       "m_city_name" => $city,
-      "m_city_state" => $state_id, 
-      "m_city_status" => $this->input->post('m_city_status'), 
+      "m_city_state" => $state_id,
+      "m_city_status" => $this->input->post('m_city_status'),
     );
     if (!empty($id)) {
       $this->db->where('m_city_id', $id)->update('master_city_tbl', $s_data);
@@ -130,7 +130,7 @@ class Master_model extends CI_model
   public function get_active_state()
   {
     $this->db->select('*');
-    $this->db->where('m_state_status', '1'); 
+    $this->db->where('m_state_status', '1');
     $this->db->order_by('m_state_name');
     $res = $this->db->get('master_state_tbl')->result();
     return $res;
@@ -146,21 +146,191 @@ class Master_model extends CI_model
   }
 
 
-	public function get_city($m_state){
-		$sql = $this->db->join("master_state_tbl", "master_state_tbl.m_state_id= master_city_tbl.m_city_state");
-		if ($m_state != '') {
-			 $sql = $this->db->where('m_city_state', $m_state);
-		}
-		$sql = $this->db->get('master_city_tbl');
-		$res = $sql->result();
-		return $res;
-	}
+  public function get_city($m_state)
+  {
+    $sql = $this->db->join("master_state_tbl", "master_state_tbl.m_state_id= master_city_tbl.m_city_state");
+    if ($m_state != '') {
+      $sql = $this->db->where('m_city_state', $m_state);
+    }
+    $sql = $this->db->get('master_city_tbl');
+    $res = $sql->result();
+    return $res;
+  }
   //=========================================== city ===============================================//
 
 
 
 
+  //===================== perm =======================//
+  public function all_perm()
+  {
+    $res = $this->db->select('*')->order_by('m_perm_module_slug')->order_by('m_perm_id')->get('master_permission_tbl')->result();
+    return $res;
+  }
+
+  public function insert_perm()
+  {
+
+    $permid = $this->input->post('m_perm_id');
+    $permname = $this->input->post('m_perm_submodule_slug');
+
+    $check = $this->db->where('m_perm_submodule_slug', $permname)->get('master_permission_tbl')->result();
+
+    if (!empty($check) && empty($permid)) {
+
+      return false;
+    } else {
+      $insert_data = array(
+        "m_perm_name"    => $this->input->post('m_perm_name'),
+        "m_perm_status"    => $this->input->post('m_perm_status'),
+        "m_perm_module"    => $this->input->post('m_perm_module'),
+        "m_perm_module_slug"    => $this->input->post('m_perm_module_slug'),
+        "m_perm_submodule_slug"    => $permname,
+        "m_perm_added_on" => date('Y-m-d H:i:s'),
+
+      );
+
+      if (!empty($permid)) {
+        $this->db->where('m_perm_id', $permid)->update('master_permission_tbl', $insert_data);
+        return 2;
+      } else {
+        $this->db->insert('master_permission_tbl', $insert_data);
+        return 1;
+      }
+    }
+  }
+
+
+  public function get_edit_perm($id)
+  {
+    $this->db->select('*');
+    $this->db->where('m_perm_id', $id);
+    $data = $this->db->get('master_permission_tbl');
+    return $data->row();
+  }
+
+  public function delete_perm()
+  {
+    $this->db->where('m_perm_id', $this->input->post('delete_id'));
+    $this->db->delete('master_permission_tbl');
+    return true;
+  }
+  //===================== perm =======================//
+
+
+  //===================== userperm =======================//
+
+  public function rolls_permission_list()
+  {
+    $this->db->select('dept.m_dept_name,dept.m_dept_id,dept.m_dept_status');
+    $this->db->where('m_dept_type', 5);
+    $this->db->where('m_dept_status', 1);
+    $this->db->order_by('m_dept_name');
+    $res = $this->db->get('master_department_tbl dept')->result();
+    return $res;
+  }
+  public function user_details($id)
+  {
+    $this->db->select('*');
+    $this->db->where('m_emp_id', $id);
+    $data = $this->db->get('master_employee_tbl');
+    return $data->row();
+  }
+  public function all_userperm_list()
+  {
+    $res = $this->db->select('*')->get('master_user_permission_tbl')->result();
+    return $res;
+  }
+
+  public function insert_userperm()
+  {
+
+    $permid = $this->input->post('permid');
+    $modulee = $this->input->post('modulee');
+    $submodule = $this->input->post('submodule');
+    $userpermid = $this->input->post('userpermid');
+    $userid = $this->input->post('userid');
+    $name = $this->input->post('name');
+    $value = $this->input->post('value');
+
+    $check = $this->db->select('m_userperm_id')->where('m_userperm_userId', $userid)->where('m_userperm_module', $modulee)->where('m_userperm_submodule', $submodule)->where('m_userperm_permId', $permid)->where('m_userperm_id !=', $userpermid)->get('master_user_permission_tbl')->row();
+
+    if (!empty($check)) {
+      $userpermid = $check->m_userperm_id;
+    }
+
+    $insert_data = array(
+      "m_userperm_userId"    => $userid,
+      "m_userperm_module"    => $modulee,
+      "m_userperm_submodule"    => $submodule,
+      "m_userperm_permId"    => $permid,
+      $name    => $value,
+
+    );
+
+    if (!empty($userpermid)) {
+      $this->db->where('m_userperm_id', $userpermid)->update('master_user_permission_tbl', $insert_data);
+      return 2;
+    } else {
+      $insert_data["m_userperm_added_on"] = date('Y-m-d H:i:s');
+      $this->db->insert('master_user_permission_tbl', $insert_data);
+      return 1;
+    }
+  }
+
+
+  public function get_userperm_userId($id)
+  {
+    $this->db->select('*');
+    $this->db->where('m_userperm_userId', $id);
+    $this->db->order_by('m_userperm_module')->order_by('m_userperm_permId');
+    $data = $this->db->get('master_user_permission_tbl');
+    return $data->result();
+  }
+
+  public function all_permission_userperm($userid)
+  {
+    $all_perm = $this->db->select('*')->order_by('m_perm_id')->get('master_permission_tbl')->result();
+    if(!empty($all_perm)){
+      foreach ($all_perm as $value) {
+       
+        $check = $this->db->select('m_userperm_id')->where('m_userperm_userId', $userid)->where('m_userperm_module', $value->m_perm_module_slug)->where('m_userperm_submodule', $value->m_perm_submodule_slug)->where('m_userperm_permId', $value->m_perm_id)->get('master_user_permission_tbl')->row();
+
+        if (!empty($check)) {
+          $userpermid = $check->m_userperm_id;
+        }
+    
+        $insert_data = array(
+          "m_userperm_userId"    => $userid,
+          "m_userperm_module"    => $value->m_perm_module_slug,
+          "m_userperm_submodule"    => $value->m_perm_submodule_slug,
+          "m_userperm_permId"    => $value->m_perm_id,
+          "m_userperm_list"    => 1,
+          "m_userperm_add"    => 1,
+          "m_userperm_edit"    => 1,
+          "m_userperm_delete"    => 1,
+          "m_userperm_export"    => 1,
+          "m_userperm_filter"    => 1,
+          "m_userperm_status"    => 1,
+       
+        );
+    
+        if (!empty($userpermid)) {
+          $this->db->where('m_userperm_id', $userpermid)->update('master_user_permission_tbl', $insert_data);
+        } else {
+          $insert_data["m_userperm_added_on"] = date('Y-m-d H:i:s');
+          $this->db->insert('master_user_permission_tbl', $insert_data);
+        }
+
+      }
+    }
+   return true;
+  }
+
+  //===================== userperm =======================//
 
 
 
-}	
+
+
+}

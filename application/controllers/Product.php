@@ -225,7 +225,7 @@ class Product extends CI_Controller
 			$data['pagename'] = "Add New Batch";
 		}
 		$data['pro_value'] = $this->Product_model->get_all_product(1); 
-		$data['ware_value'] = $this->Hr_model->get_all_store(2,1);
+		$data['ware_value'] = $this->General_model->get_all_store(2,1);
 		$data['edit_value'] = $this->Product_model->get_edit_batch($data['id']);
 		$this->load->view('Product/batch_add', $data);
 	}

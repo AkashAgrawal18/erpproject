@@ -9,7 +9,7 @@ class General extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Entities List";
-		$data['all_value'] = $this->Billing_model->get_all_entity();
+		$data['all_value'] = $this->General_model->get_all_entity();
 		$this->load->view('General/entity_list', $data);
 	}
 	public function entity_add()
@@ -21,15 +21,15 @@ class General extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Entity";
 		}
-		$data['emp_value'] = $this->Employee_model->get_emp_list();
-		$data['edit_value'] = $this->Billing_model->get_edit_entity($data['id']);
+		$data['emp_value'] = $this->Hr_model->get_emp_list();
+		$data['edit_value'] = $this->General_model->get_edit_entity($data['id']);
 		$this->load->view('General/entity_add', $data);
 	}
 
 	public function insert_entity()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Billing_model->insert_entity()) {
+			if ($data = $this->General_model->insert_entity()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -55,7 +55,7 @@ class General extends CI_Controller
 	public function delete_entity()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Billing_model->delete_entity()) {
+			if ($data = $this->General_model->delete_entity()) {
 
 				$info = array(
 					'status' => 'success',
@@ -79,7 +79,7 @@ class General extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "Stores List";
 		$data['pgtype'] = 1;
-		$data['all_value'] = $this->Hr_model->get_all_store($data['pgtype']);
+		$data['all_value'] = $this->General_model->get_all_store($data['pgtype']);
 		$this->load->view('General/store_list', $data);
 	}
 
@@ -88,7 +88,7 @@ class General extends CI_Controller
 		$data = $this->login_details();
 		$data['pagename'] = "Warehouse List";
 		$data['pgtype'] = 2;
-		$data['all_value'] = $this->Hr_model->get_all_store($data['pgtype']);
+		$data['all_value'] = $this->General_model->get_all_store($data['pgtype']);
 		$this->load->view('General/store_list', $data);
 	}
 
@@ -104,7 +104,7 @@ class General extends CI_Controller
 		}
 		$data['get_active_state'] = $this->Master_model->get_active_state();
 		$data['get_active_city'] = $this->Master_model->get_active_city();
-		$data['edit_value'] = $this->Hr_model->get_edit_store($data['id']);
+		$data['edit_value'] = $this->General_model->get_edit_store($data['id']);
 		// print_r($data['get_active_city']); die();
 		$this->load->view('General/store_add', $data);
 	}
@@ -112,7 +112,7 @@ class General extends CI_Controller
 	public function insert_store()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Hr_model->insert_store()) {
+			if ($data = $this->General_model->insert_store()) {
 
 				if ($data == 1) {
 					$info = array(
@@ -138,7 +138,7 @@ class General extends CI_Controller
 	public function delete_store()
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Hr_model->delete_store()) {
+			if ($data = $this->General_model->delete_store()) {
 
 				$info = array(
 					'status' => 'success',

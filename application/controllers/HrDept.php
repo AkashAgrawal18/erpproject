@@ -212,7 +212,7 @@ class HrDept extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Leave";
 		}
-		$data['emp_value'] = $this->Employee_model->get_emp_list();
+		$data['emp_value'] = $this->Hr_model->get_emp_list();
 		$data['edit_value'] = $this->Hr_model->get_edit_leave($data['id']);
 		$this->load->view('Hr/leave_add', $data);
 	}
@@ -279,7 +279,7 @@ class HrDept extends CI_Controller
 			$this->excelForemp($data['from_date'], $data['to_date']);
 		}
 
-		$data['emp_value'] = $this->Employee_model->get_emp_list($data['from_date'], $data['to_date']);
+		$data['emp_value'] = $this->Hr_model->get_emp_list($data['from_date'], $data['to_date']);
 		$this->load->view('Hr/employe_list', $data);
 	}
 
@@ -287,7 +287,7 @@ class HrDept extends CI_Controller
 	{
 		$data = $this->login_details();
 		$data['pagename'] = "Add New Employee";
-		$data['store_list'] = $this->Hr_model->get_active_store();
+		$data['store_list'] = $this->General_model->get_all_store(null,1);
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['design_value'] = $this->Hr_model->get_active_design();
@@ -305,15 +305,15 @@ class HrDept extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Employee";
 		}
-		$data['store_list'] = $this->Hr_model->get_active_store();
+		$data['store_list'] = $this->General_model->get_all_store(null,1);
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
 		// $data['hq_value'] = $this->Hr_model->get_active_hq();
 		// $data['emp_list'] = $this->Hr_model->get_Active_emp();
-		$data['edit_value'] = $this->Employee_model->get_emp_dtl($data['id']);
-		$data['slbk_value'] = $this->Employee_model->get_salarybk($data['id']);
+		$data['edit_value'] = $this->Hr_model->get_emp_dtl($data['id']);
+		$data['slbk_value'] = $this->Hr_model->get_salarybk($data['id']);
 		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
 		$this->load->view('Hr/edit_employee', $data);
@@ -325,7 +325,7 @@ class HrDept extends CI_Controller
 			return;
 		}
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($this->Employee_model->insert_emp()) {
+			if ($this->Hr_model->insert_emp()) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Employee has been added successfully!'
@@ -347,7 +347,7 @@ class HrDept extends CI_Controller
 			return;
 		}
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($this->Employee_model->update_emp()) {
+			if ($this->Hr_model->update_emp()) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Employee data updated successfully!'
@@ -366,7 +366,7 @@ class HrDept extends CI_Controller
 	{
 		$data = $this->login_details();
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($data = $this->Employee_model->delete_slarybk()) {
+			if ($data = $this->Hr_model->delete_slarybk()) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Salary has been Deleted successfully!'
@@ -386,7 +386,7 @@ class HrDept extends CI_Controller
 	{
 
 		$id = $this->input->post('empid');
-		$res = $this->Employee_model->check_emp_history($id);
+		$res = $this->Hr_model->check_emp_history($id);
 		if (!empty($res)) {
 			$curdate = date('Y-m-d');
 			$date1 = date_create($curdate);
@@ -400,7 +400,7 @@ class HrDept extends CI_Controller
 			$data['message'] = 'Allowed';
 		}
 		$data['advc_his'] = $res;
-		$data['emp_dtl'] = $this->Employee_model->get_emp_dtl($id);
+		$data['emp_dtl'] = $this->Hr_model->get_emp_dtl($id);
 		echo json_encode($data);
 	}
 
@@ -408,7 +408,7 @@ class HrDept extends CI_Controller
 	{
 
 		$id = $this->input->post('empid');
-		$data = $this->Employee_model->get_emp_dtl($id);
+		$data = $this->Hr_model->get_emp_dtl($id);
 		echo json_encode($data);
 	}
 
@@ -418,7 +418,7 @@ class HrDept extends CI_Controller
 			return;
 		}
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($this->Employee_model->delete_emp()) {
+			if ($this->Hr_model->delete_emp()) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Data has been Deleted Successfully!'
@@ -436,7 +436,7 @@ class HrDept extends CI_Controller
 	public function excelForemp($from_date, $to_date)
 	{
 
-		$allreportdata  = $this->Employee_model->get_emp_list($from_date, $to_date);
+		$allreportdata  = $this->Hr_model->get_emp_list($from_date, $to_date);
 
 		$count = 0;
 		$data = array();
@@ -575,7 +575,7 @@ class HrDept extends CI_Controller
 		$data['from_month'] = $this->input->post('from_month') ?: date('Y-m');
 		$data['emp_id'] = $this->input->post('emp_id') ?: '';
 
-		$data['emp_list'] = $this->Employee_model->get_Active_emp();
+		$data['emp_list'] = $this->Hr_model->get_Active_emp();
 		$data['emp_att'] = $this->Report_model->get_emp_salary($data['emp_id'], $data['from_month']);
 		// echo "<pre>";print_r($data['emp_att']);die();
 		$this->load->view('Hr/emp_salary_list', $data);

@@ -23,7 +23,7 @@ public function stock_transfe_add()
         $data['pagename'] = "Add New Stock Transfer";
     }
     $data['batch_value'] = $this->Invoice_model->get_availble_batch(date('Y-m-d'));
-    $data['store_value'] = $this->Hr_model->get_all_store(null,1);
+    $data['store_value'] = $this->General_model->get_all_store(null,1);
     $data['edit_value'] = $this->Invoice_model->get_edit_stck_transfer($data['id']);
     //  echo '<pre>'; print_r($data['edit_value']); die ;
     $this->load->view('Invoice/stock_transfe_add', $data);
@@ -96,8 +96,8 @@ public function invoice_add()
     }
     $data['store_batchvalue'] = $this->Invoice_model->get_store_availble_batch(date('Y-m-d'));
     $data['warehouse_batchvalue'] = $this->Invoice_model->get_availble_batch(date('Y-m-d'));
-    $data['entities_value'] = $this->Billing_model->get_all_entity(null,1);
-    $data['store_value'] = $this->Hr_model->get_all_store(null,1);
+    $data['entities_value'] = $this->General_model->get_all_entity(null,1);
+    $data['store_value'] = $this->General_model->get_all_store(null,1);
     $data['edit_value'] = $this->Invoice_model->get_edit_invoice($data['id']);
     //  echo '<pre>'; print_r($data['batch_value']); die ;
     //  echo '<pre>'; print_r($data['edit_value']); die ;

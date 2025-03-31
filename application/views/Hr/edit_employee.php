@@ -72,7 +72,6 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 							$password            = $edit_value->m_emp_password;
 							$qualification            = $edit_value->m_emp_qualification;
 							$dol            = $edit_value->m_emp_dol;
-							$login_type            = $edit_value->m_emp_login_type;
 							$salmode            = $edit_value->m_emp_salmode;
 							$m_emp_status  =  $edit_value->m_emp_status;
 							$monthly    = $edit_value->m_emp_monthly;
@@ -118,7 +117,6 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 							$password = '';
 							$qualification = '';
 							$dol = '';
-							$login_type = '';
 							$salmode = '';
 							$m_emp_status = '';
 							$monthly = '';
@@ -366,15 +364,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												</div>
 
 											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Login Type</label>
-													<select name="m_emp_login_type" id="m_emp_login_type" class="form-control">
-														<option value="1" <?= $login_type == '1' ? 'selected' : '' ?>>Admin</option>
-														<option value="2" <?= $login_type == '2' ? 'selected' : '' ?>>User</option>
-													</select>
-												</div>
-											</div>
+											
 											<div class="col-md-2">
 												<div class="form-group">
 													<label>No.Of Leaves Monthly</label>
