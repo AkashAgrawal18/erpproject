@@ -233,8 +233,7 @@ class Hr_model extends CI_model
 
 	public function get_emp_list()
 	{
-		// $this->db->where('m_login_type!=', 1);
-		$this->db->where('m_dept_type', 2);
+		$this->db->where('m_login_type !=', 1);
 		$this->db->join('master_department_tbl design', 'design.m_dept_id  = master_employee_tbl.m_emp_design', 'left');
 		$res = $this->db->get('master_employee_tbl')->result();
 		return $res;

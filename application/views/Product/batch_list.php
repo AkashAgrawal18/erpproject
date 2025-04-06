@@ -12,8 +12,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-6 text-right">
-					<a href="<?php echo site_url('Product/batch_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Batch</a>
-
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'BCH', 'Add')) { ?>
+						<a href="<?php echo site_url('Product/batch_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Batch</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -33,9 +34,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 5%">#</th>
 										<th>Batch Number</th>
 										<th>Product </th>
-										<th>Quntity</th> 
-										<th>Date</th> 
-										<th>Expiry Period</th> 
+										<th>Quntity</th>
+										<th>Date</th>
+										<th>Expiry Period</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -53,8 +54,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<td><?php echo $value->m_pro_name; ?></td>
 												<td><?php echo $value->m_batch_quantity; ?></td>
 												<td><?php echo date('d-m-Y', strtotime($value->m_batch_date)); ?></td>
-												<td><?php echo $value->m_batch_expiry; echo '-Month'; ?></td>
-												  
+												<td><?php echo $value->m_batch_expiry;
+													echo '-Month'; ?></td>
+
 												<td>
 													<?php
 													if (!empty($value->m_batch_status == 1)) {
@@ -69,11 +71,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'BCH', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?PHP } ?>
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-batch" data-value="<?php echo $value->m_batch_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'BCH', 'Delete')) { ?>
+														<button class="btn btn-danger btn-sm delete-batch" data-value="<?php echo $value->m_batch_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?PHP } ?>
 												</td>
 											</tr>

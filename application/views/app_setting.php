@@ -35,69 +35,89 @@
 					<div class="card-body">
 						<div class="row">
 							<input type="hidden" name="appid" value="<?php echo $app_details[0]->m_app_id ?>">
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Application Name</label>
 									<input type="text" class="form-control" value="<?php echo $app_details[0]->m_app_name; ?>" placeholder="Application Name" name="m_app_name">
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Application Contact</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_mobile  ?>" name="m_app_contact" class="form-control" placeholder="Application Contact">
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Application Title</label>
+									<input type="text" class="form-control" value="<?php echo $app_details[0]->m_app_title; ?>" placeholder="Application Title" name="m_app_title">
+								</div>
 							</div>
 							<!-- /.col -->
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Application Alternative Contact</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_alt_mobile  ?>" name="m_app_alt_contact" class="form-control" placeholder="Application Alternative Contact">
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Application Mail</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_email  ?>" name="m_app_mail" class="form-control" placeholder="Application Mail">
 								</div>
-								<!-- /.form-group -->
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Application Address</label>
 									<textarea class="form-control" name="m_app_address" placeholder="Application Address"><?php echo $app_details[0]->m_app_address ?></textarea>
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Application GSTNO</label>
+									<input type="text" name="m_app_gstno" value="<?php echo $app_details[0]->m_app_gstno; ?>" class="form-control" placeholder="GST Number">
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Application Tax</label>
+									<input type="text" name="m_app_tax" value="<?php echo $app_details[0]->m_app_tax; ?>" class="form-control" placeholder="Application Tax">
+								</div>
+
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Instagram</label>
 									<input type="text" name="m_app_instagram" value="<?php echo $app_details[0]->m_app_insta; ?>" class="form-control" placeholder="Instagram">
 								</div>
 
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label> Facebook</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_fb; ?>" name="m_app_fesbook" class="form-control" placeholder="Facebook">
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Whatsapp</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_whatsapp; ?>" name="m_app_whatsapp" class="form-control" placeholder="Whatsapp">
 								</div>
-								<!-- /.form-group -->
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label> Twitter</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_twitter; ?>" name="m_app_twitter" class="form-control" placeholder="Twitter">
 								</div>
-								<!-- /.form-group -->
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Linkedin</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_linkedin; ?>" name="m_app_linkedin" class="form-control" placeholder="Linkedin">
 								</div>
-
-								<!-- /.form-group -->
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label> Youtube</label>
 									<input type="text" value="<?php echo $app_details[0]->m_app_youtube; ?>" name="m_app_youtude" class="form-control" placeholder="Youtube">
@@ -125,7 +145,7 @@
 						<!-- /.card-header -->
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<?php
 										if (!empty($app_details[0]->m_app_logo) && file_exists('uploads/user/' . $app_details[0]->m_app_logo)) {
@@ -155,7 +175,7 @@
 									<!-- /.form-group -->
 								</div>
 								<!-- /.col -->
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<?php
 										if (!empty($app_details[0]->m_app_black_logo) && file_exists('uploads/user/' . $app_details[0]->m_app_black_logo)) {

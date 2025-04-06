@@ -12,8 +12,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-6 text-right">
-					<a href="<?php echo site_url('HrDept/leave_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Leave</a>
-
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Add')) { ?>
+						<a href="<?php echo site_url('HrDept/leave_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Leave</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -33,7 +34,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 5%">#</th>
 										<th>Name</th>
 										<th>Type</th>
-										<th>Duration</th> 
+										<th>Duration</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -56,7 +57,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 															echo "Sick";
 														} elseif ($value->m_leav_type == 3) {
 															echo "Unleave";
-														}  
+														}
 													}
 													?> </td>
 												<td>
@@ -68,10 +69,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 															echo "Multiple Days";
 														} elseif ($value->m_leav_duration == 3) {
 															echo "Half Day";
-														}  
+														}
 													}
 													?>
-												</td> 
+												</td>
 												<td>
 													<?php
 													if (!empty($value->m_leav_status == 1)) {
@@ -86,11 +87,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php } ?>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'LVS', 'Edit')) { ?>
-													<button class="btn btn-danger btn-sm delete-leave" data-value="<?php echo $value->m_leav_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+														<button class="btn btn-danger btn-sm delete-leave" data-value="<?php echo $value->m_leav_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>
 											</tr>

@@ -12,8 +12,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-6 text-right">
-					<a href="<?php echo site_url('General/entity_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Entity</a>
-
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'GEN', 'ENT', 'Add')) { ?>
+						<a href="<?php echo site_url('General/entity_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Entity</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -33,8 +34,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 5%">#</th>
 										<th>Entity Name</th>
 										<th>Type </th>
-										<th>Mobile</th> 
-										<th>Address</th>  
+										<th>Mobile</th>
+										<th>Address</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -49,10 +50,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_entity_name; ?></td>
-												<td><?php echo $value->m_emp_name ; ?></td>
-												<td><?php echo $value->m_entity_mobile; ?></td> 
-												<td><?php echo $value->m_entity_address; ?></td> 
-												  
+												<td><?php echo $value->m_emp_name; ?></td>
+												<td><?php echo $value->m_entity_mobile; ?></td>
+												<td><?php echo $value->m_entity_address; ?></td>
+
 												<td>
 													<?php
 													if (!empty($value->m_entity_status == 1)) {
@@ -67,11 +68,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'GEN', 'ENT', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?PHP } ?>
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-entity" data-value="<?php echo $value->m_entity_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'GEN', 'ENT', 'Delete')) { ?>
+														<button class="btn btn-danger btn-sm delete-entity" data-value="<?php echo $value->m_entity_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?PHP } ?>
 												</td>
 											</tr>

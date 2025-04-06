@@ -12,9 +12,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 				</div>
 				<div class="col-sm-6 text-right">
 					<div class="seipkon-breadcromb-right">
-						<a href="<?= site_url('HrDept/employe_list'); ?>" class="btn btn-info btn-vsm">
-							<i class="fa fa-list-alt"></i> All Employees
-						</a>
+						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'List')) { ?>
+							<a href="<?= site_url('HrDept/employe_list'); ?>" class="btn btn-info btn-vsm">
+								<i class="fa fa-list-alt"></i> All Employees
+							</a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -124,389 +126,389 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 						}
 						?>
 						<div class="card-body">
-						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Edit')) { ?>
-							<form method="post" action="#" id="frm-emp-update" enctype="mutipart/form-data">
-								<div class="row">
-									<input type="hidden" name="m_emp_id" id="m_emp_id" class="form-control" value="<?= $id ?>">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Employee Code</label>
-													<input type="text" name="m_emp_code" id="m_emp_code" class="form-control" value="<?= $code; ?>">
+							<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Edit')) { ?>
+								<form method="post" action="#" id="frm-emp-update" enctype="mutipart/form-data">
+									<div class="row">
+										<input type="hidden" name="m_emp_id" id="m_emp_id" class="form-control" value="<?= $id ?>">
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Employee Code</label>
+														<input type="text" name="m_emp_code" id="m_emp_code" class="form-control" value="<?= $code; ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Employee Name <span class="text-danger">*</span></label>
-													<input type="text" name="m_emp_name" id="m_emp_name" class="form-control" required="" value="<?= $name; ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Employee Name <span class="text-danger">*</span></label>
+														<input type="text" name="m_emp_name" id="m_emp_name" class="form-control" required="" value="<?= $name; ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Father Name <span class="text-danger">*</span></label>
-													<input type="text" name="m_emp_fhname" id="m_emp_fhname" class="form-control" required='' value="<?= $fhname ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Father Name <span class="text-danger">*</span></label>
+														<input type="text" name="m_emp_fhname" id="m_emp_fhname" class="form-control" required='' value="<?= $fhname ?>">
+													</div>
 												</div>
-											</div>
 
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Department <span class="text-danger">*</span></label>
-													<select name="m_emp_dept" id="m_emp_dept" class="form-control select2" required>
-														<?php
-														foreach ($dept_value as $dkey) {
-															if ($dept == $dkey->m_dept_id) {
-																$op = 'selected';
-															} else {
-																$op = '';
-															}
-														?>
-															<option value="<?php echo $dkey->m_dept_id; ?>" <?= $op ?>><?php echo $dkey->m_dept_name; ?>
-															</option>
-														<?php
-														}
-
-														?>
-
-													</select>
-												</div>
-											</div>
-
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Designation <span class="text-danger">*</span></label>
-													<select name="m_emp_design" id="m_emp_design" class="form-control select2" required>
-														<?php
-														foreach ($design_value as $dekey) {
-															if ($design == $dekey->m_dept_id) {
-																$op = 'selected';
-															} else {
-																$op = '';
-															}
-														?>
-															<option value="<?php echo $dekey->m_dept_id; ?>" <?= $op ?>><?php echo $dekey->m_dept_name; ?>
-															</option>
-														<?php
-														}
-
-														?>
-
-													</select>
-												</div>
-											</div>
-
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Store</label>
-													<select name="m_emp_store" id="m_emp_store" class="form-control select2">
-														<?php if (!empty($store_list)) {
-															foreach ($store_list as $key) {
-																if ($store == $key->m_str_id) {
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Department <span class="text-danger">*</span></label>
+														<select name="m_emp_dept" id="m_emp_dept" class="form-control select2" required>
+															<?php
+															foreach ($dept_value as $dkey) {
+																if ($dept == $dkey->m_dept_id) {
 																	$op = 'selected';
 																} else {
 																	$op = '';
 																}
-																echo '<option value="' . $key->m_str_id . '" ' . $op . '>' . $key->m_str_name . '</option>';
+															?>
+																<option value="<?php echo $dkey->m_dept_id; ?>" <?= $op ?>><?php echo $dkey->m_dept_name; ?>
+																</option>
+															<?php
 															}
-														} ?>
 
-													</select>
+															?>
 
+														</select>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Roles</label>
-													<select name="m_emp_roll" id="m_emp_roll" class="form-control select2">
-														<?php if (!empty($roll_value)) {
-															foreach ($roll_value as $key) {
-																if ($roll == $key->m_dept_id) {
+
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Designation <span class="text-danger">*</span></label>
+														<select name="m_emp_design" id="m_emp_design" class="form-control select2" required>
+															<?php
+															foreach ($design_value as $dekey) {
+																if ($design == $dekey->m_dept_id) {
 																	$op = 'selected';
 																} else {
 																	$op = '';
 																}
-																echo '<option value="' . $key->m_dept_id . '" ' . $op . '>' . $key->m_dept_name . '</option>';
+															?>
+																<option value="<?php echo $dekey->m_dept_id; ?>" <?= $op ?>><?php echo $dekey->m_dept_name; ?>
+																</option>
+															<?php
 															}
-														} ?>
 
-													</select>
+															?>
 
+														</select>
+													</div>
 												</div>
-											</div>
 
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Date Of Birth <span class="text-danger">*</span></label>
-													<input type="date" name="m_emp_dob" id="m_emp_dob" max="<?= date('Y-m-d', strtotime(date('Y-m-d') . '- 15 years')) ?>" class="form-control" required value="<?= $dob ?>">
-												</div>
-											</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Store</label>
+														<select name="m_emp_store" id="m_emp_store" class="form-control select2">
+															<?php if (!empty($store_list)) {
+																foreach ($store_list as $key) {
+																	if ($store == $key->m_str_id) {
+																		$op = 'selected';
+																	} else {
+																		$op = '';
+																	}
+																	echo '<option value="' . $key->m_str_id . '" ' . $op . '>' . $key->m_str_name . '</option>';
+																}
+															} ?>
 
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Date Of Joining <span class="text-danger">*</span></label>
-													<input type="date" name="m_emp_doj" id="m_emp_doj" max="<?= date('Y-m-d') ?>" class="form-control" required value="<?= $doj ?>">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Mobile Number <span class="text-danger">*</span></label>
-													<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_mobile" id="m_emp_mobile" class="form-control mobilevali" placeholder="Enter Mobile Number" required="" value="<?= $mobile; ?>">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Alt Mobile <span class="text-danger">*</span></label>
-													<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_altmobile" id="m_emp_altmobile" class="form-control mobilevali" placeholder="Enter Phone Number" required value="<?= $altmobile; ?>">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Email id</label>
-													<input type="email" name="m_emp_email" id="m_emp_email" class="form-control" placeholder="Enter Your Email id" value="<?= $email; ?>">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Alt Email id</label>
-													<input type="email" name="m_emp_altemail" id="m_emp_altemail" class="form-control" placeholder="Enter Your Email id" value="<?= $altemail; ?>">
-												</div>
-											</div>
+														</select>
 
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Duty Shift</label>
-													<select name="m_emp_dshift" id="m_emp_dshift" class="form-control select2" required>
-												<?php
-												foreach ($shift_value as $skey) {
-													if ($m_emp_dshift == $skey->m_dept_id) {
-														$op = 'selected';
-													} else {
-														$op = '';
-													}
-												?>
-													<option value="<?php echo $skey->m_dept_id; ?>" <?= $op ?>><?php echo $skey->m_dept_name; ?></option>
-												<?php
-												}
-												?>
-											</select> 
-
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Duty Type</label>
-													<select name="m_emp_dtype" id="m_emp_dtype" class="form-control select2">
-														<option value="Fix (Office time)" <?php if ($dtype == "Fix (Office time)") {
-																								echo 'selected';
-																							} ?>>Fix (Office time)</option>
-														<option value="GST-12%" <?php if ($dtype == "GST-12%") {
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Roles</label>
+														<select name="m_emp_roll" id="m_emp_roll" class="form-control select2">
+															<?php if (!empty($roll_value)) {
+																foreach ($roll_value as $key) {
+																	if ($roll == $key->m_dept_id) {
+																		$op = 'selected';
+																	} else {
+																		$op = '';
+																	}
+																	echo '<option value="' . $key->m_dept_id . '" ' . $op . '>' . $key->m_dept_name . '</option>';
+																}
+															} ?>
+
+														</select>
+
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Date Of Birth <span class="text-danger">*</span></label>
+														<input type="date" name="m_emp_dob" id="m_emp_dob" max="<?= date('Y-m-d', strtotime(date('Y-m-d') . '- 15 years')) ?>" class="form-control" required value="<?= $dob ?>">
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Date Of Joining <span class="text-danger">*</span></label>
+														<input type="date" name="m_emp_doj" id="m_emp_doj" max="<?= date('Y-m-d') ?>" class="form-control" required value="<?= $doj ?>">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Mobile Number <span class="text-danger">*</span></label>
+														<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_mobile" id="m_emp_mobile" class="form-control mobilevali" placeholder="Enter Mobile Number" required="" value="<?= $mobile; ?>">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Alt Mobile <span class="text-danger">*</span></label>
+														<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_emp_altmobile" id="m_emp_altmobile" class="form-control mobilevali" placeholder="Enter Phone Number" required value="<?= $altmobile; ?>">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Email id</label>
+														<input type="email" name="m_emp_email" id="m_emp_email" class="form-control" placeholder="Enter Your Email id" value="<?= $email; ?>">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Alt Email id</label>
+														<input type="email" name="m_emp_altemail" id="m_emp_altemail" class="form-control" placeholder="Enter Your Email id" value="<?= $altemail; ?>">
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Duty Shift</label>
+														<select name="m_emp_dshift" id="m_emp_dshift" class="form-control select2" required>
+															<?php
+															foreach ($shift_value as $skey) {
+																if ($m_emp_dshift == $skey->m_dept_id) {
+																	$op = 'selected';
+																} else {
+																	$op = '';
+																}
+															?>
+																<option value="<?php echo $skey->m_dept_id; ?>" <?= $op ?>><?php echo $skey->m_dept_name; ?></option>
+															<?php
+															}
+															?>
+														</select>
+
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Duty Type</label>
+														<select name="m_emp_dtype" id="m_emp_dtype" class="form-control select2">
+															<option value="Fix (Office time)" <?php if ($dtype == "Fix (Office time)") {
+																									echo 'selected';
+																								} ?>>Fix (Office time)</option>
+															<option value="GST-12%" <?php if ($dtype == "GST-12%") {
+																						echo 'selected';
+																					} ?>>GST-12%</option>
+
+														</select>
+
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Rest Day</label>
+														<select name="m_emp_rest" id="m_emp_rest" class="form-control select2">
+															<option value="none" <?php if ($rest == "none") {
+																						echo 'selected';
+																					} ?>>None</option>
+															<option value="1" <?php if ($rest == "2") {
 																					echo 'selected';
-																				} ?>>GST-12%</option>
-
-													</select>
-
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Rest Day</label>
-													<select name="m_emp_rest" id="m_emp_rest" class="form-control select2">
-														<option value="none" <?php if ($rest == "none") {
+																				} ?>>Mon</option>
+															<option value="2" <?php if ($rest == "2") {
 																					echo 'selected';
-																				} ?>>None</option>
-														<option value="1" <?php if ($rest == "2") {
-																				echo 'selected';
-																			} ?>>Mon</option>
-														<option value="2" <?php if ($rest == "2") {
-																				echo 'selected';
-																			} ?>>Tue</option>
-														<option value="3" <?php if ($rest == "3") {
-																				echo 'selected';
-																			} ?>>Wed</option>
-														<option value="4" <?php if ($rest == "4") {
-																				echo 'selected';
-																			} ?>>Thu</option>
-														<option value="5" <?php if ($rest == "5") {
-																				echo 'selected';
-																			} ?>>Fri</option>
-														<option value="6" <?php if ($rest == "6") {
-																				echo 'selected';
-																			} ?>>Sat</option>
-														<option value="7" <?php if ($rest == "7") {
-																				echo 'selected';
-																			} ?>>Sun</option>
+																				} ?>>Tue</option>
+															<option value="3" <?php if ($rest == "3") {
+																					echo 'selected';
+																				} ?>>Wed</option>
+															<option value="4" <?php if ($rest == "4") {
+																					echo 'selected';
+																				} ?>>Thu</option>
+															<option value="5" <?php if ($rest == "5") {
+																					echo 'selected';
+																				} ?>>Fri</option>
+															<option value="6" <?php if ($rest == "6") {
+																					echo 'selected';
+																				} ?>>Sat</option>
+															<option value="7" <?php if ($rest == "7") {
+																					echo 'selected';
+																				} ?>>Sun</option>
 
 
-													</select>
+														</select>
 
+													</div>
 												</div>
-											</div>
 
-											<!-- <div class="col-md-4" id="dol_block">
+												<!-- <div class="col-md-4" id="dol_block">
 												<div class="form-group">
 													<label>Date of Leave</label>
 													<input type="date" name="m_emp_dol" id="m_emp_dol" class="form-control" value="<?= $dol ?>">
 												</div>
 											</div> -->
-											<div class="col-md-2" id="">
-												<div class="form-group">
-													<label>Status</label>
-													<select name="m_emp_status" class="form-control">
-														<option value="1" <?= $m_emp_status == '1' ? 'selected' : '' ?>>Active</option>
-														<option value="2" <?= $m_emp_status == '2' ? 'selected' : '' ?>>IN-Active</option>
-													</select>
+												<div class="col-md-2" id="">
+													<div class="form-group">
+														<label>Status</label>
+														<select name="m_emp_status" class="form-control">
+															<option value="1" <?= $m_emp_status == '1' ? 'selected' : '' ?>>Active</option>
+															<option value="2" <?= $m_emp_status == '2' ? 'selected' : '' ?>>IN-Active</option>
+														</select>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Password</label>
-													<input type="text" name="m_emp_password" id="m_emp_password" class="form-control" value="<?= $password ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Password</label>
+														<input type="text" name="m_emp_password" id="m_emp_password" class="form-control" value="<?= $password ?>">
+													</div>
+
 												</div>
 
-											</div>
-											
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>No.Of Leaves Monthly</label>
-													<input type="number" name="m_emp_monthly" id="m_emp_monthly" class="form-control"  value="<?= $monthly ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>No.Of Leaves Monthly</label>
+														<input type="number" name="m_emp_monthly" id="m_emp_monthly" class="form-control" value="<?= $monthly ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>No.Of Leaves yearly</label> 
-													<input type="number" name="m_emp_yearly" id="m_emp_yearly" class="form-control"  value="<?= $yearly ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>No.Of Leaves yearly</label>
+														<input type="number" name="m_emp_yearly" id="m_emp_yearly" class="form-control" value="<?= $yearly ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Actual Salary</label>
-													<input type="number" name="m_emp_salary" id="m_emp_salary" readonly class="form-control" value="<?= $salary ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Actual Salary</label>
+														<input type="number" name="m_emp_salary" id="m_emp_salary" readonly class="form-control" value="<?= $salary ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Gross Salary</label>
-													<input type="number" name="m_emp_gross" id="m_emp_gross" readonly class="form-control" value="<?= $grosssalary ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Gross Salary</label>
+														<input type="number" name="m_emp_gross" id="m_emp_gross" readonly class="form-control" value="<?= $grosssalary ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Previous Employer</label>
-													<input type="text" name="m_emp_prev_empr" id="m_emp_prev_empr" class="form-control" value="<?= $prev_empr ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Previous Employer</label>
+														<input type="text" name="m_emp_prev_empr" id="m_emp_prev_empr" class="form-control" value="<?= $prev_empr ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Previous Department</label>
-													<input type="text" name="m_emp_prev_dept" id="m_emp_prev_dept" class="form-control" value="<?= $prev_dept ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Previous Department</label>
+														<input type="text" name="m_emp_prev_dept" id="m_emp_prev_dept" class="form-control" value="<?= $prev_dept ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label>Previous Designation</label>
-													<input type="text" name="m_emp_prev_design" id="m_emp_prev_design" class="form-control" value="<?= $prev_design ?>">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label>Previous Designation</label>
+														<input type="text" name="m_emp_prev_design" id="m_emp_prev_design" class="form-control" value="<?= $prev_design ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label>Prev. Employement Duration</label>
-													<input type="text" name="m_emp_prev_duration" id="m_emp_prev_duration" class="form-control" value="<?= $prev_duration ?>">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label>Prev. Employement Duration</label>
+														<input type="text" name="m_emp_prev_duration" id="m_emp_prev_duration" class="form-control" value="<?= $prev_duration ?>">
+													</div>
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Local Address</label>
-													<textarea name="m_emp_laddress" id="m_emp_laddress" class="form-control"><?= $laddress ?></textarea>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Local Address</label>
+														<textarea name="m_emp_laddress" id="m_emp_laddress" class="form-control"><?= $laddress ?></textarea>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Permanent Address</label>
-													<textarea name="m_emp_paddress" id="m_emp_paddress" class="form-control"><?= $paddress ?></textarea>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Permanent Address</label>
+														<textarea name="m_emp_paddress" id="m_emp_paddress" class="form-control"><?= $paddress ?></textarea>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Qualification</label>
-													<textarea name="m_emp_qualification" id="m_emp_qualification" class="form-control"><?= $qualification ?></textarea>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Qualification</label>
+														<textarea name="m_emp_qualification" id="m_emp_qualification" class="form-control"><?= $qualification ?></textarea>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!---------------5th row completed--------------->
-								<h3>Salary Mode</h3>
-								<?php
-								if (!empty($slbk_value)) {
-									$firstRow = true;
-									foreach ($slbk_value as $val) { ?>
-										<div class="row sbk_delt" id="row">
-											<div class="col-md-2">
-												<div class="form-group">
-													<?php if ($firstRow) { ?> <label>Name</label> <?php } ?>
-													<input type="hidden" name="m_esalary_id[]" value="<?= $val->m_esalary_id ?>">
-													<input type="hidden" name="m_empid[]" value="<?= $val->m_empid ?>">
-													<select name="m_sbreakup_id[]" class="form-control">
-														<?php
-														if (!empty($salarybk_value)) {
-															foreach ($salarybk_value as $row) {
-																$areaselect = ($val->m_sbreakup_id == $row->m_dept_id) ? 'selected' : '';
-																echo "<option value='" . $row->m_dept_id . "' $areaselect>" . $row->m_dept_name . "</option>";
+									<!---------------5th row completed--------------->
+									<h3>Salary Mode</h3>
+									<?php
+									if (!empty($slbk_value)) {
+										$firstRow = true;
+										foreach ($slbk_value as $val) { ?>
+											<div class="row sbk_delt" id="row">
+												<div class="col-md-2">
+													<div class="form-group">
+														<?php if ($firstRow) { ?> <label>Name</label> <?php } ?>
+														<input type="hidden" name="m_esalary_id[]" value="<?= $val->m_esalary_id ?>">
+														<input type="hidden" name="m_empid[]" value="<?= $val->m_empid ?>">
+														<select name="m_sbreakup_id[]" class="form-control">
+															<?php
+															if (!empty($salarybk_value)) {
+																foreach ($salarybk_value as $row) {
+																	$areaselect = ($val->m_sbreakup_id == $row->m_dept_id) ? 'selected' : '';
+																	echo "<option value='" . $row->m_dept_id . "' $areaselect>" . $row->m_dept_name . "</option>";
+																}
 															}
-														}
-														?>
-													</select>
+															?>
+														</select>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<?php if ($firstRow) { ?> <label>Type</label> <?php } ?>
-													<select name="m_amounttype[]" class="form-control amountType">
-														<option value="1" <?= $val->m_amounttype == '1' ? 'selected' : '' ?>>Add On</option>
-														<option value="2" <?= $val->m_amounttype == '2' ? 'selected' : '' ?>>Deduction</option>
-													</select>
+												<div class="col-md-2">
+													<div class="form-group">
+														<?php if ($firstRow) { ?> <label>Type</label> <?php } ?>
+														<select name="m_amounttype[]" class="form-control amountType">
+															<option value="1" <?= $val->m_amounttype == '1' ? 'selected' : '' ?>>Add On</option>
+															<option value="2" <?= $val->m_amounttype == '2' ? 'selected' : '' ?>>Deduction</option>
+														</select>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<?php if ($firstRow) { ?> <label>Amount *</label> <?php } ?>
-													<input type="text" name="m_amount[]" class="form-control amount" value="<?= $val->m_amount ?>">
+												<div class="col-md-2">
+													<div class="form-group">
+														<?php if ($firstRow) { ?> <label>Amount *</label> <?php } ?>
+														<input type="text" name="m_amount[]" class="form-control amount" value="<?= $val->m_amount ?>">
+													</div>
 												</div>
-											</div>
 
-											<div class="col-md-1 d-flex align-items-end">
-												<div class="form-group">
-													<button type="button" name="addRowButton" id="addRowButton" class="btn btn-success add_more me-2" title="Add More">+</button>
-													<button type="button" class="btn btn-danger removeRowButton delete-sbk" data-value="<?php echo $val->m_esalary_id; ?>">-</button>
+												<div class="col-md-1 d-flex align-items-end">
+													<div class="form-group">
+														<button type="button" name="addRowButton" id="addRowButton" class="btn btn-success add_more me-2" title="Add More">+</button>
+														<button type="button" class="btn btn-danger removeRowButton delete-sbk" data-value="<?php echo $val->m_esalary_id; ?>">-</button>
+													</div>
 												</div>
 											</div>
-										</div>
-								<?php
-										$firstRow = false;
+									<?php
+											$firstRow = false;
+										}
 									}
-								}
-								?>
-								<div id="repeat_div"></div>
+									?>
+									<div id="repeat_div"></div>
 
 
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<button type="submit" id="btn-emp-update" class="btn btn-block btn-info"> Update</button>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-layout-submit">
+												<button type="submit" id="btn-emp-update" class="btn btn-block btn-info"> Update</button>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<?php if (!empty($id)) { ?>
+												<div class="form-layout-submit"><a href="<?php echo site_url('HrDept/employe_list'); ?>" class="btn btn-block btn-danger">Cancel</a>
+												<?php } else { ?>
+													<div class="form-layout-submit"><a href="<?php echo site_url('HrDept/add_employe'); ?>" class="btn btn-block btn-danger">Reset</a>
+													<?php } ?>
+													</div>
+												</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<?php if (!empty($id)) { ?>
-											<div class="form-layout-submit"><a href="<?php echo site_url('HrDept/employe_list'); ?>" class="btn btn-block btn-danger">Cancel</a>
-											<?php } else { ?>
-												<div class="form-layout-submit"><a href="<?php echo site_url('HrDept/add_employe'); ?>" class="btn btn-block btn-danger">Reset</a>
-												<?php } ?>
-												</div>
-											</div>
-									</div>
-								</div>
 
-							</form>
+								</form>
 							<?php } ?>
 						</div>
 						<!-- /.card-body -->

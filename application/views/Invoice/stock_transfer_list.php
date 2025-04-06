@@ -12,8 +12,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-6 text-right">
-					<a href="<?php echo site_url('Invoice/stock_transfe_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New</a>
-
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'Add')) { ?>
+						<a href="<?php echo site_url('Invoice/stock_transfe_add') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -33,15 +34,15 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 5%">#</th>
 										<th>Date</th>
 										<th>Challan No</th>
-										<th>From</th> 
-										<th>To</th> 
-										<th>Product</th> 
-										<th>Batch</th> 
-										<th>Qty</th> 
+										<th>From</th>
+										<th>To</th>
+										<th>Product</th>
+										<th>Batch</th>
+										<th>Qty</th>
 										<th style="width: 15%">Action</th>
 									</tr>
 								</thead>
-								<tbody> 
+								<tbody>
 									<?php
 									$i = 1;
 									if (!empty($all_value)) {
@@ -50,20 +51,20 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									?>
 											<tr>
 												<td><?= $i; ?></td>
-												<td><?= date('d-m-Y',strtotime($value->stk_trans_date)); ?></td>
-												<td><?= $value->stk_trans_challan ; ?></td>
-												<td><?= $value->trans_from; ?></td> 
-												<td><?= $value->trans_to; ?></td> 
-												<td><?= $value->product_name; ?></td> 
-												<td><?= $value->batch_number; ?></td> 
-												<td><?= $value->totalqty; ?></td> 
-												 
+												<td><?= date('d-m-Y', strtotime($value->stk_trans_date)); ?></td>
+												<td><?= $value->stk_trans_challan; ?></td>
+												<td><?= $value->trans_from; ?></td>
+												<td><?= $value->trans_to; ?></td>
+												<td><?= $value->product_name; ?></td>
+												<td><?= $value->batch_number; ?></td>
+												<td><?= $value->totalqty; ?></td>
+
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?PHP } ?>
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'DPT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-stocktrans" data-dtype="1" data-value="<?php echo $value->stk_trans_challan; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'Delete')) { ?>
+														<button class="btn btn-danger btn-sm delete-stocktrans" data-dtype="1" data-value="<?php echo $value->stk_trans_challan; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?PHP } ?>
 												</td>
 											</tr>

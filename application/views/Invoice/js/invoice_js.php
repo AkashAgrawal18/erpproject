@@ -5,18 +5,23 @@
             let custid = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custid')
             let custname = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custname')
             let custtype = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custtype')
+            let custdis = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custdis')
+            let custstate = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custstate')
             let custmobile = $(this).val();
 
             $('#m_entity_type').val(custtype);
             $('#m_inv_entity').val(custid);
             $('#m_entity_name').val(custname);
-
+            $('#m_entity_discount').val(custdis);
+            $('#m_entity_state').val(custstate);
+            $('#m_inv_dispr').val(custdis)
         });
 
 
         $("#m_inv_store").change(function() {
             var selectedWrh = $(this).val();
-
+            var sstate = $(this).find('option:selected').data('sstate');
+            $('#m_store_state').val(sstate);
             $("#items_datalist option").each(function() {
                 var btchWrh = $(this).data("warehseid");
 
@@ -32,7 +37,16 @@
         total_calculate_fun();
         let incount = $('#rowunt').val();
         $(document).on('change', '#item_serch_inp', function() {
-            let sttnid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-sttnid')
+
+            if ($('#m_entity_mobile').val() == null || $('#m_entity_mobile').val() == "" || $('#m_inv_store').val() == null || $('#m_inv_store').val() == "") {
+                swal("First Select Store and Enter Customer Details", {
+                    icon: "error",
+                    timer: 1000,
+                });
+                return false;
+            }
+
+            let prodname = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-prodname')
             let prodid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-prodid')
             let batchid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-batchid')
             let batchno = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-batchno')
@@ -41,10 +55,17 @@
             let sizename = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-sizename')
             let warehseid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-warehseid')
             let price = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-price')
-            let prodname = $(this).val();
+            let sttnid = $(this).val();
+            let custdis = parseInt($('#m_entity_discount').val());
+            let custstate = $('#m_entity_state').val();
+            let sstate = $('#m_store_state').val();
+            let gsttype = 1;
             incount++
 
-            addrow(incount, sttnid, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname, price);
+            if (custstate != sstate) {
+                gsttype = 2;
+            }
+            addrow(incount, sttnid, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname, price, custdis, gsttype);
             $(this).val('');
         });
 
@@ -191,7 +212,20 @@
     });
 
 
-    function addrow(x, sttnid, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname, price) {
+    function addrow(x, sttnid, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname, price, custdis, gsttype) {
+        let gstpr = parseFloat($('#m_inv_taxper').val());
+        let cgst = 0;
+        let sgst = 0;
+        let igst = 0;
+        if (gsttype == 1) {
+            cgst = gstpr/2;
+            sgst = gstpr/2;
+            igst = 0;
+        } else {
+            cgst = 0;
+            sgst = 0;
+            igst = gstpr;
+        }
         $('#tableblock').append(` <tr id="rowcot${x}">
         <td id="rowcount${x}">${x}</td>
                                             <td id="item_name${x}">${prodname}</td>
@@ -205,13 +239,18 @@
                                             <input type="number" id="inv_item_qty${x}" name="inv_item_qty[]" class="prodqty checkqty calclss" data-count="${x}" style="width:80px" value="0">
                                             <input type="hidden" name="pre_item_qty[]" value="0"></td>
                                             <td><input type="number" id="inv_item_rate${x}" name="inv_item_rate[]" class="prodrate calclss " data-count="${x}" style="width:80px" value="${price}">
+                                            <input type="hidden" id="inv_item_disamt${x}" name="inv_item_disamt[]" value="0" class="proddisamt">
+                                            <input type="hidden" id="inv_item_disper${x}" name="inv_item_disper[]" value="${custdis}" class="prodisper">
                                             <input type="hidden" id="inv_item_pretaxamt${x}" name="inv_item_pretaxamt[]" value="0" class="prodstotal">
                                             <input type="hidden" id="inv_item_cgst${x}" name="inv_item_cgst[]" value="0" class="prodcgst">
                                             <input type="hidden" id="inv_item_sgst${x}" name="inv_item_sgst[]" value="0" class="prodsgst">
+                                            <input type="hidden" id="inv_item_igst${x}" name="inv_item_igst[]" value="0" class="prodigst">
                                             <input type="hidden" id="inv_item_netamt${x}" name="inv_item_netamt[]" value="0" class="prodntotal"></td>
                                             <td id="item_pretaxamt${x}"></td>
-                                            <td id="item_cgst${x}"></td>
-                                            <td id="item_sgst${x}"></td>
+                                            <td id="item_cgst${x}">${cgst}</td>
+                                            <td id="item_sgst${x}">${sgst}</td>
+                                            <td id="item_igst${x}">${igst}</td>
+                                            <td id="item_custdis${x}">${custdis}</td>
                                             <td id="item_netamt${x}"></td>
                                             <td>  <button type="button" class="btn btn-danger px-1 py-0 removerow" data-count="${x}" title="Delete"><i class="fa fa-trash"></i></button></td>
                                             </tr>`);
@@ -221,18 +260,22 @@
 
         let rate = parseFloat($('#inv_item_rate' + count).val());
         let qty = parseInt($('#inv_item_qty' + count).val());
-        let gstpr = 9;
+        let discount = parseFloat($('#inv_item_disper'+ count).val());
+        let gstpr = parseFloat($('#m_inv_taxper').val());
         let subtotal = (rate * qty);
-        let gstamount = ((gstpr / 100) * subtotal);
-        let nettotal = (subtotal + (gstamount * 2));
-        $('#item_pretaxamt' + count).html(subtotal);
-        $('#item_cgst' + count).html(gstamount.toFixed(2));
-        $('#item_sgst' + count).html(gstamount.toFixed(2));
+        let disamount = ((discount / 100) * subtotal);
+        let nettotal = (subtotal - disamount);
+        let gstamount = ((gstpr / 100) * nettotal);
+        let pretaxtotal = (subtotal - gstamount);
+        $('#item_pretaxamt' + count).html(pretaxtotal);
+        // $('#item_cgst' + count).html(gstamount.toFixed(2));
+        // $('#item_sgst' + count).html(gstamount.toFixed(2));
         $('#item_netamt' + count).html(nettotal.toFixed(2));
 
-        $('#inv_item_pretaxamt' + count).val(subtotal);
+        $('#inv_item_pretaxamt' + count).val(pretaxtotal.toFixed(2));
         $('#inv_item_cgst' + count).val(gstamount.toFixed(2));
         $('#inv_item_sgst' + count).val(gstamount.toFixed(2));
+        $('#inv_item_disamt' + count).val(disamount.toFixed(2));
         $('#inv_item_netamt' + count).val(nettotal.toFixed(2));
     }
 
@@ -259,6 +302,16 @@
             Tsgst += parseFloat($(this).val());
 
         });
+        var Tigst = 0;
+        $('.prodigst').each(function(index) {
+            Tigst += parseFloat($(this).val());
+
+        });
+        var Tdisamt = 0;
+        $('.proddisamt').each(function(index) {
+            Tdisamt += parseFloat($(this).val());
+
+        });
         var Tntotal = 0;
         $('.prodntotal').each(function(index) {
             Tntotal += parseFloat($(this).val());
@@ -267,8 +320,8 @@
 
         $('#qty_total').html(totalqty);
         $('#sub_total').html(Tstotal);
-        $('#cgst_total').html(Tcgst);
-        $('#sgst_total').html(Tsgst);
+        // $('#cgst_total').html(Tcgst);
+        // $('#sgst_total').html(Tsgst);
         $('#grand_total').html(Tntotal);
         discount_cal_fun();
     }
@@ -276,18 +329,18 @@
     function discount_cal_fun() {
         let Tstotal = parseFloat($('#sub_total').html());
         let dispr = parseInt($('#m_inv_dispr').val());
-        let disamt = ((dispr / 100) * Tstotal);
-        let gstpr = 9;
+        let disamt = ((dispr / 100) * Math.round(Tstotal));
+        let gstpr = parseFloat($('#m_inv_taxper').val());
         let subtotal = (Tstotal - disamt);
         let gstamount = ((gstpr / 100) * subtotal);
-        let nettotal = (subtotal + (gstamount * 2));
+        let nettotal = (subtotal + gstamount);
 
         $('#m_inv_amount').val(Tstotal);
         $('#m_inv_discount').val(disamt.toFixed(2));
         $('#m_inv_pretax_amount').val(subtotal.toFixed(2));
-        $('#m_inv_cgst').val(gstamount.toFixed(2));
-        $('#m_inv_sgst').val(gstamount.toFixed(2));
-        $('#total_tax').val(gstamount.toFixed(2) * 2);
+        $('#m_inv_cgst').val(gstamount / 2);
+        $('#m_inv_sgst').val(gstamount / 2);
+        $('#total_tax').val(gstamount.toFixed(2));
         $('#m_inv_totalamt').val(nettotal.toFixed(2));
 
     }

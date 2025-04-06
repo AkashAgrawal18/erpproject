@@ -12,8 +12,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-6 text-right">
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Add')) {  ?>
 						<a href="<?php echo site_url('HrDept/add_employe') ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New Employee</a>
-					</div>
+					<?php } ?>
+				</div>
 			</div>
 		</div><!-- /.container-fluid -->
 	</section>
@@ -21,7 +23,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 	<!-- Main content -->
 	<section class="content">
 		<div class="container-fluid">
-			<div class="row"> 
+			<div class="row">
 				<div class="col-md-12">
 					<div class="card">
 						<!-- /.card-header -->
@@ -30,11 +32,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 								<thead>
 									<tr>
 										<th>Sno.</th>
-										<th>EmpCode</th> 
+										<th>EmpCode</th>
 										<th>EmpName</th>
-										<th>DOJ</th>  
-										<th>Mobile No</th> 
-										<th>Email</th> 
+										<th>DOJ</th>
+										<th>Mobile No</th>
+										<th>Email</th>
 										<th>Desig</th>
 										<th>Status</th>
 										<th>Action</th>
@@ -49,17 +51,17 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 									?>
 											<tr>
 												<td><?php echo $i; ?></td>
-												<td><?php echo $value->m_emp_code; ?></td> 
+												<td><?php echo $value->m_emp_code; ?></td>
 												<td><?php echo $value->m_emp_name; ?></td>
-												<td><?= date('d-m-Y', strtotime($value->m_emp_doj)); ?></td> 
+												<td><?= date('d-m-Y', strtotime($value->m_emp_doj)); ?></td>
 												<td><?php echo $value->m_emp_mobile; ?></td>
-												<td><?php echo $value->m_emp_email; ?></td>  
+												<td><?php echo $value->m_emp_email; ?></td>
 												<td><?php echo $value->m_dept_name; ?></td>
 
 												<td><?php if ($value->m_emp_status == 1) echo "Active";
-															else {
-																echo "In-Active";
-															} ?></td> 
+													else {
+														echo "In-Active";
+													} ?></td>
 
 												<td class="wd-30">
 
@@ -99,10 +101,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 														<i class="fa fa-eye"></i>
 													</button>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Edit')) { ?>
-													<a href="<?php echo base_url('HrDept/edit_employee?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+														<a href="<?php echo base_url('HrDept/edit_employee?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php } ?>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Delete')) { ?>
-													<button class="btn btn-danger btn-action delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+														<button class="btn btn-danger btn-action delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>
 											</tr>

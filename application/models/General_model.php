@@ -37,6 +37,9 @@ class General_model extends CI_model
 		$s_data = array(
 			"m_entity_name" => $this->input->post('m_entity_name'),
 			"m_entity_type" => $this->input->post('m_entity_type'),
+			"m_entity_gstno" => $this->input->post('m_entity_gstno'),
+			"m_entity_discount" => $this->input->post('m_entity_discount'),
+			"m_entity_state" => $this->input->post('m_entity_state'),
 			"m_entity_mobile" => $this->input->post('m_entity_mobile'),
 			"m_entity_address" => $this->input->post('m_entity_address'),
 			"m_entity_status" => $this->input->post('m_entity_status'),

@@ -1,7 +1,17 @@
 <?php $this->view('Includes/header') ?>
 <?php $roll_id = $this->session->userdata('roll_id');
-$logged_user_type = $this->session->userdata('user_type'); ?>
-
+$user_type = $this->session->userdata('user_type'); ?>
+<?php if ($pgtype == 1) {
+	$pagelink = "store_list";
+	$pgname = "Store";
+	$Md = "GEN";
+	$Smd = "STRFCT";
+} else {
+	$pagelink = "warehouse_list";
+	$pgname = "Warehouse";
+	$Md = "WRH";
+	$Smd = "STRFCT";
+} ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -11,8 +21,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 				<div class="col-sm-6">
 					<h1><?= $pagename ?></h1>
 				</div>
-				<div class="col-sm-6 text-right">
-					<a href="<?php echo site_url('General/store_add?type=' . $pgtype) ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New</a>
+				<div class="col-sm-6 text-right">	
+					<?php if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Add')) { ?>
+					<a href="<?= site_url('General/store_add?type=' . $pgtype) ?>" class="btn btn-sm btn-info btn-vsm"><i class="fa fa-plus-circle"></i> Add New</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -76,9 +88,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'STRFCT', 'Edit')) { ?>
+													<?php if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Edit')) { ?>
 														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a> <?php } ?>
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'STRFCT', 'Delete')) { ?>
+													<?php if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Delete')) { ?>
 														<button class="btn btn-danger btn-sm delete-store" data-value="<?php echo $value->m_str_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button> <?php } ?>
 												</td>
 											</tr>

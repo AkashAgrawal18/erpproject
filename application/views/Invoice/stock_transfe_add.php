@@ -12,7 +12,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-2 text-right">
-					<a href="<?php echo site_url('Invoice/stock_transfer_list') ?>" class="btn btn-sm btn-info">Stock Transfer List </a>
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'List')) { ?>
+						<a href="<?php echo site_url('Invoice/stock_transfer_list') ?>" class="btn btn-sm btn-info">Stock Transfer List </a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -26,22 +28,22 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<div class="card">
 
 						<div class="card-body">
-							<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'PDT', 'Add')) { ?>
+							<?php if (!empty($edit_value)) {
+								$stk_trans_date = $edit_value[0]->stk_trans_date;
+								$stk_trans_from = $edit_value[0]->stk_trans_from;
+								$stk_trans_to = $edit_value[0]->stk_trans_to;
+								$stk_trans_remark = $edit_value[0]->stk_trans_remark;
+								$fild = "Edit";
+							} else {
+								$stk_trans_date = date('Y-m-d');
+								$stk_trans_from = '';
+								$stk_trans_to = '';
+								$stk_trans_remark = '';
+								$fild = 'Add';
+							} ?>
+							<?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', $fild)) { ?>
 
 								<form method="post" action="#" id="frm-add-stocktrans">
-									<?php if (!empty($edit_value)) {
-										$stk_trans_challan = $edit_value[0]->stk_trans_challan;
-										$stk_trans_date = $edit_value[0]->stk_trans_date;
-										$stk_trans_from = $edit_value[0]->stk_trans_from;
-										$stk_trans_to = $edit_value[0]->stk_trans_to;
-										$stk_trans_remark = $edit_value[0]->stk_trans_remark;
-									} else {
-										$stk_trans_challan = '';
-										$stk_trans_date = date('Y-m-d');
-										$stk_trans_from = '';
-										$stk_trans_to = '';
-										$stk_trans_remark = '';
-									} ?>
 
 									<div class="row mb-1 g-3">
 
@@ -49,13 +51,6 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<div class="form-group">
 												<label>Date <span class="text-danger">*</span></label>
 												<input type="date" max="<?= date('Y-m-d') ?>" name="stk_trans_date" id="stk_trans_date" class="form-control" required="" value="<?= $stk_trans_date ?>">
-											</div>
-										</div>
-
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>Challan No <span class="text-danger">*</span></label>
-												<input type="text" name="stk_trans_challan" id="stk_trans_challan" class="form-control" placeholder="Enter Challan No" value="<?= $stk_trans_challan ?>">
 											</div>
 										</div>
 
@@ -108,20 +103,21 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 														<th></th>
 													</thead>
 													<tbody id="tableblock">
-														<?php $total_qty = 0; if (!empty($id)) {
+														<?php $total_qty = 0;
+														if (!empty($id)) {
 															$cou = 0;
 															foreach ($edit_value as $kry) {
 																$total_qty += $kry->stk_trans_qty;
 																$cou++;
 														?>
-																
+
 																<tr id="rowcot<?= $cou ?>">
 																	<td id="rowcount$<?= $cou ?>"><?= $cou ?></td>
 																	<td id="item_name<?= $cou ?>"><?= $kry->m_pro_name ?></td>
 																	<td id="item_batch<?= $cou ?>"><?= $kry->m_batch_number ?></td>
 																	<td><input type="hidden" name="stk_trans_id[]" id="stk_trans_id<?= $cou ?>" value="<?= $kry->stk_trans_id ?>">
 																		<input type="hidden" name="stk_trans_prod[]" id="stk_trans_prod<?= $cou ?>" value="<?= $kry->stk_trans_prod ?>">
-																		<input type="hidden" name="stk_trans_batch[]" id="stk_trans_batch<?= $cou ?>" data-avlqty="<?= ($kry->balance_qty+$kry->stk_trans_qty) ?>" value="<?= $kry->stk_trans_batch ?>">
+																		<input type="hidden" name="stk_trans_batch[]" id="stk_trans_batch<?= $cou ?>" data-avlqty="<?= ($kry->balance_qty + $kry->stk_trans_qty) ?>" value="<?= $kry->stk_trans_batch ?>">
 																		<input type="number" id="stk_trans_qty<?= $cou ?>" name="stk_trans_qty[]" class="prodqty checkqty" data-count="<?= $cou ?>" style="width:80px" value="<?= $kry->stk_trans_qty ?>">
 																		<input type="hidden" name="pre_item_qty[]" value="<?= $kry->stk_trans_qty ?>">
 																	</td>
@@ -140,7 +136,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													<tfoot>
 														<tr>
 															<td colspan="3">Total </td>
-															<td id="qty_total"><?= $total_qty?></td>
+															<td id="qty_total"><?= $total_qty ?></td>
 															<td colspan="3"></td>
 														</tr>
 													</tfoot>
@@ -153,7 +149,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													if (!empty($batch_value)) {
 														foreach ($batch_value as $Vitem) {
 													?>
-															<option value="<?= $Vitem->m_pro_name; ?>" data-prodid="<?= $Vitem->m_batch_pro_id ?>" data-batchid="<?= $Vitem->m_batch_id ?>" data-batchno="<?= $Vitem->m_batch_number ?>" data-avlbal="<?= $Vitem->balance_qty ?>" data-pckgname="<?= $Vitem->package_name ?>" data-sizename="<?= $Vitem->size_name ?>" data-warehseid="<?= $Vitem->m_batch_ware_id ?>"><?= $Vitem->m_pro_name . ' - ' . $Vitem->m_batch_number; ?></option>
+															<option value="<?= $Vitem->m_batch_number; ?>" data-prodid="<?= $Vitem->m_batch_pro_id ?>" data-batchid="<?= $Vitem->m_batch_id ?>" data-prodname="<?= $Vitem->m_pro_name ?>" data-avlbal="<?= $Vitem->balance_qty ?>" data-pckgname="<?= $Vitem->package_name ?>" data-sizename="<?= $Vitem->size_name ?>" data-warehseid="<?= $Vitem->stk_trans_to ?>"><?= $Vitem->m_pro_name . ' - ' . $Vitem->m_batch_number; ?></option>
 													<?php
 														}
 													}

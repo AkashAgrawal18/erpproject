@@ -1,6 +1,6 @@
 <?php $this->view('Includes/header'); ?>
 <?php $roll_id = $this->session->userdata('roll_id');
-$logged_user_type = $this->session->userdata('user_type'); ?>
+$user_type = $this->session->userdata('user_type'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -12,9 +12,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 				</div>
 				<div class="col-sm-6 text-right">
 					<div class="seipkon-breadcromb-right">
-						<a href="<?= site_url('HrDept/employe_list'); ?>" class="btn btn-info btn-vsm">
-							<i class="fa fa-list-alt"></i> All Employees
-						</a>
+						<?php if ($user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'List')) { ?>
+							<a href="<?= site_url('HrDept/employe_list'); ?>" class="btn btn-info btn-vsm">
+								<i class="fa fa-list-alt"></i> All Employees
+							</a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -31,7 +33,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<div class="card">
 
 						<div class="card-body">
-							<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Add')) { ?>
+							<?php if ($user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Add')) { ?>
 								<form method="post" action="#" id="frm-emp-create" enctype="mutipart/form-data">
 									<div class="row">
 										<div class="col-md-12">

@@ -6,18 +6,28 @@ $roll_id = $this->session->userdata('roll_id');
 if ($cattype == 1) {
 	$relink = "category_list";
 	$headname = "Category";
+	$Md = "PDT";
+	$Smd = "CTG";
 } else if ($cattype == 2) {
 	$relink = "sub_category_list";
 	$headname = "Sub Category";
+	$Md = "PDT";
+	$Smd = "SCTG";
 } else if ($cattype == 3) {
 	$relink = "product_package_list";
 	$headname = "Product Package";
+	$Md = "PDT";
+	$Smd = "PDTPACK";
 } else if ($cattype == 4) {
 	$relink = "product_size_list";
 	$headname = "Product Size";
+	$Md = "PDT";
+	$Smd = "PDTSIZE";
 } else if ($cattype == 5) {
 	$relink = "product_brand_list";
 	$headname = "Product Brand";
+	$Md = "PDT";
+	$Smd = "PDTBRAND";
 }
 
 ?>
@@ -94,12 +104,12 @@ if ($cattype == 1) {
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'PDT', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php } ?>
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'PDT', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-cate" data-value="<?php echo $value->m_cat_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-                                                    <?php } ?>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Delete')) { ?>
+														<button class="btn btn-danger btn-sm delete-cate" data-value="<?php echo $value->m_cat_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+													<?php } ?>
 												</td>
 											</tr>
 									<?php
@@ -117,114 +127,118 @@ if ($cattype == 1) {
 
 				</div>
 				<!-- /.col -->
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title"><?php if (!empty($id)) {
-														echo 'Edit Value';
-													} else {
-														echo 'Add New';
-													} ?></h3>
-						</div>
-						<!-- /.card-header -->
-						<div class="card-body">
-							<form method="post" action="#" id="frm-add-cate">
+				<?php $fild = !empty($id) ? "Edit" : "Add";
+				if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, $fild)) { ?>
 
-								<?php if (!empty($edit_value)) {
-									$id = $edit_value->m_cat_id;
-									$title = $edit_value->m_cat_name;
-									$cattype = $edit_value->m_cat_type;
-									$catimg = $edit_value->m_cat_img;
-									$status = $edit_value->m_cat_status;
-									$catsub = $edit_value->m_catsub_id;
-								} else {
-									$id = '';
-									$title = '';
-									$catimg = '';
-									$status = 1;
-									$catsub = '';
-								} ?>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label><?= $headname ?> Name<span class="text-danger">*</span></label>
-											<input type="hidden" name="m_cat_id" id="m_cat_id" value="<?= $id ?>">
-											<input type="hidden" name="m_cat_type" id="m_cat_type" value="<?= $cattype ?>">
-											<input type="text" name="m_cat_name" id="m_cat_name" class="form-control" placeholder="Enter Name" required="" value="<?= $title ?>">
-										</div>
-									</div>
-								</div>
-								<?php if ($cattype == 2) { ?>
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title"><?php if (!empty($id)) {
+															echo 'Edit Value';
+														} else {
+															echo 'Add New';
+														} ?></h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form method="post" action="#" id="frm-add-cate">
+
+									<?php if (!empty($edit_value)) {
+										$id = $edit_value->m_cat_id;
+										$title = $edit_value->m_cat_name;
+										$cattype = $edit_value->m_cat_type;
+										$catimg = $edit_value->m_cat_img;
+										$status = $edit_value->m_cat_status;
+										$catsub = $edit_value->m_catsub_id;
+									} else {
+										$id = '';
+										$title = '';
+										$catimg = '';
+										$status = 1;
+										$catsub = '';
+									} ?>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Category Name<span class="text-danger">*</span></label>
-												<select name="m_catsub_id" id="m_catsub_id" class="form-control select2">
-													<?php if (!empty($all_subcate)) {
-														foreach ($all_subcate as $key) {
-															if ($catsub == $key->m_cat_id) {
-																$op = 'selected';
-															} else {
-																$op = '';
+												<label><?= $headname ?> Name<span class="text-danger">*</span></label>
+												<input type="hidden" name="m_cat_id" id="m_cat_id" value="<?= $id ?>">
+												<input type="hidden" name="m_cat_type" id="m_cat_type" value="<?= $cattype ?>">
+												<input type="text" name="m_cat_name" id="m_cat_name" class="form-control" placeholder="Enter Name" required="" value="<?= $title ?>">
+											</div>
+										</div>
+									</div>
+									<?php if ($cattype == 2) { ?>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>Category Name<span class="text-danger">*</span></label>
+													<select name="m_catsub_id" id="m_catsub_id" class="form-control select2">
+														<?php if (!empty($all_subcate)) {
+															foreach ($all_subcate as $key) {
+																if ($catsub == $key->m_cat_id) {
+																	$op = 'selected';
+																} else {
+																	$op = '';
+																}
+																echo '<option value="' . $key->m_cat_id . '" ' . $op . '>' . $key->m_cat_name . '</option>';
 															}
-															echo '<option value="' . $key->m_cat_id . '" ' . $op . '>' . $key->m_cat_name . '</option>';
-														}
-													} ?>
+														} ?>
 
+													</select>
+												</div>
+											</div>
+										</div>
+									<?php }  ?>
+									<?php if ($cattype == 1 || $cattype == 2) { ?>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<?php
+													if (!empty($catimg) && file_exists('uploads/cate/' . $catimg)) {
+														$catepic = base_url('uploads/cate/' . $catimg);
+													} else {
+														$catepic = base_url('uploads/cate/default.jpg');
+													}
+													?>
+													<label class="control-label">Image</label>
+													<input type="hidden" name="catimg" value="<?php echo $catimg ?>">
+													<input type="file" name="m_cat_img" class="form-control">
+												</div>
+											</div>
+										</div>
+									<?php } ?>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Status</label>
+												<select name="m_cat_status" id="m_cat_status" class="form-control" title="Select Status">
+													<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
+													<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
 												</select>
 											</div>
 										</div>
 									</div>
-								<?php }  ?>
-								<?php if ($cattype == 1 || $cattype == 2) { ?>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<?php
-											if (!empty($catimg) && file_exists('uploads/cate/' . $catimg)) {
-												$catepic = base_url('uploads/cate/' . $catimg);
-											} else {
-												$catepic = base_url('uploads/cate/default.jpg');
-											}
-											?>
-											<label class="control-label">Image</label>
-											<input type="hidden" name="catimg" value="<?php echo $catimg ?>">
-											<input type="file" name="m_cat_img" class="form-control">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-layout-submit">
+												<button type="submit" id="btn-add-cate" class="btn btn-block btn-info">Submit</button>
+											</div>
 										</div>
-									</div>
-								</div>
-								<?php } ?>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label>Status</label>
-											<select name="m_cat_status" id="m_cat_status" class="form-control" title="Select Status">
-												<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
-												<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<button type="submit" id="btn-add-cate" class="btn btn-block btn-info">Submit</button>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<a href="<?php echo site_url('Product/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
+										<div class="col-md-6">
+											<div class="form-layout-submit">
+												<a href="<?php echo site_url('Product/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
 
+											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
+							</div>
+							<!-- /.card-body -->
 						</div>
-						<!-- /.card-body -->
-					</div>
-					<!-- /.card -->
+						<!-- /.card -->
 
-				</div>
+					</div>
+				<?php } ?>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->

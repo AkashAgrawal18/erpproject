@@ -21,12 +21,12 @@
         $(document).on('change', '#item_serch_inp', function() {
             let prodid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-prodid')
             let batchid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-batchid')
-            let batchno = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-batchno')
+            let prodname = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-prodname')
             let avlbal = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-avlbal')
             let pckgname = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-pckgname')
             let sizename = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-sizename')
             let warehseid = $("#items_datalist option[value='" + $(this).val() + "']").attr('data-warehseid')
-            let prodname = $(this).val();
+            let batchno = $(this).val();
             incount++
 
             addrow(incount, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname);

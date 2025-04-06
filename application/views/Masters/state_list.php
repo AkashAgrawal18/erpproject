@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-				<h1><?= $pagename ?></h1>
+					<h1><?= $pagename ?></h1>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -56,11 +56,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-												<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Edit')) { ?>
-													<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Edit')) { ?>
+														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php } ?>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Delete')) { ?>
-													<button class="btn btn-danger btn-sm delete-state" data-value="<?php echo $value->m_state_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+														<button class="btn btn-danger btn-sm delete-state" data-value="<?php echo $value->m_state_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>
 											</tr>
@@ -79,71 +79,74 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 
 				</div>
 				<!-- /.col -->
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title"><?php if (!empty($id)) {
-														echo 'Edit Value';
-													} else {
-														echo 'Add New';
-													} ?></h3>
+				<?php $fild = !empty($id) ? "Edit" : "Add";
+				if ($user_type == 1 || has_perm($roll_id, 'MST', 'ST', $fild)) { ?>
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title"><?php if (!empty($id)) {
+															echo 'Edit Value';
+														} else {
+															echo 'Add New';
+														} ?></h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Add')) { ?>
+									<form method="post" action="#" id="frm-add-state">
+										<?php if (!empty($edit_value)) {
+											$id = $edit_value->m_state_id;
+											$title = $edit_value->m_state_name;
+											$status = $edit_value->m_state_status;
+										} else {
+											$id = '';
+											$title = '';
+											$status = 1;
+										} ?>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>State Title<span class="text-danger">*</span></label>
+													<input type="hidden" name="m_state_id" id="m_state_id" value="<?= $id ?>">
+													<input type="text" name="m_state_name" id="m_state_name" class="form-control" placeholder="Enter State Title" required="" value="<?= $title ?>">
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>State Status</label>
+													<select name="m_state_status" id="m_state_status" class="form-control" title="Select Status">
+														<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
+														<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-layout-submit">
+													<button type="submit" id="btn-add-state" class="btn btn-block btn-info">Submit</button>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-layout-submit">
+													<a href="<?php echo site_url('Master/state_list') ?>" class="btn btn-block btn-danger">Cancel </a>
+
+												</div>
+											</div>
+										</div>
+									</form>
+								<?php } ?>
+							</div>
+							<!-- /.card-body -->
 						</div>
-						<!-- /.card-header -->
-						<div class="card-body">
-						<?php if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'Add')) { ?>
-							<form method="post" action="#" id="frm-add-state">
-								<?php if (!empty($edit_value)) {
-									$id = $edit_value->m_state_id;
-									$title = $edit_value->m_state_name;
-									$status = $edit_value->m_state_status;
-								} else {
-									$id = '';
-									$title = '';
-									$status = 1;
-								} ?>
+						<!-- /.card -->
 
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label>State Title<span class="text-danger">*</span></label>
-											<input type="hidden" name="m_state_id" id="m_state_id" value="<?= $id ?>">
-											<input type="text" name="m_state_name" id="m_state_name" class="form-control" placeholder="Enter State Title" required="" value="<?= $title ?>">
-										</div>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label>State Status</label>
-											<select name="m_state_status" id="m_state_status" class="form-control" title="Select Status">
-												<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
-												<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<button type="submit" id="btn-add-state" class="btn btn-block btn-info">Submit</button>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<a href="<?php echo site_url('Master/state_list') ?>" class="btn btn-block btn-danger">Cancel </a>
-
-										</div>
-									</div>
-								</div>
-							</form>
-							<?php } ?>
-						</div>
-						<!-- /.card-body -->
 					</div>
-					<!-- /.card -->
-
-				</div>
+				<?php } ?>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->

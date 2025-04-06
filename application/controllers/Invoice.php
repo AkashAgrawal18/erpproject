@@ -22,7 +22,7 @@ public function stock_transfe_add()
     } else {
         $data['pagename'] = "Add New Stock Transfer";
     }
-    $data['batch_value'] = $this->Invoice_model->get_availble_batch(date('Y-m-d'));
+    $data['batch_value'] = $this->Invoice_model->get_store_availble_batch(date('Y-m-d'));
     $data['store_value'] = $this->General_model->get_all_store(null,1);
     $data['edit_value'] = $this->Invoice_model->get_edit_stck_transfer($data['id']);
     //  echo '<pre>'; print_r($data['edit_value']); die ;
@@ -95,7 +95,6 @@ public function invoice_add()
         $data['pagename'] = "Add New Invoice";
     }
     $data['store_batchvalue'] = $this->Invoice_model->get_store_availble_batch(date('Y-m-d'));
-    $data['warehouse_batchvalue'] = $this->Invoice_model->get_availble_batch(date('Y-m-d'));
     $data['entities_value'] = $this->General_model->get_all_entity(null,1);
     $data['store_value'] = $this->General_model->get_all_store(null,1);
     $data['edit_value'] = $this->Invoice_model->get_edit_invoice($data['id']);
@@ -147,6 +146,14 @@ public function delete_invoice()
         }
         echo json_encode($info);
     }
+}
+
+public function invoice_print()
+{
+    $data['id'] = $this->input->get('id');
+    $data['edit_value'] = $this->Invoice_model->get_edit_invoice($data['id']);
+    //  echo '<pre>'; print_r($data['edit_value']); die ;
+    $this->load->view('Invoice/invoice_bil_print', $data);
 }
 
 //-------------------- Invoice -------------------//

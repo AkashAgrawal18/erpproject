@@ -76,6 +76,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					</div>
 				</div>
 				<!-- /.col -->
+				<?php $fild = !empty($id) ? "Edit":"Add"; if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', $fild)) { ?>
 				<div class="col-md-4">
 					<div class="card">
 						<div class="card-header">
@@ -109,9 +110,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<option value="">Select State</option>
 												<?php
 												if (!empty($get_active_state)) {
-													foreach ($get_active_state as $state) {
+													foreach ($get_active_state as $ste) {
 												?>
-														<option value="<?php echo $state->m_state_id; ?>" <?php if ($State == $state->m_state_id) echo 'selected'; ?>><?php echo $state->m_state_name; ?></option>
+														<option value="<?php echo $ste->m_state_id; ?>" <?php if ($State == $ste->m_state_id) echo 'selected'; ?>><?php echo $ste->m_state_name; ?></option>
 												<?php
 													}
 												}
@@ -160,6 +161,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<!-- /.card -->
 
 				</div>
+				 <?php } ?>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->

@@ -176,7 +176,7 @@ class Setting_model extends CI_model
 
 		$data = array(
 			"m_app_name" => $this->input->post('m_app_name'),
-			// "m_app_title" => $this->input->post('m_app_title'),
+			"m_app_title" => $this->input->post('m_app_title'),
 			"m_app_email" => $this->input->post('m_app_mail'),
 			"m_app_mobile" => $this->input->post('m_app_contact'),
 			"m_app_alt_mobile" => $this->input->post('m_app_alt_contact'),
@@ -187,6 +187,8 @@ class Setting_model extends CI_model
 			"m_app_linkedin" => $this->input->post('m_app_linkedin'),
 			"m_app_whatsapp" => $this->input->post('m_app_whatsapp'),
 			"m_app_twitter" => $this->input->post('m_app_twitter'),
+			"m_app_tax" => $this->input->post('m_app_tax'),
+			"m_app_gstno" => $this->input->post('m_app_gstno'),
 			"m_app_logo" => "$m_app_logo",
 			"m_app_icon" => "$m_app_icon",
 			"m_app_black_logo" => "$m_app_black_logo",

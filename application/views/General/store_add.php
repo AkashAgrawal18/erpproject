@@ -1,7 +1,17 @@
 <?php $this->view('Includes/header') ?>
 <?php $roll_id = $this->session->userdata('roll_id');
 $logged_user_type = $this->session->userdata('user_type'); ?>
-
+<?php if ($type == 1) {
+	$pagelink = "store_list";
+	$pgname = "Store";
+	$Md = "GEN";
+	$Smd = "STRFCT";
+} else {
+	$pagelink = "warehouse_list";
+	$pgname = "Warehouse";
+	$Md = "WRH";
+	$Smd = "STRFCT";
+} ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -12,11 +22,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					<h1><?= $pagename ?></h1>
 				</div>
 				<div class="col-sm-2 text-right">
-					<?php if ($type == 1) {
-						echo '<a href="' . site_url('General/store_list') . '" class="btn btn-sm btn-info">Store List </a>';
-					} else {
-						echo '<a href="' . site_url('General/warehouse_list') . '" class="btn btn-sm btn-info">Warehouse List </a>';
-					} ?>
+					<?php if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, 'List')) { ?>
+						<a href="<?= site_url('General/' . $pagelink) ?>" class="btn btn-sm btn-info"><?= $pgname ?> List </a>
+					<?php } ?>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->
@@ -29,7 +37,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-body">
-							<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'STRFCT', 'Add')) { ?>
+							<?php if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Add')) { ?>
 
 								<form method="post" action="#" id="frm-add-store">
 									<?php if (!empty($edit_value)) {
@@ -73,32 +81,32 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<input type="text" name="m_str_code" id="m_str_code" class="form-control" placeholder="Enter Code" value="<?= $code ?>">
 											</div>
 										</div>
-										<?php if($type == 1){ ?>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>Opening Time<span class="text-danger">*</span></label>
-												<input type="time" name="m_str_opening_time" id="m_str_opening_time" class="form-control"" required="" value=" <?= $stropening ?>">
+										<?php if ($type == 1) { ?>
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Opening Time<span class="text-danger">*</span></label>
+													<input type="time" name="m_str_opening_time" id="m_str_opening_time" class="form-control"" required="" value=" <?= $stropening ?>">
+												</div>
 											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>Closing Time<span class="text-danger">*</span></label>
-												<input type="time" name="m_str_closing_time" id="m_str_closing_time" class="form-control" required="" value="<?= $strclosing ?>">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Closing Time<span class="text-danger">*</span></label>
+													<input type="time" name="m_str_closing_time" id="m_str_closing_time" class="form-control" required="" value="<?= $strclosing ?>">
+												</div>
 											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>Manager Name<span class="text-danger">*</span> </label>
-												<input type="text" name="m_str_manage_name" id="m_str_manage_name" required class="form-control" placeholder="Manager Name" value="<?= $manager ?>">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Manager Name<span class="text-danger">*</span> </label>
+													<input type="text" name="m_str_manage_name" id="m_str_manage_name" required class="form-control" placeholder="Manager Name" value="<?= $manager ?>">
+												</div>
 											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>Mobile<span class="text-danger">*</span> </label>
-												<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_str_mobile" id="m_str_mobile" class="form-control mobilevali" placeholder="Enter Phone Number" required value="<?= $mobile ?>">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Mobile<span class="text-danger">*</span> </label>
+													<input type="tel" maxlength="10" minlength="10" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" name="m_str_mobile" id="m_str_mobile" class="form-control mobilevali" placeholder="Enter Phone Number" required value="<?= $mobile ?>">
+												</div>
 											</div>
-										</div>
-										 <?php }?>
+										<?php } ?>
 										<div class="col-sm-3">
 											<div class="form-group">
 												<label>State<span class="text-danger">*</span></label>
@@ -161,7 +169,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										</div>
 										<div class="col-md-3">
 											<div class="form-layout-submit">
-												<a href="<?php echo site_url('General/store_add?type='.$type) ?>" class="btn btn-block btn-danger">Cancel </a>
+												<a href="<?php echo site_url('General/' . $pagelink) ?>" class="btn btn-block btn-danger">Cancel </a>
 
 											</div>
 										</div>

@@ -21,7 +21,7 @@ class General extends CI_Controller
 		} else {
 			$data['pagename'] = "Add New Entity";
 		}
-		$data['emp_value'] = $this->Hr_model->get_emp_list();
+		$data['get_active_state'] = $this->Master_model->get_active_state();
 		$data['edit_value'] = $this->General_model->get_edit_entity($data['id']);
 		$this->load->view('General/entity_add', $data);
 	}

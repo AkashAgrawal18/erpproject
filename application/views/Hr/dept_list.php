@@ -1,22 +1,32 @@
 <?php $this->view('Includes/header'); ?>
 
 <?php $roll_id = $this->session->userdata('roll_id');
-$logged_user_type = $this->session->userdata('user_type');
+$user_type = $this->session->userdata('user_type');
 if ($pgtype == 1) {
 	$relink = "department_list";
 	$headname = "Department";
+	$Md = "HR";
+	$Smd = "DPT";
 } else if ($pgtype == 2) {
 	$relink = "designation_list";
 	$headname = "Designation";
+	$Md = "HR";
+	$Smd = "DGN";
 } else if ($pgtype == 3) {
 	$relink = "salaryBreakup_list";
 	$headname = "";
+	$Md = "MST";
+	$Smd = "SBRK";
 } else if ($pgtype == 4) {
 	$relink = "shift_roster_list";
 	$headname = "Shift Roster";
+	$Md = "HR";
+	$Smd = "SFTR";
 } else if ($pgtype == 5) {
 	$relink = "role_list";
 	$headname = "Roles";
+	$Md = "HR";
+	$Smd = "RLS";
 }
 ?>
 
@@ -48,18 +58,15 @@ if ($pgtype == 1) {
 									<tr>
 										<th style="width: 5%">#</th>
 										<th><?= $headname ?> Name</th>
-
 										<?php if ($pgtype == 1 || $pgtype == 2) { ?>
 											<th><?= $headname ?> Code</th>
 										<?php } elseif ($pgtype == 3) { ?>
 											<th><?= $headname ?> Type</th>
 										<?php } ?>
-
 										<?php if ($pgtype == 4) { ?>
 											<th>Start Time</th>
 											<th>End Time</th>
 										<?php } ?>
-
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -100,10 +107,10 @@ if ($pgtype == 1) {
 													?>
 												</td>
 												<td title="Action" style="white-space: nowrap;">
-													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'DPT', 'Edit')) { ?>
+													<?php if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Edit')) { ?>
 														<a href="<?php echo $edit_link; ?>" class="btn btn-success btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php }
-													if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'DPT', 'Delete')) { ?>
+													if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, 'Delete')) { ?>
 														<button class="btn btn-danger btn-sm delete-dept" data-value="<?php echo $value->m_dept_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>
@@ -123,104 +130,106 @@ if ($pgtype == 1) {
 
 				</div>
 				<!-- /.col -->
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title"><?php if (!empty($id)) {
-														echo 'Edit Value';
-													} else {
-														echo 'Add New';
-													} ?></h3>
-						</div>
-						<!-- /.card-header -->
-						<div class="card-body">
-							<form method="post" action="#" id="frm-add-dept">
+				<?php $fild = !empty($id) ? "Edit":"Add"; if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, $fild)) { ?>
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title"><?php if (!empty($id)) {
+															echo 'Edit Value';
+														} else {
+															echo 'Add New';
+														} ?></h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form method="post" action="#" id="frm-add-dept">
 
-								<?php if (!empty($edit_value)) {
-									$id = $edit_value->m_dept_id;
-									$title = $edit_value->m_dept_name;
-									$pgtype = $edit_value->m_dept_type;
-									$code = $edit_value->m_dept_code;
-									$status = $edit_value->m_dept_status;
-									$starttime = $edit_value->m_start_time;
-									$endtime = $edit_value->m_end_time;
-								} else {
-									$id = '';
-									$title = '';
-									$code = '';
-									$status = 1;
-									$starttime = '';
-									$endtime = '';
-								} ?>
-								<div class="row">
-									<div class="col-md-12">
-										<?php if ($pgtype == 3) { ?>
+									<?php if (!empty($edit_value)) {
+										$id = $edit_value->m_dept_id;
+										$title = $edit_value->m_dept_name;
+										$pgtype = $edit_value->m_dept_type;
+										$code = $edit_value->m_dept_code;
+										$status = $edit_value->m_dept_status;
+										$starttime = $edit_value->m_start_time;
+										$endtime = $edit_value->m_end_time;
+									} else {
+										$id = '';
+										$title = '';
+										$code = '';
+										$status = 1;
+										$starttime = '';
+										$endtime = '';
+									} ?>
+									<div class="row">
+										<div class="col-md-12">
+											<?php if ($pgtype == 3) { ?>
+												<div class="form-group">
+													<label><?= $headname ?> type<span class="text-danger">*</span></label>
+													<select name="m_dept_code" id="m_dept_code" class="form-control" required>
+														<option value="addon" <?php if ($code == 'addon') echo 'selected'; ?>>Add On</option>
+														<option value="deduction" <?php if ($code == 'deduction') echo 'selected'; ?>>Deduction</option>
+													</select>
+												</div>
+											<?php } elseif ($pgtype == 4) { ?>
+												<div class="form-group">
+													<label> Start Time<span class="text-danger">*</span></label>
+													<input type="time" name="m_start_time" id="m_start_time" class="form-control" placeholder="Enter start time" required value="<?= $starttime ?>">
+												</div>
+												<div class="form-group">
+													<label> End Time<span class="text-danger">*</span></label>
+													<input type="time" name="m_end_time" id="m_end_time" class="form-control" placeholder="Enter end time" required value="<?= $endtime ?>">
+												</div>
+											<?php } else { ?>
+												<div class="form-group">
+													<label><?= $headname ?> Code<span class="text-danger">*</span></label>
+													<input type="text" name="m_dept_code" id="m_dept_code" class="form-control" placeholder="Enter code" required value="<?= $code ?>">
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
 											<div class="form-group">
-												<label><?= $headname ?> type<span class="text-danger">*</span></label>
-												<select name="m_dept_code" id="m_dept_code" class="form-control" required>
-													<option value="addon" <?php if ($code == 'addon') echo 'selected'; ?>>Add On</option>
-													<option value="deduction" <?php if ($code == 'deduction') echo 'selected'; ?>>Deduction</option>
+												<label><?= $headname ?> Name<span class="text-danger">*</span></label>
+												<input type="hidden" name="m_dept_id" id="m_dept_id" value="<?= $id ?>">
+												<input type="hidden" name="m_dept_type" id="m_dept_type" value="<?= $pgtype ?>">
+												<input type="text" name="m_dept_name" id="m_dept_name" class="form-control" placeholder="Enter Name" required="" value="<?= $title ?>">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Status</label>
+												<select name="m_dept_status" id="m_dept_status" class="form-control" title="Select Status">
+													<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
+													<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
 												</select>
 											</div>
-										<?php } elseif ($pgtype == 4) { ?>
-											<div class="form-group">
-												<label> Start Time<span class="text-danger">*</span></label>
-												<input type="time" name="m_start_time" id="m_start_time" class="form-control" placeholder="Enter start time" required value="<?= $starttime ?>">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-layout-submit">
+												<button type="submit" id="btn-add-dept" class="btn btn-block btn-info">Submit</button>
 											</div>
-											<div class="form-group">
-												<label> End Time<span class="text-danger">*</span></label>
-												<input type="time" name="m_end_time" id="m_end_time" class="form-control" placeholder="Enter end time" required value="<?= $endtime ?>">
-											</div>
-										<?php } else { ?>
-											<div class="form-group">
-												<label><?= $headname ?> Code<span class="text-danger">*</span></label>
-												<input type="text" name="m_dept_code" id="m_dept_code" class="form-control" placeholder="Enter code" required value="<?= $code ?>">
-											</div>
-										<?php } ?>
+										</div>
+										<div class="col-md-6">
+											<div class="form-layout-submit">
+												<a href="<?php echo site_url('HrDept/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
 
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label><?= $headname ?> Name<span class="text-danger">*</span></label>
-											<input type="hidden" name="m_dept_id" id="m_dept_id" value="<?= $id ?>">
-											<input type="hidden" name="m_dept_type" id="m_dept_type" value="<?= $pgtype ?>">
-											<input type="text" name="m_dept_name" id="m_dept_name" class="form-control" placeholder="Enter Name" required="" value="<?= $title ?>">
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label>Status</label>
-											<select name="m_dept_status" id="m_dept_status" class="form-control" title="Select Status">
-												<option value="1" <?php if ($status == 1) echo 'selected' ?>>Active</option>
-												<option value="0" <?php if ($status == 0) echo 'selected' ?>>In-Active</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<button type="submit" id="btn-add-dept" class="btn btn-block btn-info">Submit</button>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-layout-submit">
-											<a href="<?php echo site_url('HrDept/' . $relink) ?>" class="btn btn-block btn-danger">Cancel </a>
-
-										</div>
-									</div>
-								</div>
-							</form>
+								</form>
+							</div>
+							<!-- /.card-body -->
 						</div>
-						<!-- /.card-body -->
-					</div>
-					<!-- /.card -->
+						<!-- /.card -->
 
-				</div>
+					</div>
+				<?php } ?>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->

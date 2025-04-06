@@ -245,6 +245,11 @@ class Product extends CI_Controller
 						'status' => 'success',
 						'message' => 'Batch Updated Successfully'
 					);
+				} else if ($data == 3) {
+					$info = array(
+						'status' => 'error',
+						'message' => 'Batch Number already taken! Please Try Again.'
+					);
 				}
 			} else {
 				$info = array(
