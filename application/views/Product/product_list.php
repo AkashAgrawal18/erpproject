@@ -34,7 +34,10 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th style="width: 5%">#</th>
 										<th>Product Name</th>
 										<th>Category</th>
-										<th>Price</th>
+										<th>Subcategory</th>
+										<th>Package</th>
+										<th>Size</th>
+										<th>Brand</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
 									</tr>
@@ -49,19 +52,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_pro_name; ?></td>
-												<td><?php echo $value->m_cat_name; ?></td>
-
-												<td>
-													<?php
-													if (!empty($value->m_pro_price)) {
-														if ($value->m_pro_price == 1) {
-															echo "MRP";
-														} elseif ($value->m_pro_price == 2) {
-															echo "Actual";
-														}
-													}
-													?>
-												</td>
+												<td><?php echo $value->category_name; ?></td>
+												<td><?php echo $value->subcategory_name; ?></td>
+												<td><?php echo $value->package_name; ?></td>
+												<td><?php echo $value->size_name; ?></td>
+												<td><?php echo $value->brand_name; ?></td>
 												<td>
 													<?php
 													if (!empty($value->m_pro_status == 1)) {

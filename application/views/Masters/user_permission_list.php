@@ -1,6 +1,13 @@
 <?php $this->view('Includes/header') ?>
 
-
+<style>
+    #custom_tbl thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* match your table's background */
+    z-index: 10;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -24,7 +31,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<!-- /.card-header -->
-						<div class="card-body">
+						<div class="card-body pt-0" style="max-height: 90vh; overflow-y: auto;">
 						<form action="" id="frm-userpermission" method="post">
                             <table id="custom_tbl" class="table table-striped table-bordered">
                                 <thead>

@@ -128,7 +128,7 @@ if ($cattype == 1) {
 				</div>
 				<!-- /.col -->
 				<?php $fild = !empty($id) ? "Edit" : "Add";
-				if ($user_type == 1 || has_perm($roll_id, $Md, $Smd, $fild)) { ?>
+				if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, $fild)) { ?>
 
 					<div class="col-md-4">
 						<div class="card">

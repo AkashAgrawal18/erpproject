@@ -7,7 +7,7 @@ class General_model extends CI_model
 
 	public function get_all_entity($type = "", $status = "")
 	{
-		$this->db->select('*');
+		$this->db->select('master_entities_tbl.*,(Case when m_entity_type = 1 then "Customer" when m_entity_type = 2 then "Dealer" when m_entity_type = 3 then "Retailer" when m_entity_type = 4 then "Supplier" Else "Wholeseller" end) as Entity_type');
 		if (!empty($type)) {
 			$this->db->where('m_entity_type', $type);
 		}

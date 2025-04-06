@@ -76,7 +76,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 					</div>
 				</div>
 				<!-- /.col -->
-				<?php $fild = !empty($id) ? "Edit":"Add"; if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', $fild)) { ?>
+				<?php $fild = !empty($id) ? "Edit":"Add"; if ($logged_user_type == 1 || has_perm($roll_id, 'MST', 'CT', $fild)) { ?>
 				<div class="col-md-4">
 					<div class="card">
 						<div class="card-header">

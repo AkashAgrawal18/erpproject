@@ -35,6 +35,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										<th>Entity Name</th>
 										<th>Type </th>
 										<th>Mobile</th>
+										<th>Discount</th>
 										<th>Address</th>
 										<th>Status</th>
 										<th style="width: 15%">Action</th>
@@ -50,8 +51,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_entity_name; ?></td>
-												<td><?php echo $value->m_emp_name; ?></td>
+												<td><?= $value->Entity_type; ?></td>
 												<td><?php echo $value->m_entity_mobile; ?></td>
+												<td><?php echo $value->m_entity_discount; ?></td>
 												<td><?php echo $value->m_entity_address; ?></td>
 
 												<td>

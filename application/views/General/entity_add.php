@@ -66,8 +66,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<label>Entity Type <span class="text-danger">*</span></label>
 												<select name="m_entity_type" id="m_entity_type" class="form-control select2" required>
 													<option value="1">Customer</option>
-													<option value="2">Retailer</option>
-													<option value="3">Dealer</option>
+													<option value="2">Dealer</option>
+													<option value="3">Retailer</option>
 													<option value="4">Supplier</option>
 													<option value="5">Wholeseller</option>
 												</select>

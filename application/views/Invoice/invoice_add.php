@@ -129,9 +129,9 @@ $taxper = (int)get_settings('m_app_tax'); ?>
                                                 <label>Customer Name <span class="text-danger">*</span></label>
                                                 <input id="m_entity_type" name="m_entity_type" type="hidden" value="<?= $m_entity_type ?>">
                                                 <input id="m_inv_entity" name="m_inv_entity" type="hidden" value="<?= $m_inv_entity ?>">
-                                                <input id="m_entity_discount" type="hidden" >
-                                                <input id="m_store_state" type="hidden" >
-                                                <input id="m_entity_state" type="hidden" >
+                                                <input id="m_entity_discount" type="hidden" value="0" >
+                                                <input id="m_store_state" type="hidden" value="0" >
+                                                <input id="m_entity_state" type="hidden" value="0" >
                                                 <input id="m_entity_name" name="m_entity_name" placeholder="Enter Name" class="form-control" value="<?= $m_entity_name ?>">
                                             </div>
                                         </div>

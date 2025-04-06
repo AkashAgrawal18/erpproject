@@ -5,8 +5,8 @@
             let custid = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custid')
             let custname = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custname')
             let custtype = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custtype')
-            let custdis = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custdis')
-            let custstate = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custstate')
+            let custdis = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custdis') || 0;
+            let custstate = $("#cust_datalist option[value='" + $(this).val() + "']").attr('data-custstate') || 0;
             let custmobile = $(this).val();
 
             $('#m_entity_type').val(custtype);
@@ -61,8 +61,7 @@
             let sstate = $('#m_store_state').val();
             let gsttype = 1;
             incount++
-
-            if (custstate != sstate) {
+            if ((custstate != 0) && custstate != sstate) {
                 gsttype = 2;
             }
             addrow(incount, sttnid, prodid, batchid, batchno, avlbal, pckgname, sizename, prodname, price, custdis, gsttype);
