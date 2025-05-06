@@ -286,37 +286,23 @@ class HrDept extends CI_Controller
 	public function add_employe()
 	{
 		$data = $this->login_details();
-		$data['pagename'] = "Add New Employee";
-		$data['store_list'] = $this->General_model->get_all_store(null,1);
-		$data['dept_value'] = $this->Hr_model->get_active_dept();
-		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
-		$data['design_value'] = $this->Hr_model->get_active_design();
-		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
-		$data['roll_value'] = $this->Hr_model->get_active_roll();
-		//   print_r($data['slbk_value']); die();
-		$this->load->view('Hr/add_employe', $data);
-	}
-	public function edit_employee()
-	{
-		$data = $this->login_details();
 		$data['id'] = $this->input->get('id');
 		if (!empty($data['id'])) {
 			$data['pagename'] = "Edit Employee Details";
 		} else {
 			$data['pagename'] = "Add New Employee";
 		}
-		$data['store_list'] = $this->General_model->get_all_store(null,1);
+		$data['store_list'] = $this->General_model->get_all_store(null, 1);
 		$data['dept_value'] = $this->Hr_model->get_active_dept();
 		$data['design_value'] = $this->Hr_model->get_active_design();
 		$data['shift_value'] = $this->Hr_model->get_active_shiftroster();
 		$data['salarybk_value'] = $this->Hr_model->get_active_salarybk();
-		// $data['hq_value'] = $this->Hr_model->get_active_hq();
-		// $data['emp_list'] = $this->Hr_model->get_Active_emp();
+		$data['emp_value'] = $this->Hr_model->get_Active_emp();
 		$data['edit_value'] = $this->Hr_model->get_emp_dtl($data['id']);
 		$data['slbk_value'] = $this->Hr_model->get_salarybk($data['id']);
 		$data['roll_value'] = $this->Hr_model->get_active_roll();
 		//   print_r($data['slbk_value']); die();
-		$this->load->view('Hr/edit_employee', $data);
+		$this->load->view('Hr/add_employe', $data);
 	}
 
 	public function insert_emp()
@@ -325,32 +311,16 @@ class HrDept extends CI_Controller
 			return;
 		}
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($this->Hr_model->insert_emp()) {
+			$data = $this->Hr_model->insert_emp();
+			if ($data == 1) {
 				$info = array(
 					'status' => 'success',
 					'message' => 'Employee has been added successfully!'
 				);
-			} else {
-				$info = array(
-					'status' => 'error',
-					'message' => 'Some problem occurred! Please try again'
-				);
-			}
-
-			echo json_encode($info);
-		}
-	}
-
-	public function update_emp()
-	{
-		if ($this->ajax_login() === false) {
-			return;
-		}
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if ($this->Hr_model->update_emp()) {
+			} else if ($data == 2) {
 				$info = array(
 					'status' => 'success',
-					'message' => 'Employee data updated successfully!'
+					'message' => 'Employee Detail has been Updated successfully!'
 				);
 			} else {
 				$info = array(
@@ -362,6 +332,7 @@ class HrDept extends CI_Controller
 			echo json_encode($info);
 		}
 	}
+
 	public function delete_slarybk()
 	{
 		$data = $this->login_details();
@@ -404,11 +375,10 @@ class HrDept extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function get_emp_dtl()
+	public function get_emp_details()
 	{
-
 		$id = $this->input->post('empid');
-		$data = $this->Hr_model->get_emp_dtl($id);
+		$data = $this->Hr_model->get_emp_detail($id);
 		echo json_encode($data);
 	}
 
@@ -507,7 +477,7 @@ class HrDept extends CI_Controller
 		$data['pagename'] = 'Add Salary';
 
 		$data['from_month'] = $this->input->post('from_month') ?: date('Y-m');
-		$data['emp_att'] = $this->Report_model->get_emp_add_salary($data['from_month']);
+		$data['emp_att'] = $this->Hr_model->get_emp_add_salary($data['from_month']);
 		// echo "<pre>";print_r($data['emp_att']);die();
 		$this->load->view('Hr/emp_add_salary', $data);
 	}
@@ -530,7 +500,7 @@ class HrDept extends CI_Controller
 
 			foreach ($salinst_empid as $key => $emp_id) {
 				// Check if record already exists
-				$existing_salary = $this->Report_model->get_salary_by_emp_id($emp_id, $this->input->post('m_salinst_date'));
+				$existing_salary = $this->Hr_model->get_salary_by_emp_id($emp_id, $this->input->post('m_salinst_date'));
 
 				$data = [
 					'm_salinst_empid' => $emp_id,
@@ -547,13 +517,13 @@ class HrDept extends CI_Controller
 
 				if ($existing_salary) {
 					// If employee salary exists, update it
-					$update_status = $this->Report_model->update_salary($emp_id, $data);
+					$update_status = $this->Hr_model->update_salary($emp_id, $data);
 					if (!$update_status) {
 						$success = false;
 					}
 				} else {
 					// If employee salary does not exist, insert new record
-					$insert_status = $this->Report_model->insert_salary($data);
+					$insert_status = $this->Hr_model->insert_salary($data);
 					if (!$insert_status) {
 						$success = false;
 					}
@@ -576,7 +546,7 @@ class HrDept extends CI_Controller
 		$data['emp_id'] = $this->input->post('emp_id') ?: '';
 
 		$data['emp_list'] = $this->Hr_model->get_Active_emp();
-		$data['emp_att'] = $this->Report_model->get_emp_salary($data['emp_id'], $data['from_month']);
+		$data['emp_att'] = $this->Hr_model->get_emp_salary($data['emp_id'], $data['from_month']);
 		// echo "<pre>";print_r($data['emp_att']);die();
 		$this->load->view('Hr/emp_salary_list', $data);
 	}

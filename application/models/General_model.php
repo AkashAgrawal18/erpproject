@@ -1,8 +1,6 @@
 <?php date_default_timezone_set('Asia/Kolkata');
 class General_model extends CI_model
 {
-
-
 	//========================== entity  =============================//
 
 	public function get_all_entity($type = "", $status = "")
@@ -99,6 +97,8 @@ class General_model extends CI_model
 			"m_str_address" => $this->input->post('m_str_address'),
 			"m_state" => $this->input->post('m_state'),
 			"m_city" => $this->input->post('m_city'),
+			"m_str_lat" => $this->input->post('m_str_lat'),
+			"m_str_long" => $this->input->post('m_str_long'),
 			"m_str_status" => $this->input->post('m_str_status'),
 			"m_str_addedon" => date('Y-m-d H:i'),
 		);

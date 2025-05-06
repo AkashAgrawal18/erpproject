@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-6 text-right">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Add')) {  ?>
@@ -64,47 +64,12 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 													} ?></td>
 
 												<td class="wd-30">
-
-													<button type="button" title="View"
-														class="btn btn-info btn-vsm view-employee"
-														data-toggle="modal"
-														data-target="#myModal"
-														data-emp-id="<?= $value->m_emp_id; ?>"
-														data-emp-code="<?= $value->m_emp_code; ?>"
-														data-emp-gtype="<?= $value->m_login_type; ?>"
-														data-emp-name="<?= $value->m_emp_name; ?>"
-														data-emp-fname="<?= $value->m_emp_fhname; ?>"
-														data-emp-email="<?= $value->m_emp_email; ?>"
-														data-emp-altemail="<?= $value->m_emp_altemail; ?>"
-														data-emp-laddress="<?= $value->m_emp_laddress; ?>"
-														data-emp-paddress="<?= $value->m_emp_paddress; ?>"
-														data-emp-store="<?= $value->m_emp_store; ?>"
-														data-emp-dob="<?= $value->m_emp_dob; ?>"
-														data-emp-doj="<?= $value->m_emp_doj; ?>"
-														data-emp-dol="<?= $value->m_emp_dol; ?>"
-														data-emp-dshift="<?= $value->m_emp_dshift; ?>"
-														data-emp-dtype="<?= $value->m_emp_dtype; ?>"
-														data-emp-rest="<?= $value->m_emp_rest; ?>"
-														data-emp-salary="<?= $value->m_emp_salary; ?>"
-														data-emp-empr="<?= $value->m_emp_prev_empr; ?>"
-														data-emp-dept="<?= $value->m_emp_prev_dept; ?>"
-														data-emp-design="<?= $value->m_emp_prev_design; ?>"
-														data-emp-duration="<?= $value->m_emp_prev_duration; ?>"
-														data-emp-password="<?= $value->m_emp_password; ?>"
-														data-emp-qualification="<?= $value->m_emp_qualification; ?>"
-														data-emp-epfno="<?= $value->m_emp_epfno; ?>"
-														data-emp-esicno="<?= $value->m_emp_esicno; ?>"
-														data-emp-eltype="<?= $value->m_emp_login_type; ?>"
-														data-emp-tdsappli="<?= $value->is_tds_applicable; ?>"
-														data-emp-status="<?= $value->m_emp_status; ?>"
-														data-emp-addedon="<?= $value->m_emp_added_on; ?>">
-														<i class="fa fa-eye"></i>
-													</button>
+													<button type="button" onclick="viewdetailmodal('<?= $value->m_emp_id ?>')" title="View" class="btn btn-info btn-sm "> <i class="fa fa-eye"></i></button>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Edit')) { ?>
-														<a href="<?php echo base_url('HrDept/edit_employee?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-action" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+														<a href="<?php echo base_url('HrDept/add_employe?id=') . $value->m_emp_id; ?>" class="btn btn-info btn-sm" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
 													<?php } ?>
 													<?php if ($logged_user_type == 1 || has_perm($roll_id, 'HR', 'EMP', 'Delete')) { ?>
-														<button class="btn btn-danger btn-action delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
+														<button class="btn btn-danger btn-sm delete-employe" data-value="<?php echo $value->m_emp_id; ?>" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
 													<?php } ?>
 												</td>
 											</tr>
@@ -136,64 +101,31 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 <!-- /.content-wrapper -->
 
 <!-- Modal Structure -->
-<div class="modal fade" id="myModal">
-	<div class="modal-dialog modal-lg">
+<div class="modal fade" id="employee_detail_modal">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
-
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">Employee Details</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-
 			<!-- Modal Body -->
 			<div class="modal-body">
-				<div class="row">
-					<div class="col-sm-4">
-						<p><strong>Employee ID:</strong> <span id="employeeId">N/A</span></p>
-						<p><strong>Employee Code:</strong> <span id="empcode">N/A</span></p>
-						<p><strong>Employee Login Type:</strong> <span id="empgtype">N/A</span></p>
-						<p><strong>Employee Name:</strong> <span id="empname">N/A</span></p>
-						<p><strong>Father Name:</strong> <span id="empfname">N/A</span></p>
-					</div>
-					<div class="col-sm-4">
-						<p><strong>Email:</strong> <span id="empmail">N/A</span></p>
-						<p><strong>Alt Mobile:</strong> <span id="empaltemail">N/A</span></p>
-						<p><strong>Local Address:</strong> <span id="empladdress">N/A</span></p>
-						<p><strong>Permanent Address:</strong> <span id="empaddress">N/A</span></p>
-						<p><strong>Store:</strong> <span id="empstore">N/A</span></p>
-
-					</div>
-					<div class="col-sm-4">
-						<p><strong>DOB:</strong> <span id="empdob">N/A</span></p>
-						<p><strong>DOJ:</strong> <span id="empdoj">N/A</span></p>
-						<p><strong>Date of Leave:</strong> <span id="empdol">N/A</span></p>
-						<p><strong>Duty Shift:</strong> <span id="empdshift">N/A</span></p>
-						<p><strong>Duty Type:</strong> <span id="empdtype">N/A</span></p>
-					</div>
-					<div class="col-sm-4">
-						<p><strong>Rest Day:</strong> <span id="emprest">N/A</span></p>
-						<p><strong>Basic Salary:</strong> <span id="empsalary">N/A</span></p>
-						<p><strong>Previous Employer:</strong> <span id="empempr">N/A</span></p>
-						<p><strong>Department :</strong> <span id="empdept">N/A</span></p>
-						<p><strong>Designation :</strong> <span id="empdesign">N/A</span></p>
-					</div>
-					<div class="col-sm-4">
-						<p><strong>Duration:</strong> <span id="empduration">N/A</span></p>
-						<p><strong>Password:</strong> <span id="emppassword">N/A</span></p>
-						<p><strong>Qualification:</strong> <span id="empqualification">N/A</span></p>
-						<p><strong>EPF Number:</strong> <span id="empepfno">N/A</span></p>
-						<p><strong>ESIC Number:</strong> <span id="empesicno">N/A</span></p>
-					</div>
-					<div class="col-sm-4">
-						<p><strong>Login Type:</strong> <span id="empeltype">N/A</span></p>
-						<p><strong>Is EPF Applicable:</strong> <span id="emptdsappli">N/A</span></p>
-						<p><strong>Status:</strong> <span id="empstatus">N/A</span></p>
-						<p><strong>Date:</strong> <span id="empaddedon">N/A</span></p>
-					</div>
-
+				<h5>Personal Details</h5>
+				<div class="row g-4" id="personaldetaildiv">
 				</div>
-
+				<hr>
+				<h5>Previous Employer Details</h5>
+				<div class="row g-4" id="previousempdiv">
+				</div>
+				<hr>
+				<h5>Official Details</h5>
+				<div class="row g-4" id="officialdtldiv">
+				</div>
+				<hr>
+				<h5>Account Details</h5>
+				<div class="row g-4" id="accountdetaildiv">
+				</div>
 
 			</div>
 
@@ -213,64 +145,120 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 <?php $this->view('js/js_hr') ?>
 
 <script>
-	$(document).on('click', '.view-employee', function() {
-		var empId = $(this).data('emp-id');
-		var ecode = $(this).data('emp-code');
-		var egtype = $(this).data('emp-gtype');
-		var ename = $(this).data('emp-name');
-		var efName = $(this).data('emp-fname');
-		var email = $(this).data('emp-email');
-		var ealtemail = $(this).data('emp-altemail');
-		var eladdress = $(this).data('emp-laddress');
-		var epaddress = $(this).data('emp-paddress');
-		var estore = $(this).data('emp-store');
-		var edob = $(this).data('emp-dob');
-		var edoj = $(this).data('emp-doj');
-		var edol = $(this).data('emp-dol');
-		var edshift = $(this).data('emp-dshift');
-		var edtype = $(this).data('emp-dtype');
-		var erest = $(this).data('emp-rest');
-		var esalary = $(this).data('emp-salary');
-		var eempr = $(this).data('emp-empr');
-		var edept = $(this).data('emp-dept');
-		var edesign = $(this).data('emp-design');
-		var eduration = $(this).data('emp-duration');
-		var epassword = $(this).data('emp-password');
-		var equalification = $(this).data('emp-qualification');
-		var eepfno = $(this).data('emp-epfno');
-		var eesicno = $(this).data('emp-esicno');
-		var eeltype = $(this).data('emp-eltype');
-		var etdsappli = $(this).data('emp-tdsappli');
-		var estatus = $(this).data('emp-status');
-		var eaddedon = $(this).data('emp-addedon');
-		$('#employeeId').text(empId);
-		$('#empcode').text(ecode);
-		$('#empgtype').text(egtype);
-		$('#empname').text(ename);
-		$('#empfname').text(efName);
-		$('#empmail').text(email);
-		$('#empaltemail').text(ealtemail);
-		$('#empladdress').text(eladdress);
-		$('#empaddress').text(epaddress);
-		$('#empstore').text(estore);
-		$('#empdob').text(edob);
-		$('#empdoj').text(edoj);
-		$('#empdol').text(edol);
-		$('#empdshift').text(edshift);
-		$('#empdtype').text(edtype);
-		$('#emprest').text(erest);
-		$('#empsalary').text(esalary);
-		$('#empempr').text(eempr);
-		$('#empdept').text(edept);
-		$('#empdesign').text(edesign);
-		$('#empduration').text(eduration);
-		$('#emppassword').text(epassword);
-		$('#empqualification').text(equalification);
-		$('#empepfno').text(eepfno);
-		$('#empesicno').text(eesicno);
-		$('#empeltype').text(eeltype);
-		$('#emptdsappli').text(etdsappli);
-		$('#empstatus').text(estatus);
-		$('#empaddedon').text(eaddedon);
-	});
+	function viewdetailmodal(empid) {
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url('HrDept/get_emp_details'); ?>",
+			data: {
+				empid
+			},
+			dataType: "JSON",
+			success: function(data) {
+				if (data) {
+
+					$('#personaldetaildiv').html(`<div class="col-sm-4">
+						<strong>Employee Code:</strong> <span id="empcode">${data.m_emp_code || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Employee Name:</strong> <span id="empname">${data.m_emp_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Father Name:</strong> <span id="empfname">${data.m_emp_fhname || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+						<strong>Mobile:</strong> <span id="empaltemail">${data.m_emp_mobile || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+						<strong>Alt Mobile:</strong> <span id="empaltemail">${data.m_emp_altmobile || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Email:</strong> <span id="empmail">${data.m_emp_email || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Alt Email:</strong> <span id="empaltmail">${data.m_emp_altemail || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>DOB:</strong> <span id="empdob">${data.m_emp_dob || 'N/A'}</span>
+						</div>
+						<div class="col-sm-6">
+							<strong>Local Address:</strong> <span id="empladdress">${data.m_emp_laddress || 'N/A'}</span>
+						</div>
+						<div class="col-sm-6">
+							<strong>Permanent Address:</strong> <span id="empaddress">${data.m_emp_paddress || 'N/A'}</span>
+					</div>`);
+
+					$('#previousempdiv').html(`
+						<div class="col-sm-4">
+							<strong>Previous Employer:</strong> <span id="preempyer">${data.m_emp_prev_empr || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Previous Department:</strong> <span id="predeprt">${data.m_emp_prev_dept || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Previous Designation:</strong> <span id="predesg">${data.m_emp_prev_design || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Experience:</strong> <span id="empexp">${data.m_emp_prev_duration || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Qualification:</strong> <span id="empqual">${data.m_emp_qualification || 'N/A'}</span>
+						</div>
+						
+					`);
+					$('#officialdtldiv').html(`
+						<div class="col-sm-4">
+							<strong>Store:</strong> <span id="empstore">${data.store_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>DOJ:</strong> <span id="empdoj">${data.m_emp_doj || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Department :</strong> <span id="empdept">${data.depart_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Designation :</strong> <span id="empdesign">${data.design_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Duty Shift:</strong> <span id="empdshift">${data.shift_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Duty Type:</strong> <span id="empdtype">${data.m_emp_dtype || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Rest Day:</strong> <span id="emprest">${data.rest_day || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Total Leave: </strong> <span id="empleave">${data.m_emp_yearly || 'N/A'}</span>
+						</div>
+					`);
+
+					$('#accountdetaildiv').html(`
+						<div class="col-sm-4">
+							<strong>Roll:</strong> <span id="emproll">${data.roll_name || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Reporting to:</strong> <span id="empreport">${data.reported_to || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Login id :</strong> <span id="emplogin">${data.m_emp_email || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Password :</strong> <span id="emppass">${data.m_emp_password || 'N/A'}</span>
+						</div>
+						<div class="col-sm-4">
+							<strong>Status :</strong> <span id="emppass">${data.m_emp_status == 1?'Active':'In-Active'}</span>
+						</div>
+										
+					`);
+
+					$('#employee_detail_modal').modal('show');
+				} else {
+					swal("Data Not Found! Please Try Again", {
+						icon: "error",
+						timer: 5000,
+					});
+				}
+			}
+		});
+	}
 </script>

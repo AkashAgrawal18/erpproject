@@ -77,6 +77,8 @@ class Setting extends CI_Controller
 	public function clock_in()
 	{
 		$empId = $this->input->post('emp_id');
+		$latitude = $this->input->post('latitude');
+		$longitude = $this->input->post('longitude');
 		if (!$empId) {
 			echo json_encode(['status' => 'error', 'message' => 'Employee ID not provided.']);
 			return;
@@ -94,6 +96,8 @@ class Setting extends CI_Controller
 			'm_emp_id' => $empId,
 			'm_date' => date('Y-m-d'),
 			'm_time_in' => date('H:i:s'),
+			'm_lat_in' => $latitude ?: '',
+			'm_long_in' => $longitude ?: '',
 			'm_status' => '0',
 			'm_updated_by' => date('Y-m-d H:i:s')
 		];
@@ -108,6 +112,8 @@ class Setting extends CI_Controller
 	public function clock_out()
 	{
 		$empId = $this->input->post('emp_id');
+		$latitude = $this->input->post('latitude');
+		$longitude = $this->input->post('longitude');
 		if (!$empId) {
 			echo json_encode(['status' => 'error', 'message' => 'Employee ID not provided.']);
 			return;
@@ -120,6 +126,8 @@ class Setting extends CI_Controller
 		}
 		$data = [
 			'm_time_out' => date('H:i:s'),
+			'm_lat_out' => $latitude ?: '',
+			'm_long_out' => $longitude ?: '',
 			'm_status' => '1',
 			'm_updated_on' => date('Y-m-d H:i:s')
 		];

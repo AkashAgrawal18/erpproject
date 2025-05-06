@@ -43,49 +43,6 @@
 			});
 		});
 
-		// Function to update an existing employee
-		$("form#frm-emp-update").submit(function(e) {
-			e.preventDefault();
-			var clkbtn = $("#btn-emp-update");
-			clkbtn.prop("disabled", true);
-			var formData = new FormData(this);
-
-			$.ajax({
-				type: "POST",
-				url: "<?php echo site_url('HrDept/update_emp'); ?>",
-				data: formData,
-				processData: false,
-				contentType: false,
-				dataType: "JSON",
-				success: function(data) {
-					if (data.status == "success") {
-						swal(data.message, {
-							icon: "success",
-							timer: 1000,
-						});
-						setTimeout(function() {
-							window.location = "<?php echo site_url('HrDept/employe_list'); ?>";
-						}, 1000);
-					} else {
-						clkbtn.prop("disabled", false);
-						swal(data.message, {
-							icon: "error",
-							timer: 5000,
-						});
-					}
-				},
-				error: function() {
-					clkbtn.prop("disabled", false);
-					swal("Some Problem Occurred!! Please try again", {
-						icon: "error",
-						timer: 2000,
-					});
-				},
-			});
-		});
-
-
-
 		$("#employe_tbl").on("click", ".delete-employe", function() {
 			var clkbtn = $(this);
 			clkbtn.prop('disabled', true);

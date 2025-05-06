@@ -2,153 +2,7 @@
 class Report_model extends CI_model
 {
 
-	public function get_emp_salary($emp_id = '', $from_month = '')
-	{
-		if (!empty($emp_id)) {
-			$this->db->where('m_salinst_empid', $emp_id);
-		}
-		if (!empty($from_month)) {
-			$this->db->like('m_salinst_date', $from_month, 'after'); // Matches 'YYYY-MM%'
-		}
-		return $this->db->select('master_salaryinst_tbl.*,emp.m_emp_id,emp.m_emp_name,emp.m_emp_pic,emp.m_emp_mobile')
-			->join('master_employee_tbl emp', 'emp.m_emp_id = master_salaryinst_tbl.m_salinst_empid')
-			->get('master_salaryinst_tbl')->result();
-	}
-
-	public function get_salary_by_emp_id($emp_id,$date)
-	{
-		$this->db->where('m_salinst_empid', $emp_id);
-		$this->db->where('m_salinst_date', $date);
-		$query = $this->db->get('master_salaryinst_tbl');
-		return $query->row();
-	}
-
-	public function insert_salary($data)
-	{
-		return $this->db->insert('master_salaryinst_tbl', $data);
-	}
-
-	public function update_salary($emp_id, $data)
-	{
-		$this->db->where('m_salinst_empid', $emp_id);
-		return $this->db->update('master_salaryinst_tbl', $data);
-	}
-
-	public function get_emp_add_salary($from_month)
-	{
-		$result = [];
-		$total_days = date('t', strtotime($from_month));
-		// Get the list of active employees
-		$emp_list = $this->db->select('m_emp_id, m_emp_name, m_emp_mobile,m_emp_rest,m_emp_monthly,m_emp_salary,m_emp_gross')
-			->where('m_emp_status', 1)
-			->get('master_employee_tbl')
-			->result();
-
-		if (empty($emp_list)) return $result;
-
-		// Fetch all attendance data in one query
-		$holidays = $this->db->like('m_hol_date', $from_month, 'after')->get('master_holiday_tbl')->num_rows();
-
-
-		$attendance_data = $this->db->select('m_emp_id, COUNT(*) AS present_days')
-			->where('m_status', 1)
-			->like('m_date', $from_month, 'after')
-			->group_by('m_emp_id')
-			->get('master_emp_attendance')
-			->result_array();
-
-		$attendance_map = array_column($attendance_data, 'present_days', 'm_emp_id');
-
-		// Fetch all leaves in one query
-		$leaves_data = $this->db->select('m_leav_empname, m_leav_fromdate, m_leav_todate')
-			->where('m_leav_status', 2)
-			->where("DATE_FORMAT(m_leav_fromdate, '%Y-%m') <=", $from_month)
-			->where("DATE_FORMAT(m_leav_todate, '%Y-%m') >=", $from_month)
-			->get('master_leaves_tbl')
-			->result();
-
-		// Process leave count for each employee
-		$leave_map = [];
-		foreach ($leaves_data as $leave) {
-			$emp_id = $leave->m_leav_empname;
-			$start_date = new DateTime($leave->m_leav_fromdate);
-			$end_date = new DateTime($leave->m_leav_todate);
-			$days = $start_date->diff($end_date)->days + 1;
-
-			if (!isset($leave_map[$emp_id])) {
-				$leave_map[$emp_id] = 0;
-			}
-			$leave_map[$emp_id] += $days;
-		}
-
-		// Build the final result
-		foreach ($emp_list as $emp) {
-			if($emp->m_emp_rest != 'none'){
-				$restdays = $this->countWeekdaysInMonth($from_month,$emp->m_emp_rest);
-			}else{
-				$restdays = 0;
-			}
-			
-			$emp_id = $emp->m_emp_id;
-			$emp->total_days = $total_days;
-			$emp->working_days = ($total_days - $restdays - $holidays);
-			$emp->leave_count = $leave_map[$emp_id] ?? 0;
-			$emp->present_count = $attendance_map[$emp_id] ?? 0;
-			$result[] = $emp;
-		}
-
-		return $result;
-	}
-
-
-	// query made by akash
-	// public function get_emp_attd($from_month = '')
-	// {
-	// 	$result = array();
-	// 	$emp_list = $this->db->select('m_emp_id,m_emp_name,m_emp_mobile,m_emp_rest,m_start_time')
-	// 		->join('master_department_tbl shift', 'shift.m_dept_id = master_employee_tbl.m_emp_dshift', 'left')
-	// 		->where('m_emp_status', 1)->get('master_employee_tbl')->result();
-	// 	$monthdays = date('t', strtotime('01-' . $from_month));
-	// 	if (!empty($emp_list)) {
-	// 		foreach ($emp_list as $emp) {
-	// 			for ($i = 1; $i <= $monthdays; $i++) {
-	// 				$date = date('Y-m-d',strtotime($i . '-' . $from_month));
-	// 				$present = $this->db->select('m_std_id,m_time_in,m_time_out')->where('m_date', $date)->where('m_emp_id', $emp->m_emp_id)->get('master_emp_attendance')->row();
-	// 				$holiday = $this->db->select('m_hol_name')->where('m_hol_date', $date)->get('master_holiday_tbl')->row();
-	// 				$leave = $this->db->select('m_leav_id')->where('m_leav_empname', $emp->m_emp_id)->where('m_leav_fromdate <=', $date)->where('m_leav_todate >=', $date)->get('master_leaves_tbl')->row();
-	// 				if (!empty($present) && !empty($present->m_time_in) && !empty($present->m_time_out)) {
-	// 					$status = 1;
-	// 					$attd_id = $present->m_std_id;
-	// 				}else if (!empty($present) && !empty($present->m_time_in)) {
-	// 					$status = 2;
-	// 					$attd_id = $present->m_std_id;
-	// 				}else if (!empty($holiday) || date('N', strtotime($date)) == $emp->m_emp_rest) {
-	// 					$status = 3;
-	// 					$attd_id = !empty($holiday) ?$holiday->m_hol_name:"Week Off" ;
-	// 				}else if (!empty($leave)) {
-	// 					$status = 4;
-	// 					$attd_id = $leave->m_leav_id;
-	// 				}else if ($date <= date('Y-m-d')) {
-	// 					$status = 5;
-	// 					$attd_id = '';
-	// 				}else {
-	// 					$status = 0;
-	// 					$attd_id = '';
-	// 				}
-	// 				$sub_res = (object) array(
-	// 					"date" => $date,
-	// 					"status" => $status,
-	// 					"attd_id" => $attd_id?:'',
-	// 				);
-	// 				$emp->attdn_status[] = $sub_res;
-	// 			}
-	// 			$result[] = $emp;
-	// 		}
-	// 	}
-	// 	return $result;
-	// }
-
-	//query optimize by chatgtp
+	/* ======================================= attendence report ======================================== */
 	public function get_emp_attd($from_month = '')
 	{
 		$result = [];
@@ -270,17 +124,107 @@ class Report_model extends CI_model
 		}
 	}
 
-	function countWeekdaysInMonth($month, $weekdayNumber)
-	{
-		$count = 0;
-		$daysInMonth = date('t', strtotime("$month-01")); // Get total days in the month
+	/* ======================================= attendence report ======================================== */
 
-		for ($day = 1; $day <= $daysInMonth; $day++) {
-			if (date('N', strtotime("$month-$day")) == $weekdayNumber) {
-				$count++;
+	/* ======================================= Stock report ======================================== */
+
+	public function get_stock($prodId, $store = '', $todate = '', $day = '')
+	{
+		// Helper function to apply date filter
+		$apply_date_filter = function ($field) use ($todate, $day) {
+			if (!empty($todate)) {
+				if ($day == 1) {
+					$this->db->where($field, $todate);
+				} else {
+					$this->db->where("DATE_FORMAT($field, '%Y-%m-%d') <=", $todate);
+				}
 			}
+		};
+
+		// Get stock in
+		$apply_date_filter('stk_trans_date');
+		if (!empty($store)) {
+			$this->db->where('stk_trans_to', $store);
+		} else {
+			$this->db->where('stk_trans_from', 0); // overall product stock
+		}
+		$in_qry = $this->db->select('SUM(stk_trans_qty) as totalqty')
+			->where('stk_trans_prod', $prodId)
+			->get('stock_transfers')
+			->row();
+		$total_in = $in_qry ? $in_qry->totalqty : 0;
+		$this->db->reset_query();
+
+		// Get stock out (only for store-specific)
+		$total_out = 0;
+		if (!empty($store)) {
+			$apply_date_filter('stk_trans_date');
+			$out_qry = $this->db->select('SUM(stk_trans_qty) as totalqty')
+				->where('stk_trans_from', $store)
+				->where('stk_trans_prod', $prodId)
+				->get('stock_transfers')
+				->row();
+			$total_out = $out_qry ? $out_qry->totalqty : 0;
+			$this->db->reset_query();
 		}
 
-		return $count;
+		// Get sales
+		if (!empty($store)) {
+			$this->db->join('invoice_tbl', 'invoice_tbl.m_inv_id = invoice_items_tbl.inv_item_invoice');
+			$this->db->where('m_inv_store', $store);
+		}
+		$apply_date_filter('inv_item_date');
+		$sale_qry = $this->db->select('SUM(inv_item_qty) as totalqty')
+			->where('inv_item_product', $prodId)
+			->get('invoice_items_tbl')
+			->row();
+		$total_sale = $sale_qry ? $sale_qry->totalqty : 0;
+
+		// Final result
+		$balance_qty = $store !== '' ? $total_in - ($total_out + $total_sale) : $total_in - $total_sale;
+
+		return (object)[
+			'total_in'      => $store !== '' ? $total_in : 0,
+			'total_out'     => $store !== '' ? $total_out : 0,
+			'total_sale'    => $total_sale,
+			'balance_qty'   => $balance_qty ?: 0
+		];
 	}
+
+
+	public function store_wise_stock($curr_date, $store, $cate = '', $subcate = '')
+	{
+		$result = array();
+		if (!empty($cate)) {
+			$this->db->where('m_pro_cate', $cate);
+		}
+		if (!empty($subcate)) {
+			$this->db->where('m_pro_subcate', $subcate);
+		}
+		$prod_list = $this->db->select('m_pro_id,m_pro_name,cate.m_cat_name as category_name,subcate.m_cat_name as subcategory_name,pkg.m_cat_name as package_name,size.m_cat_name as size_name,brand.m_cat_name as brand_name')->join('master_cate_tbl as cate', 'master_product_tbl.m_pro_cate = cate.m_cat_id')->join('master_cate_tbl as subcate', 'master_product_tbl.m_pro_subcate = subcate.m_cat_id')->join('master_cate_tbl as pkg', 'master_product_tbl.m_pro_pack = pkg.m_cat_id')->join('master_cate_tbl as size', 'master_product_tbl.m_pro_size = size.m_cat_id')->join('master_cate_tbl as brand', 'master_product_tbl.m_pro_brand = brand.m_cat_id')->where('m_pro_status', 1)->order_by('m_pro_name')->get('master_product_tbl')->result();
+
+		if (!empty($prod_list)) {
+			foreach ($prod_list as $prod) {
+				$opening_bal = $this->get_stock($prod->m_pro_id, $store, date('Y-m-d', strtotime($curr_date . '-1 day')));
+
+				$today_bal = $this->get_stock($prod->m_pro_id, $store, $curr_date, 1);
+				$res = (object)array(
+					"m_pro_id" => $prod->m_pro_id,
+					"m_pro_name" => $prod->m_pro_name,
+					"category_name" => $prod->category_name,
+					"subcategory_name" => $prod->subcategory_name,
+					"package_name" => $prod->package_name,
+					"size_name" => $prod->size_name,
+					"brand_name" => $prod->brand_name,
+					"opening_stock" => $opening_bal->balance_qty,
+					"todays_pkg" => $today_bal->total_in ?: 0,
+					"todays_sale" => ($today_bal->total_out + $today_bal->total_sale) ?: 0,
+					"closing_stock" => $opening_bal->balance_qty + $today_bal->balance_qty,
+				);
+				$result[] = $res;
+			}
+		}
+		return $result;
+	}
+	/* ======================================= Stock report ======================================== */
 }

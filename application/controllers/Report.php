@@ -1,7 +1,7 @@
 <?php
 class Report extends CI_Controller
 {
-	
+
 
 	public function emp_attd_report()
 	{
@@ -28,7 +28,27 @@ class Report extends CI_Controller
 			}
 		}
 	}
+	/* ======================================= attendence report ======================================== */
 
+	/* ======================================= Stock report ======================================== */
+
+	public function store_wise_stock()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = 'Store Stock Report';
+		$data['user_store'] = $this->session->userdata('user_store'); 
+		$data['to_date'] = $this->input->post('to_date') ?: date('Y-m-d');
+		$data['m_cate'] = $this->input->post('m_cate');
+		$data['m_subcate'] = $this->input->post('m_subcate');
+		$data['m_store'] = $this->input->post('m_store') ?:$data['user_store'];
+		$data['cate_value'] = $this->Product_model->get_cate_list(1);
+		$data['subcate_value'] = $this->Product_model->get_sucat_list(1,$data['m_cate']);
+		$data['store_value'] = $this->General_model->get_all_store(null,1);
+		$data['all_value'] = $this->Report_model->store_wise_stock($data['to_date'],$data['m_store'],$data['m_cate'],$data['m_subcate']);
+		$this->load->view('Reports/stock_list', $data);
+	}
+
+	/* ======================================= Stock report ======================================== */
 
 	//==========================Details===========================//
 	protected function login_details()

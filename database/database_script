@@ -9,3 +9,16 @@ UPDATE `master_city_tbl` SET `m_city_state`= 35 WHERE `m_city_state` = 36;
 ALTER TABLE `invoice_items_tbl` ADD `inv_item_igst` DECIMAL(10,2) NOT NULL AFTER `inv_item_sgst`;
 ALTER TABLE `application_settings` CHANGE `paid_listing_added_amt` `m_app_gstno` VARCHAR(50) NOT NULL, CHANGE `agent_daily_milestone` `m_app_tax` INT NOT NULL;
 ALTER TABLE `master_entities_tbl` ADD `m_entity_gstno` VARCHAR(50) NOT NULL AFTER `m_entity_mobile`, ADD `m_entity_discount` INT NOT NULL AFTER `m_entity_gstno`, ADD `m_entity_state` INT NOT NULL AFTER `m_entity_discount`;
+
+-- 13-04-25 change --
+ALTER TABLE `master_employee_tbl` ADD `m_emp_reporting` BIGINT NOT NULL COMMENT 'employee tbale se reporting manager id' AFTER `m_emp_rest`;
+ALTER TABLE `master_store_tbl` ADD `m_str_lat` VARCHAR(50) NOT NULL AFTER `m_str_address`, ADD `m_str_long` VARCHAR(50) NOT NULL AFTER `m_str_lat`;
+ALTER TABLE `master_emp_attendance` ADD `m_lat_in` VARCHAR(50) NOT NULL AFTER `m_date`, ADD `m_long_in` VARCHAR(50) NOT NULL AFTER `m_lat_in`, ADD `m_lat_out` VARCHAR(50) NOT NULL AFTER `m_long_in`, ADD `m_long_out` VARCHAR(50) NOT NULL AFTER `m_lat_out`;
+
+/* 26-04-25 */
+ALTER TABLE `master_lead_tbl` ADD `m_lead_contname` VARCHAR(255) NOT NULL AFTER `m_lead_name`;
+ALTER TABLE `master_lead_tbl` ADD `m_lead_area` VARCHAR(50) NOT NULL AFTER `m_lead_source`, ADD `m_lead_subarea` VARCHAR(50) NOT NULL AFTER `m_lead_area`;
+ALTER TABLE `master_lead_tbl` ADD `m_lead_visitassigned` BIGINT NOT NULL AFTER `m_lead_assigned`, ADD `m_lead_nextvisit` DATE NULL DEFAULT NULL AFTER `m_lead_visitassigned`, ADD `m_lead_nextfollow` DATE NULL DEFAULT NULL AFTER `m_lead_nextvisit`;
+ALTER TABLE `lead_transfer_tbl` ADD `l_trans_type` TINYINT(1) NOT NULL COMMENT '1-visit,2-followup' AFTER `l_trans_to`, ADD `l_trans_visitstatus` INT NOT NULL AFTER `l_trans_type`, ADD `l_trans_followupstatus` INT NOT NULL AFTER `l_trans_visitstatus`;
+ALTER TABLE `master_followup_tbl` CHANGE `m_follow_sample` `m_follow_type` TINYINT(1) NOT NULL COMMENT '1 -visit,2-followup', CHANGE `m_follow_piece` `m_follow_nextvisit` DATE NOT NULL, CHANGE `m_follow_product` `m_follow_visitstatus` INT NOT NULL;
+

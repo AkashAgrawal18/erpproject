@@ -161,7 +161,7 @@ class Invoice_model extends CI_Model
     /* -------- Invoice working ---------- */
     public function get_edit_invoice($id)
     {
-        $this->db->select('invoice_items_tbl.*,m_batch_number,stk_trans_balqty as balance_qty,prod.m_pro_name,prod.m_pro_pic,pkg.m_cat_name as package_name,size.m_cat_name as size_name');
+        $this->db->select('invoice_items_tbl.*,m_batch_number,m_batch_date,m_batch_expiry,stk_trans_balqty as balance_qty,prod.m_pro_name,prod.m_pro_pic,pkg.m_cat_name as package_name,size.m_cat_name as size_name');
         $this->db->join('stock_transfers', 'stock_transfers.stk_trans_id = inv_item_stcktrans', 'left')
             ->join('master_batch_tbl batch', 'batch.m_batch_id = inv_item_batch', 'left')
             ->join('master_product_tbl as prod', 'prod.m_pro_id = inv_item_product', 'left')
@@ -184,7 +184,7 @@ class Invoice_model extends CI_Model
     {
         $user_store = $this->session->userdata('user_store');
 
-        $this->db->select('m_inv_id,m_inv_no,m_inv_entity,m_inv_date,m_inv_store,m_inv_amount,m_inv_discount,m_inv_cgst,m_inv_sgst,m_inv_totalamt,m_inv_remarks,store.m_str_name,entities.m_entity_name,m_entity_mobile');
+        $this->db->select('m_inv_id,m_inv_no,m_inv_entity,m_inv_date,m_inv_store,m_inv_amount,m_inv_discount,m_inv_cgst,m_inv_sgst,m_inv_igst,m_inv_totalamt,m_inv_remarks,store.m_str_name,entities.m_entity_name,m_entity_mobile');
         $this->db->from('invoice_tbl');
         $this->db->join('master_store_tbl store', 'store.m_str_id = m_inv_store', 'left');
         $this->db->join('master_entities_tbl entities', 'entities.m_entity_id = m_inv_entity', 'left');

@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-6 text-right">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'BCH', 'Add')) { ?>
@@ -31,14 +31,17 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 							<table id="batch_tbl" class="table table-bordered datatable">
 								<thead>
 									<tr>
-										<th style="width: 5%">#</th>
-										<th>Batch Number</th>
-										<th>Product </th>
-										<th>Quntity</th>
+										<th style="width:4%">#</th>
+										<th>Batch No.</th>
+										<th>Product</th>
+										<th>Package</th>
+										<th>Size</th>
+										<th>Brand</th>
+										<th>Quantity</th>
 										<th>Date</th>
-										<th>Expiry Period</th>
+										<th>Expiry </th>
 										<th>Status</th>
-										<th style="width: 15%">Action</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -52,6 +55,9 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $value->m_batch_number; ?></td>
 												<td><?php echo $value->m_pro_name; ?></td>
+												<td><?php echo $value->package_name; ?></td>
+												<td><?php echo $value->size_name; ?></td>
+												<td><?php echo $value->brand_name; ?></td>
 												<td><?php echo $value->m_batch_quantity; ?></td>
 												<td><?php echo date('d-m-Y', strtotime($value->m_batch_date)); ?></td>
 												<td><?php echo $value->m_batch_expiry;

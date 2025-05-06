@@ -13,7 +13,7 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-6">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'FNC', 'ASLR', 'Filter')) { ?>

@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 			</div>
 		</div><!-- /.container-fluid -->

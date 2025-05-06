@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-10">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-2 text-right">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'GEN', 'ENT', 'List')) { ?>
@@ -65,11 +65,11 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<div class="form-group">
 												<label>Entity Type <span class="text-danger">*</span></label>
 												<select name="m_entity_type" id="m_entity_type" class="form-control select2" required>
-													<option value="1">Customer</option>
-													<option value="2">Dealer</option>
-													<option value="3">Retailer</option>
-													<option value="4">Supplier</option>
-													<option value="5">Wholeseller</option>
+													<option value="1" <?php if($entitytype == 1) echo 'selected' ?>>Customer</option>
+													<option value="2" <?php if($entitytype == 2) echo 'selected' ?>>Dealer</option>
+													<option value="3" <?php if($entitytype == 3) echo 'selected' ?>>Retailer</option>
+													<option value="4" <?php if($entitytype == 4) echo 'selected' ?>>Supplier</option>
+													<option value="5" <?php if($entitytype == 5) echo 'selected' ?>>Wholeseller</option>
 												</select>
 											</div>
 										</div>

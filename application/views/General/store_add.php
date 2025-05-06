@@ -19,7 +19,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-10">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-2 text-right">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, $Md, $Smd, 'List')) { ?>
@@ -52,6 +52,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										$state = $edit_value->m_state;
 										$city = $edit_value->m_city;
 										$status = $edit_value->m_str_status;
+										$str_lat = $edit_value->m_str_lat;
+										$str_long = $edit_value->m_str_long;
 									} else {
 										$id = '';
 										$title = '';
@@ -64,6 +66,8 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 										$state = '';
 										$city = '';
 										$status = 1;
+										$str_lat = '';
+										$str_long = '';
 									} ?>
 
 									<div class="row">
@@ -85,7 +89,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 											<div class="col-sm-3">
 												<div class="form-group">
 													<label>Opening Time<span class="text-danger">*</span></label>
-													<input type="time" name="m_str_opening_time" id="m_str_opening_time" class="form-control"" required="" value=" <?= $stropening ?>">
+													<input type="time" name="m_str_opening_time" id="m_str_opening_time" class="form-control" required="" value="<?= $stropening ?>">
 												</div>
 											</div>
 											<div class="col-sm-3">
@@ -138,11 +142,23 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 															$op = '';
 														}
 													?>
-														<option value="<?php echo $skey->m_city_id; ?>" <?= $op ?>><?php echo $skey->m_city_name; ?></option>
+														<option value="<?php echo $skey->m_city_id; ?>" data-state="<?= $cty->m_city_state?>" <?= $op ?>><?php echo $skey->m_city_name; ?></option>
 													<?php
 													}
 													?>
 												</select>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label>Latitude <span class="text-danger">*</span> </label>
+												<input type="text" name="m_str_lat" id="m_str_lat" class="form-control" placeholder="Enter Latitude" required value="<?= $str_lat ?>">
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label>Longitude <span class="text-danger">*</span> </label>
+												<input type="text" name="m_str_long" id="m_str_long" class="form-control" placeholder="Enter Longitude" required value="<?= $str_long ?>">
 											</div>
 										</div>
 										<div class="col-sm-3">

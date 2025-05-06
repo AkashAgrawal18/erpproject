@@ -241,7 +241,7 @@ class Hr_model extends CI_model
 
 	public function get_Active_emp()
 	{
-		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where('m_emp_status', 1)->get('master_employee_tbl')->result();
+		$res = $this->db->select('m_emp_name,m_emp_mobile,m_emp_code,m_emp_id')->where('m_login_type !=', 1)->where('m_emp_status', 1)->get('master_employee_tbl')->result();
 		return $res;
 	}
 
@@ -265,6 +265,12 @@ class Hr_model extends CI_model
 		return $res;
 	}
 
+	public function get_emp_detail($id)
+	{
+		return $this->db->select('emp.*,depart.m_dept_name as depart_name,design.m_dept_name as design_name,shift.m_dept_name as shift_name,roll.m_dept_name as roll_name,store.m_str_name as store_name,reporting.m_emp_name as reported_to,(case when emp.m_emp_rest = 1 then "Monday" when emp.m_emp_rest = 2 then "Tuesday" when emp.m_emp_rest = 3 then "Wednesday" when emp.m_emp_rest = 4 then "Thursday" when emp.m_emp_rest = 5 then "Friday" when emp.m_emp_rest = 6 then "Saturday" when emp.m_emp_rest = 7 then "Sunday" Else "None" End) as rest_day')->join('master_department_tbl depart', 'depart.m_dept_id  = emp.m_emp_dept', 'left')->join('master_department_tbl design', 'design.m_dept_id  = emp.m_emp_design', 'left')->join('master_department_tbl shift', 'shift.m_dept_id  = emp.m_emp_dshift', 'left')->join('master_department_tbl roll', 'roll.m_dept_id  = emp.m_emp_roll', 'left')->join('master_store_tbl store', 'store.m_str_id  = emp.m_emp_store', 'left')->join('master_employee_tbl reporting', 'reporting.m_emp_id = emp.m_emp_reporting', 'left')->where('emp.m_emp_id', $id)->get('master_employee_tbl emp')->row();
+		
+	}
+
 	public function get_salarybk($id)
 	{
 		$this->db->select('*');
@@ -276,26 +282,13 @@ class Hr_model extends CI_model
 	public function insert_emp()
 	{
 
+		$emp_id = $this->input->post('m_emp_id');
 
-		if ($this->input->post('is_esic_applicable')) {
-			$is_esic_applicable = 1;
-		} else {
-			$is_esic_applicable = 0;
-		}
-		if ($this->input->post('is_tds_applicable')) {
-			$is_tds_applicable = 1;
-		} else {
-			$is_tds_applicable = 0;
-		}
-		if ($this->input->post('is_epf_applicable')) {
-			$is_epf_applicable = 1;
-		} else {
-			$is_epf_applicable = 0;
-		}
-
+		$is_esic_applicable = $this->input->post('is_esic_applicable') ? 1 : 0;
+		$is_tds_applicable = $this->input->post('is_tds_applicable') ? 1 : 0;
+		$is_epf_applicable = $this->input->post('is_epf_applicable') ? 1 : 0;
 
 		$data = array(
-
 			"m_emp_code" => 		$this->input->post('m_emp_code'),
 			"m_emp_name" => 		$this->input->post('m_emp_name'),
 			"m_emp_fhname" => 		$this->input->post('m_emp_fhname'),
@@ -336,139 +329,53 @@ class Hr_model extends CI_model
 			"m_emp_dol" => 			$this->input->post('m_emp_dol') ?: '',
 			"m_emp_salmode" => 			$this->input->post('m_emp_salmode') ?: '',
 			"m_emp_status"       => $this->input->post('m_emp_status') ?: '',
-			// "m_emp_leadact" => 			$m_emp_leadact,
+			"m_emp_reporting"       => $this->input->post('m_emp_reporting') ?: '',
 			"is_esic_applicable" => $is_esic_applicable,
 			"is_tds_applicable" => 	$is_tds_applicable,
-			// "m_emp_status" => 		$m_emp_status,
 			"is_epf_applicable" => 	$is_epf_applicable,
 			"m_login_type" => 2,
 
 
 		);
-		$this->db->insert('master_employee_tbl', $data);
-		$last_id = $this->db->insert_id();
+
+		if (!empty($emp_id)) {
+			$this->db->where('m_emp_id', $emp_id)->update('master_employee_tbl', $data);
+			$last_id = $emp_id;
+			$res = 2;
+		} else {
+			$this->db->insert('master_employee_tbl', $data);
+			$last_id = $this->db->insert_id();
+			$res = 1;
+		}
 
 
+		$esalary_id = $this->input->post('m_esalary_id');
 		$key_feature = $this->input->post('m_sbreakup_id');
 		$m_amounttype = $this->input->post('m_amounttype');
-		$m_amount = $this->input->post('m_amount');;
+		$m_amount = $this->input->post('m_amount');
 		// print_r($data); die(); 
 
 		if (!empty($key_feature)) {
 			foreach ($key_feature  as $i => $key) {
-
-				$upddata = array(
-					"m_empid" => $last_id,
-					"m_sbreakup_id" => $key,
-					"m_amounttype" => $m_amounttype[$i],
-					"m_amount" => $m_amount[$i],
-					"m_status" => 1,
-					"m_addedon" => date('Y-m-d H:i'),
-				);
-				$set = $this->db->insert('master_emp_salary_breakup', $upddata);
+				if (!empty($m_amount[$i])) {
+					$upddata = array(
+						"m_empid" => $last_id,
+						"m_sbreakup_id" => $key,
+						"m_amounttype" => $m_amounttype[$i],
+						"m_amount" => $m_amount[$i],
+						"m_status" => 1,
+						"m_addedon" => date('Y-m-d H:i'),
+					);
+					if (!empty($esalary_id[$i])) {
+						$this->db->where('m_esalary_id', $esalary_id[$i])->update('master_emp_salary_breakup', $upddata);
+					} else {
+						$this->db->insert('master_emp_salary_breakup', $upddata);
+					}
+				}
 			}
 		}
 
-		//  $data2 = array(  
-		//     "m_emp_salary" => 1, 
-		//  );
-		//  $this->db->where('m_emp_id', $last_id);
-		//  $this->db->update('master_employee_tbl', $data2); 
-		return true;
-	}
-
-
-	public function update_emp()
-	{
-		$emp_id = $this->input->post('m_emp_id');
-
-		if (!$emp_id) {
-			return 0;
-		}
-		$is_esic_applicable = $this->input->post('is_esic_applicable') ? 1 : 0;
-		$is_tds_applicable = $this->input->post('is_tds_applicable') ? 1 : 0;
-		$is_epf_applicable = $this->input->post('is_epf_applicable') ? 1 : 0;
-
-		// Employee Data Array
-		$data = array(
-			"m_emp_code"         => $this->input->post('m_emp_code'),
-			"m_emp_name"         => $this->input->post('m_emp_name'),
-			"m_emp_fhname"       => $this->input->post('m_emp_fhname'),
-			"m_emp_doj"          => $this->input->post('m_emp_doj'),
-			"m_emp_dob"          => $this->input->post('m_emp_dob'),
-			"m_emp_mobile"       => $this->input->post('m_emp_mobile'),
-			"m_emp_store"      => $this->input->post('m_emp_store'),
-			"m_emp_roll"      => $this->input->post('m_emp_roll'),
-			"m_emp_monthly" => 		$this->input->post('m_emp_monthly') ?: '',
-			"m_emp_yearly" => 		$this->input->post('m_emp_yearly') ?: '',
-			"m_emp_dept"         => $this->input->post('m_emp_dept') ?: '',
-			"m_emp_design"       => $this->input->post('m_emp_design') ?: '',
-			"m_emp_altmobile"    => $this->input->post('m_emp_altmobile'),
-			"m_emp_email"        => $this->input->post('m_emp_email') ?: '',
-			"m_emp_altemail"     => $this->input->post('m_emp_altemail') ?: '',
-			"m_emp_dshift"       => $this->input->post('m_emp_dshift'),
-			"m_emp_dtype"        => $this->input->post('m_emp_dtype'),
-			"m_emp_rest"         => $this->input->post('m_emp_rest'),
-			"m_emp_salary"       => $this->input->post('m_emp_salary') ?: '',
-			"m_emp_gross"       => $this->input->post('m_emp_gross') ?: '',
-			"m_emp_epfno"        => $this->input->post('m_emp_epfno') ?: '',
-			"m_emp_esicno"       => $this->input->post('m_emp_esicno') ?: '',
-			"m_emp_accno"        => $this->input->post('m_emp_accno') ?: '',
-			"m_emp_panno"        => $this->input->post('m_emp_panno') ?: '',
-			"m_emp_uanno"        => $this->input->post('m_emp_uanno') ?: '',
-			"m_emp_bankname"     => $this->input->post('m_emp_bankname') ?: '',
-			"m_emp_bankbranch"   => $this->input->post('m_emp_bankbranch') ?: '',
-			"m_emp_adharno"      => $this->input->post('m_emp_adharno') ?: '',
-			"m_emp_ifsc"         => $this->input->post('m_emp_ifsc') ?: '',
-			"m_emp_prev_empr"    => $this->input->post('m_emp_prev_empr') ?: '',
-			"m_emp_prev_dept"    => $this->input->post('m_emp_prev_dept') ?: '',
-			"m_emp_prev_design"  => $this->input->post('m_emp_prev_design') ?: '',
-			"m_emp_prev_duration" => $this->input->post('m_emp_prev_duration') ?: '',
-			"m_emp_laddress"     => $this->input->post('m_emp_laddress') ?: '',
-			"m_emp_paddress"     => $this->input->post('m_emp_paddress') ?: '',
-			"m_emp_password"     => $this->input->post('m_emp_password') ?: '',
-			"m_emp_qualification" => $this->input->post('m_emp_qualification') ?: '',
-			"m_emp_dol"          => $this->input->post('m_emp_dol') ?: '',
-			"m_emp_salmode"      => $this->input->post('m_emp_salmode') ?: '',
-			"m_emp_status"       => $this->input->post('m_emp_status') ?: '',
-			"m_emp_added_on" => date('Y-m-d H:i'),
-			"is_esic_applicable" => $is_esic_applicable,
-			"is_tds_applicable"  => $is_tds_applicable,
-			"is_epf_applicable"  => $is_epf_applicable,
-			"m_login_type"       => 2,
-
-		);
-
-		$this->db->where('m_emp_id', $emp_id)->update('master_employee_tbl', $data);
-
-		$key_feature  = $this->input->post('m_sbreakup_id');
-		$m_amounttype  = $this->input->post('m_amounttype');
-		$m_amount      = $this->input->post('m_amount');
-		$last_id       = $this->input->post('m_emp_id');
-		$this->db->where('m_empid', $last_id)->delete('master_emp_salary_breakup');
-
-		if (!empty($key_feature)) {
-			foreach ($key_feature  as $i => $key) {
-				$salary_data[] = array(
-					"m_empid"       => $last_id,
-					"m_sbreakup_id" => $key,
-					"m_amounttype"  => $m_amounttype[$i],
-					"m_amount"      => $m_amount[$i],
-					"m_status"      => 1,
-					"m_addedon"     => date('Y-m-d H:i'),
-				);
-			}
-			if (!empty($salary_data)) {
-				$this->db->insert_batch('master_emp_salary_breakup', $salary_data);
-			}
-			// print_r($salary_data); die(); 
-		}
-		// $data2 = array(  
-		//     "m_emp_salary" => 100, 
-		//  );
-		//  $this->db->where('m_emp_id', $last_id);
-		//  $this->db->update('master_employee_tbl', $data2); 
-		return true;
+		return $res;
 	}
 
 	public function delete_emp()
@@ -486,7 +393,120 @@ class Hr_model extends CI_model
 	}
 	//=======================================================employee=================================================//
 
+	//======================================================= salary employee =================================================//
+
+	public function get_emp_salary($emp_id = '', $from_month = '')
+	{
+		if (!empty($emp_id)) {
+			$this->db->where('m_salinst_empid', $emp_id);
+		}
+		if (!empty($from_month)) {
+			$this->db->like('m_salinst_date', $from_month, 'after'); // Matches 'YYYY-MM%'
+		}
+		return $this->db->select('master_salaryinst_tbl.*,emp.m_emp_id,emp.m_emp_name,emp.m_emp_pic,emp.m_emp_mobile')
+			->join('master_employee_tbl emp', 'emp.m_emp_id = master_salaryinst_tbl.m_salinst_empid')
+			->get('master_salaryinst_tbl')->result();
+	}
+
+	public function get_salary_by_emp_id($emp_id, $date)
+	{
+		$this->db->where('m_salinst_empid', $emp_id);
+		$this->db->where('m_salinst_date', $date);
+		$query = $this->db->get('master_salaryinst_tbl');
+		return $query->row();
+	}
+
+	public function insert_salary($data)
+	{
+		return $this->db->insert('master_salaryinst_tbl', $data);
+	}
+
+	public function update_salary($emp_id, $data)
+	{
+		$this->db->where('m_salinst_empid', $emp_id);
+		return $this->db->update('master_salaryinst_tbl', $data);
+	}
+
+	public function get_emp_add_salary($from_month)
+	{
+		$result = [];
+		$total_days = date('t', strtotime($from_month));
+		// Get the list of active employees
+		$emp_list = $this->db->select('m_emp_id, m_emp_name, m_emp_mobile,m_emp_rest,m_emp_monthly,m_emp_salary,m_emp_gross')
+			->where('m_emp_status', 1)
+			->get('master_employee_tbl')
+			->result();
+
+		if (empty($emp_list)) return $result;
+
+		// Fetch all attendance data in one query
+		$holidays = $this->db->like('m_hol_date', $from_month, 'after')->get('master_holiday_tbl')->num_rows();
 
 
+		$attendance_data = $this->db->select('m_emp_id, COUNT(*) AS present_days')
+			->where('m_status', 1)
+			->like('m_date', $from_month, 'after')
+			->group_by('m_emp_id')
+			->get('master_emp_attendance')
+			->result_array();
+
+		$attendance_map = array_column($attendance_data, 'present_days', 'm_emp_id');
+
+		// Fetch all leaves in one query
+		$leaves_data = $this->db->select('m_leav_empname, m_leav_fromdate, m_leav_todate')
+			->where('m_leav_status', 2)
+			->where("DATE_FORMAT(m_leav_fromdate, '%Y-%m') <=", $from_month)
+			->where("DATE_FORMAT(m_leav_todate, '%Y-%m') >=", $from_month)
+			->get('master_leaves_tbl')
+			->result();
+
+		// Process leave count for each employee
+		$leave_map = [];
+		foreach ($leaves_data as $leave) {
+			$emp_id = $leave->m_leav_empname;
+			$start_date = new DateTime($leave->m_leav_fromdate);
+			$end_date = new DateTime($leave->m_leav_todate);
+			$days = $start_date->diff($end_date)->days + 1;
+
+			if (!isset($leave_map[$emp_id])) {
+				$leave_map[$emp_id] = 0;
+			}
+			$leave_map[$emp_id] += $days;
+		}
+
+		// Build the final result
+		foreach ($emp_list as $emp) {
+			if ($emp->m_emp_rest != 'none') {
+				$restdays = $this->countWeekdaysInMonth($from_month, $emp->m_emp_rest);
+			} else {
+				$restdays = 0;
+			}
+
+			$emp_id = $emp->m_emp_id;
+			$emp->total_days = $total_days;
+			$emp->working_days = ($total_days - $restdays - $holidays);
+			$emp->leave_count = $leave_map[$emp_id] ?? 0;
+			$emp->present_count = $attendance_map[$emp_id] ?? 0;
+			$result[] = $emp;
+		}
+
+		return $result;
+	}
+
+
+	function countWeekdaysInMonth($month, $weekdayNumber)
+	{
+		$count = 0;
+		$daysInMonth = date('t', strtotime("$month-01")); // Get total days in the month
+
+		for ($day = 1; $day <= $daysInMonth; $day++) {
+			if (date('N', strtotime("$month-$day")) == $weekdayNumber) {
+				$count++;
+			}
+		}
+
+		return $count;
+	}
+	//======================================================= salary employee =================================================//
 
 }

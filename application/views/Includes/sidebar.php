@@ -15,7 +15,7 @@
   				<img src="<?php echo base_url(); ?>assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
   			</div>
   			<div class="info">
-  				<a href="<?php echo base_url('Welcome'); ?>" class="d-block">Digitalshakha</a>
+  				<a href="<?php echo base_url('Welcome'); ?>" class="d-block"><?= get_settings('m_app_name')?></a>
   			</div>
   		</div>
 
@@ -29,7 +29,105 @@
   						<p> Dashboard </p>
   					</a>
   				</li>
-  				<?php if ($user_type == 1 || has_perm($roll_id, 'HR')) { ?>
+  				<?php if ($user_type == 1 || has_perm($roll_id, 'INV')) { ?>
+  					<li class="nav-item nav-base">
+  						<a href="#" class="nav-link nav-parent">
+  							<i class="nav-icon fas fa-box"></i>
+  							<p>
+  								Billing & Invoices
+  								<i class="fas fa-angle-left right"></i>
+  							</p>
+  						</a>
+  						<ul class="nav nav-treeview">
+  							<?php if ($user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'List')) { ?>
+  								<li class="nav-item">
+  									<a href="<?php echo base_url('Invoice/stock_transfer_list'); ?>" class="nav-link">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Stock Transfer </p>
+  									</a>
+  								</li>
+  							<?php }
+								if ($user_type == 1 || has_perm($roll_id, 'INV', 'INV', 'Add')) { ?>
+  								<li class="nav-item">
+  									<a href="<?php echo base_url('Invoice/invoice_add'); ?>" class="nav-link">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Add New Invoice </p>
+  									</a>
+  								</li>
+  							<?php }
+								if ($user_type == 1 || has_perm($roll_id, 'INV', 'INV', 'List')) { ?>
+  								<li class="nav-item">
+  									<a href="<?php echo base_url('Invoice/invoice_list'); ?>" class="nav-link">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Invoice_list </p>
+  									</a>
+  								</li>
+  							<?php } ?>
+
+  						</ul>
+  					</li>
+  				<?PHP }
+					if ($user_type == 1 || has_perm($roll_id, 'RPT')) { ?>
+  					<li class="nav-item nav-base">
+  						<a href="#" class="nav-link nav-parent">
+  							<i class="nav-icon fas fa-box"></i>
+  							<p>Report<i class="fas fa-angle-left right"></i></p>
+  						</a>
+  						<ul class="nav nav-treeview">
+  							<?php if ($user_type == 1 || has_perm($roll_id, 'RPT', 'STKRPT', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Report/store_wise_stock'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Stock Report</p>
+  									</a>
+  								</li>
+  							<?php } ?>
+  						</ul>
+  					</li>
+  				<?php }
+					if ($user_type == 1 || has_perm($roll_id, 'HR')) { ?>
+  					<li class="nav-item nav-base">
+  						<a href="#" class="nav-link nav-parent">
+  							<i class="nav-icon fa fa-user"></i>
+  							<p> Lead <i class="fas fa-angle-left right"></i> </p>
+  						</a>
+  						<ul class="nav nav-treeview">
+  							<?php if ($user_type == 1 || has_perm($roll_id, 'HR', 'DPT', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Leads/lead_list'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Lead List</p>
+  									</a>
+  								</li>
+  							<?PHP }
+								if ($user_type == 1 || has_perm($roll_id, 'HR', 'DGN', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Leads/lead_add'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Add New Lead</p>
+  									</a>
+  								</li>
+  							<?PHP }
+								if ($user_type == 1 || has_perm($roll_id, 'HR', 'DGN', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Leads/status_list'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Status List</p>
+  									</a>
+  								</li>
+  							<?PHP }
+								if ($user_type == 1 || has_perm($roll_id, 'HR', 'DGN', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Leads/source_list'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Source List</p>
+  									</a>
+  								</li>
+  							<?PHP } ?>
+  						</ul>
+  					</li>
+  				<?php }
+					if ($user_type == 1 || has_perm($roll_id, 'HR')) { ?>
   					<li class="nav-item nav-base">
   						<a href="#" class="nav-link nav-parent">
   							<i class="nav-icon fa fa-user"></i>
@@ -162,6 +260,7 @@
 
   						</ul>
   					</li>
+
   				<?PHP }
 					if ($user_type == 1 || has_perm($roll_id, 'FNC')) { ?>
   					<li class="nav-item nav-base">
@@ -195,52 +294,6 @@
   									</a>
   								</li>
   							<?php } ?>
-  						</ul>
-  					</li>
-  				<?php }
-					if ($user_type == 1 || has_perm($roll_id, 'MST')) { ?>
-  					<li class="nav-item nav-base">
-  						<a href="#" class="nav-link nav-parent">
-  							<i class="nav-icon fas fa-database"></i>
-  							<p>
-  								Master
-  								<i class="fas fa-angle-left right"></i>
-  							</p>
-  						</a>
-  						<ul class="nav nav-treeview">
-  							<?php if ($user_type == 1 || has_perm($roll_id, 'MST', 'SBRK', 'List')) { ?>
-  								<li class="nav-item">
-  									<a class="nav-link" href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>">
-  										<i class="far fa-circle nav-icon"></i>
-  										<p>Salary Breakup</p>
-  									</a>
-  								</li>
-  							<?php }
-								if ($user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'List')) { ?>
-  								<li class="nav-item">
-  									<a class="nav-link" href="<?php echo base_url('Master/state_list'); ?>">
-  										<i class="far fa-circle nav-icon"></i>
-  										<p>State</p>
-  									</a>
-  								</li>
-  							<?php }
-								if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', 'List')) { ?>
-  								<li class="nav-item">
-  									<a class="nav-link" href="<?php echo base_url('Master/city_list'); ?>">
-  										<i class="far fa-circle nav-icon"></i>
-  										<p>City</p>
-  									</a>
-  								</li>
-  							<?php }
-								if ($user_type == 1 || has_perm($roll_id, 'MST', 'PRM', 'List')) { ?>
-  								<li class="nav-item">
-  									<a class="nav-link" href="<?php echo base_url('Master/rolls_permission'); ?>">
-  										<i class="far fa-circle nav-icon"></i>
-  										<p>Roles & Permission</p>
-  									</a>
-  								</li>
-  							<?php } ?>
-
   						</ul>
   					</li>
   				<?php }
@@ -282,43 +335,68 @@
   						</ul>
   					</li>
   				<?php }
-					if ($user_type == 1 || has_perm($roll_id, 'INV')) { ?>
+					if ($user_type == 1 || has_perm($roll_id, 'MST')) { ?>
   					<li class="nav-item nav-base">
   						<a href="#" class="nav-link nav-parent">
-  							<i class="nav-icon fas fa-box"></i>
+  							<i class="nav-icon fas fa-database"></i>
   							<p>
-  								Billing & Invoices
+  								Master
   								<i class="fas fa-angle-left right"></i>
   							</p>
   						</a>
   						<ul class="nav nav-treeview">
-  							<?php if ($user_type == 1 || has_perm($roll_id, 'INV', 'STKTN', 'List')) { ?>
+  							<?php if ($user_type == 1 || has_perm($roll_id, 'MST', 'SBRK', 'List')) { ?>
   								<li class="nav-item">
-  									<a href="<?php echo base_url('Invoice/stock_transfer_list'); ?>" class="nav-link">
+  									<a class="nav-link" href="<?php echo base_url('HrDept/salaryBreakup_list'); ?>">
   										<i class="far fa-circle nav-icon"></i>
-  										<p>Stock Transfer </p>
+  										<p>Salary Breakup</p>
   									</a>
   								</li>
   							<?php }
-								if ($user_type == 1 || has_perm($roll_id, 'INV', 'INV', 'Add')) { ?>
+								if ($user_type == 1 || has_perm($roll_id, 'MST', 'ST', 'List')) { ?>
   								<li class="nav-item">
-  									<a href="<?php echo base_url('Invoice/invoice_add'); ?>" class="nav-link">
+  									<a class="nav-link" href="<?php echo base_url('Master/state_list'); ?>">
   										<i class="far fa-circle nav-icon"></i>
-  										<p>Add New Invoice </p>
+  										<p>State</p>
   									</a>
   								</li>
   							<?php }
-								if ($user_type == 1 || has_perm($roll_id, 'INV', 'INV', 'List')) { ?>
+								if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', 'List')) { ?>
   								<li class="nav-item">
-  									<a href="<?php echo base_url('Invoice/invoice_list'); ?>" class="nav-link">
+  									<a class="nav-link" href="<?php echo base_url('Master/city_list'); ?>">
   										<i class="far fa-circle nav-icon"></i>
-  										<p>Invoice_list </p>
+  										<p>City</p>
+  									</a>
+  								</li>
+  							<?php }
+								if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Master/area_list'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Area</p>
+  									</a>
+  								</li>
+  							<?php }
+								if ($user_type == 1 || has_perm($roll_id, 'MST', 'CT', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Master/subarea_list'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Sub Area</p>
+  									</a>
+  								</li>
+  							<?php }
+								if ($user_type == 1 || has_perm($roll_id, 'MST', 'PRM', 'List')) { ?>
+  								<li class="nav-item">
+  									<a class="nav-link" href="<?php echo base_url('Master/rolls_permission'); ?>">
+  										<i class="far fa-circle nav-icon"></i>
+  										<p>Roles & Permission</p>
   									</a>
   								</li>
   							<?php } ?>
 
   						</ul>
   					</li>
+
   				<?php } ?>
 
   				<li class="nav-item nav-base">

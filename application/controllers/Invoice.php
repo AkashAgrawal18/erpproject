@@ -151,7 +151,9 @@ public function delete_invoice()
 public function invoice_print()
 {
     $data['id'] = $this->input->get('id');
+    $data['printtype'] = $this->input->get('type');
     $data['edit_value'] = $this->Invoice_model->get_edit_invoice($data['id']);
+    $data['fileName'] = $data['edit_value']->m_inv_no;
     //  echo '<pre>'; print_r($data['edit_value']); die ;
     $this->load->view('Invoice/invoice_bil_print', $data);
 }

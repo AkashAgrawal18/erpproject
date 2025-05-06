@@ -210,150 +210,117 @@
     //===========================City===========================//
 
  
-    //===========================cashacc ===========================//
-    $("form#frm-add-cashacc").submit(function(e) {
-      e.preventDefault();
-      var clkbtn = $("#btn-add-cashacc");
-      clkbtn.prop('disabled', true);
-      var formData = new FormData(this);
+  //=========================== area ===========================//
 
-      $.ajax({
-        type: "POST",
-        url: "<?php echo site_url('Master/insert_cashacc'); ?>",
-        data: formData,
-        processData: false,
-        contentType: false,
-        dataType: "JSON",
-        success: function(data) {
-          if (data.status == 'success') {
-            swal(data.message, {
-              icon: "success",
-              timer: 1000,
-            });
-            setTimeout(function() {
-              window.location = "<?php echo site_url('Master/cashAcc_list'); ?>";
-            }, 1000);
-          } else {
-            clkbtn.prop('disabled', false);
-            swal(data.message, {
-              icon: "error",
-              timer: 5000,
-            });
-          }
-        },
-        error: function(jqXHR, status, err) {
-          clkbtn.prop('disabled', false);
-          swal("Some Problem Occurred!! please try again", {
-            icon: "error",
-            timer: 2000,
-          });
-        }
-      });
+  $("form#frm-add-area").submit(function(e) {
+			e.preventDefault();
+			var clkbtn = $("#btn-add-area");
+			clkbtn.prop('disabled', true);
+			var formData = new FormData(this);
+			let pgtype = $('#m_area_type').val();
+			if (pgtype == 1) {
+				var relink = "area_list";
+			} else if (pgtype == 2) {
+				var relink = "subarea_list";
+			}
 
-    });
+			$.ajax({
+				type: "POST",
+				url: "<?php echo site_url('Master/insert_area'); ?>",
+				data: formData,
+				processData: false,
+				contentType: false,
+				dataType: "JSON",
+				success: function(data) {
+					if (data.status == 'success') {
+						swal(data.message, {
+							icon: "success",
+							timer: 1000,
+						});
+						setTimeout(function() {
+							window.location = "<?php echo site_url('Master/'); ?>" + relink;
+						}, 1000);
+					} else {
+						clkbtn.prop('disabled', false);
+						swal(data.message, {
+							icon: "error",
+							timer: 5000,
+						});
+					}
+				},
+				error: function(jqXHR, status, err) {
+					clkbtn.prop('disabled', false);
+					swal("Some Problem Occurred!! please try again", {
+						icon: "error",
+						timer: 2000,
+					});
+				}
+			});
+
+		});
 
 
-    $("#cashacc_tbl").on("click", ".delete-cashacc", function() {
-      var clkbtn = $(this);
-      clkbtn.prop('disabled', true);
-      var dlt_id = $(this).data('value');
+		$("#area_tbl").on("click", ".delete-area", function() {
+			var clkbtn = $(this);
+			clkbtn.prop('disabled', true);
+			var dlt_id = $(this).data('value');
 
-      swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this data!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover this data!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
 
-          $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Master/delete_cashacc'); ?>",
-            data: {
-              delete_id: dlt_id
-            },
-            dataType: "JSON",
-            success: function(data) {
-              if (data.status == 'success') {
-                swal(data.message, {
-                  icon: "success",
-                  timer: 1000,
-                });
-                setTimeout(function() {
-                  location.reload();
-                }, 1000);
-              } else {
-                clkbtn.prop('disabled', false);
-                swal(data.message, {
-                  icon: "error",
-                  timer: 5000,
-                });
-              }
-            },
-            error: function(jqXHR, status, err) {
-              clkbtn.prop('disabled', false);
-              swal("Some Problem Occurred!! please try again", {
-                icon: "error",
-                timer: 2000,
-              });
-            }
-          });
+					$.ajax({
+						type: "POST",
+						url: "<?php echo site_url('Master/delete_area'); ?>",
+						data: {
+							delete_id: dlt_id
+						},
+						dataType: "JSON",
+						success: function(data) {
+							if (data.status == 'success') {
+								swal(data.message, {
+									icon: "success",
+									timer: 1000,
+								});
+								setTimeout(function() {
+									location.reload();
+								}, 1000);
+							} else {
+								clkbtn.prop('disabled', false);
+								swal(data.message, {
+									icon: "error",
+									timer: 5000,
+								});
+							}
+						},
+						error: function(jqXHR, status, err) {
+							clkbtn.prop('disabled', false);
+							swal("Some Problem Occurred!! please try again", {
+								icon: "error",
+								timer: 2000,
+							});
+						}
+					});
 
-        } else {
-          clkbtn.prop('disabled', false);
-          swal("Your Data is safe!", {
-            icon: "info",
-            timer: 2000,
-          });
-        }
-      });
-    });
+				} else {
+					clkbtn.prop('disabled', false);
+					swal("Your Data is safe!", {
+						icon: "info",
+						timer: 2000,
+					});
+				}
+			});
+		});
 
-    //===========================cashacc ===========================//
+		//===========================area===========================//
+
  
 		//---------------state wise city----------------------//
-		
-    //////////////////////////
-    $("#m_state").on('change', function() {
-        var m_state = $('#m_state :selected').val();
-
-        $('#m_city').find('option').not(':first').remove();
-
-
-
-        $.ajax({
-            url: "<?php echo site_url('Master/get_city') ?>",
-            type: "POST",
-            data: {
-                m_state: m_state
-            },
-            dataType: "JSON",
-            success: function(data) {
-
-                var selectm_state = $("#m_state").val();
-
-                var html = "";
-
-                $.each(data, function(index, value) {
-
-                    if (value.state == selectm_state) {
-                        var sel2 = 'selected';
-
-                    } else {
-                        var sel2 = '';
-
-                    }
-
-                    html += "<option value='" + value.m_city_id + "' " + sel2 + ">" + value.m_city_name + "</option>";
-                });
-                $("#m_city").append(html);
-            }
-        });
-    });
-
-		// //////////////////////////////////////////////////////////
-
 		
     //===========================perm===========================//
     $("form#frm-add-perm").submit(function(e) {

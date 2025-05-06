@@ -165,6 +165,88 @@ class Master extends CI_Controller
 
 	//-------------------------- city ------------------------//
 
+	//-------------------------- area ------------------------//
+	public function area_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = "Area List";
+		$data['pgtype'] = 1;
+		$data['id'] = $this->input->get('id');
+		$data['state_list'] = $this->Master_model->get_active_state();
+		$data['city_list'] = $this->Master_model->get_active_city();
+		$data['all_value'] = $this->Master_model->get_all_area($data['pgtype']);
+		$data['edit_value'] = $this->Master_model->get_edit_area($data['id']);
+
+		$this->load->view('Masters/area_list', $data);
+	}
+	public function subarea_list()
+	{
+		$data = $this->login_details();
+		$data['pagename'] = "Sub Area List";
+		$data['pgtype'] = 2;
+		$data['id'] = $this->input->get('id');
+		$data['state_list'] = $this->Master_model->get_active_state();
+		$data['city_list'] = $this->Master_model->get_active_city();
+		$data['area_list'] = $this->Master_model->get_active_area(1);
+		$data['all_value'] = $this->Master_model->get_all_area($data['pgtype']);
+		$data['edit_value'] = $this->Master_model->get_edit_area($data['id']);
+
+		$this->load->view('Masters/area_list', $data);
+	}
+
+	public function insert_area()
+	{
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Master_model->insert_area()) {
+
+				if ($data == 1) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Area has been Added successfully!'
+					);
+				} else if ($data == 2) {
+					$info = array(
+						'status' => 'success',
+						'message' => 'Area Updated Successfully'
+					);
+				} else if ($data == 3) {
+					$info = array(
+						'status' => 'error',
+						'message' => 'Data with same name already exist'
+					);
+				}
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+
+	public function delete_area()
+	{
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			if ($data = $this->Master_model->delete_area()) {
+				$info = array(
+					'status' => 'success',
+					'message' => 'Area has been Deleted successfully!'
+				);
+			} else {
+				$info = array(
+					'status' => 'error',
+					'message' => 'Some problem Occurred!! please try again'
+				);
+			}
+			echo json_encode($info);
+		}
+	}
+
+	//-------------------------- area ------------------------//
+
 
 
 

@@ -11,7 +11,7 @@ $taxper = (int)get_settings('m_app_tax'); ?>
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-10">
-                    <h1><?= $pagename ?></h1>
+                    <h3><?= $pagename ?></h3>
                 </div>
                 <div class="col-sm-2 text-right">
                     <?php if ($logged_user_type == 1 || has_perm($roll_id, 'INV', 'INV', 'List')) { ?>
@@ -178,6 +178,7 @@ $taxper = (int)get_settings('m_app_tax'); ?>
                                                                     </td>
                                                                     <td><input type="number" id="inv_item_rate<?= $cou ?>" name="inv_item_rate[]" class="prodrate calclss " data-count="<?= $cou ?>" style="width:80px" value="<?= $kry->inv_item_rate ?>">
                                                                         <input type="hidden" id="inv_item_pretaxamt<?= $cou ?>" name="inv_item_pretaxamt[]" value="<?= $kry->inv_item_pretaxamt ?>" class="prodstotal">
+                                                                        <input type="hidden" id="inv_item_subtotal<?= $cou ?>" name="inv_item_subtotal[]" value="<?= ($kry->inv_item_qty * $kry->inv_item_rate)?>" class="prodsubtotal">
                                                                         <input type="hidden" id="inv_item_cgst<?= $cou ?>" name="inv_item_cgst[]" value="<?= $kry->inv_item_cgst ?>" class="prodcgst">
                                                                         <input type="hidden" id="inv_item_sgst<?= $cou ?>" name="inv_item_sgst[]" value="<?= $kry->inv_item_sgst ?>" class="prodsgst">
                                                                         <input type="hidden" id="inv_item_disamt<?= $cou ?>" name="inv_item_disamt[]" value="<?= $kry->inv_item_disamt ?>" class="proddisamt">
@@ -206,13 +207,14 @@ $taxper = (int)get_settings('m_app_tax'); ?>
                                                         <tr>
                                                             <td colspan="4">Total </td>
                                                             <td id="qty_total"></td>
-                                                            <td></td>
+                                                            <td><span id="Tsub_total" class="d-none"></span><span id="gstType" class="d-none"></span></td>
                                                             <td id="sub_total"></td>
                                                             <td id="cgst_total"></td>
                                                             <td id="sgst_total"></td>
                                                             <td id="igst_total"></td>
                                                             <td id="dis_total"></td>
                                                             <td id="grand_total"></td>
+                                                            <td></td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -224,7 +226,7 @@ $taxper = (int)get_settings('m_app_tax'); ?>
                                                     if (!empty($store_batchvalue)) {
                                                         foreach ($store_batchvalue as $Vitem) {
                                                     ?>
-                                                            <option value="<?= $Vitem->stk_trans_id; ?>" data-prodname="<?= $Vitem->m_pro_name ?>" data-prodid="<?= $Vitem->m_batch_pro_id ?>" data-batchid="<?= $Vitem->m_batch_id ?>" data-batchno="<?= $Vitem->m_batch_number ?>" data-avlbal="<?= $Vitem->balance_qty ?>" data-pckgname="<?= $Vitem->package_name ?>" data-sizename="<?= $Vitem->size_name ?>" data-warehseid="<?= $Vitem->stk_trans_to ?>" data-price="<?= $Vitem->m_batch_price ?>"><?= $Vitem->m_pro_name . ' - ' . $Vitem->m_batch_number; ?></option>
+                                                            <option value="<?= $Vitem->stk_trans_id.' '. $Vitem->m_batch_number .' ('.$Vitem->balance_qty.' avl)' ?>" data-stktrans="<?= $Vitem->stk_trans_id; ?>" data-prodname="<?= $Vitem->m_pro_name ?>" data-prodid="<?= $Vitem->m_batch_pro_id ?>" data-batchid="<?= $Vitem->m_batch_id ?>" data-batchno="<?= $Vitem->m_batch_number ?>" data-avlbal="<?= $Vitem->balance_qty ?>" data-pckgname="<?= $Vitem->package_name ?>" data-sizename="<?= $Vitem->size_name ?>" data-warehseid="<?= $Vitem->stk_trans_to ?>" data-price="<?= $Vitem->m_batch_price ?>"><?= $Vitem->m_pro_name . ' - ' . $Vitem->m_batch_number; ?></option>
                                                     <?php
                                                         }
                                                     }

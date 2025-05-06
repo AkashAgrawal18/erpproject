@@ -137,7 +137,7 @@ class Master_model extends CI_model
   }
   public function get_active_city()
   {
-    $this->db->select('city.m_city_name,city.m_city_id,state.m_state_name');
+    $this->db->select('city.m_city_name,city.m_city_id,m_city_state,state.m_state_name');
     $this->db->join('master_state_tbl state', 'state.m_state_id = city.m_city_state', 'left');
     $this->db->where('m_city_status', '1');
     $this->db->order_by('m_city_name');
@@ -157,6 +157,74 @@ class Master_model extends CI_model
     return $res;
   }
   //=========================================== city ===============================================//
+  //========================== Area  =============================//
+
+  public function get_all_area($type)
+  {
+    $this->db->select('master_area_tbl.*,state.m_state_name as state_name,city.m_city_name as city_name,area.m_area_name as area_name');
+    $this->db->join('master_state_tbl state', 'state.m_state_id = master_area_tbl.m_area_state', 'left');
+    $this->db->join('master_city_tbl city', 'city.m_city_id = master_area_tbl.m_area_city', 'left');
+    $this->db->join('master_area_tbl area', 'area.m_area_id = master_area_tbl.m_area_area', 'left');
+    $this->db->where('master_area_tbl.m_area_type',$type);
+    $this->db->order_by('master_area_tbl.m_area_name');
+    $res = $this->db->get('master_area_tbl')->result();
+    return $res;
+  }
+  public function get_edit_area($edid)
+  {
+    $this->db->select('*');
+    $this->db->where('m_area_id', $edid);
+    $res = $this->db->get('master_area_tbl')->row();
+    return $res;
+  }
+
+  public function insert_area()
+  {
+    $id = $this->input->post('m_area_id');
+    $area = $this->input->post('m_area_name');
+    $state_id = $this->input->post('m_area_state');
+    $city_id = $this->input->post('m_area_city');
+    $area_id = $this->input->post('m_area_area');
+    $type = $this->input->post('m_area_type');
+    $check = $this->db->where('m_area_name', $area)->where('m_area_state', $state_id)->where('m_area_city', $city_id)->where('m_area_area', $area_id)->where('m_area_type', $type)->where('m_area_id !=', $id)->get('master_area_tbl')->num_rows();
+    if ($check > 0) {
+      return 3;
+    }
+    $s_data = array(
+      "m_area_name" => $area,
+      "m_area_state" => $state_id,
+      "m_area_city" => $city_id,
+      "m_area_area" => $area_id,
+      "m_area_type" => $type,
+      "m_area_status" => $this->input->post('m_area_status'),
+    );
+    if (!empty($id)) {
+      $this->db->where('m_area_id', $id)->update('master_area_tbl', $s_data);
+      return 2;
+    } else {
+      $s_data['m_area_addedon'] = date('Y-m-d H:i');
+      $this->db->insert('master_area_tbl', $s_data);
+      return 1;
+    }
+  }
+
+  public function delete_area()
+  {
+    $this->db->where('m_area_id', $this->input->post('delete_id'));
+    return $this->db->delete('master_area_tbl');
+  }
+ 
+  public function get_active_area($type)
+  {
+    $this->db->select('*');
+    $this->db->where('m_area_type',$type);
+    $this->db->where('m_area_status',1);
+    $this->db->order_by('m_area_name');
+    $res = $this->db->get('master_area_tbl')->result();
+    return $res;
+  }
+
+  //=========================================== area ===============================================//
 
 
 

@@ -41,7 +41,7 @@ $user_type = $this->session->userdata('user_type');
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-4">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-6">
 					<form method="post" action="<?php echo site_url('Report/emp_attd_report'); ?>">

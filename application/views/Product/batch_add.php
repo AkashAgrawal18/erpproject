@@ -9,7 +9,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-10">
-					<h1><?= $pagename ?></h1>
+					<h3><?= $pagename ?></h3>
 				</div>
 				<div class="col-sm-2 text-right">
 					<?php if ($logged_user_type == 1 || has_perm($roll_id, 'PDT', 'BCH', 'List')) { ?>
@@ -92,7 +92,7 @@ $logged_user_type = $this->session->userdata('user_type'); ?>
 
 										<div class="col-sm-3">
 											<div class="form-group">
-												<label>Warehouse <span class="text-danger">*</span></label>
+												<label>Location <span class="text-danger">*</span></label>
 												<select name="m_batch_ware_id" id="m_batch_ware_id" class="form-control select2" required>
 													<?php if (!empty($ware_value)) {
 														foreach ($ware_value as $row) {

@@ -112,11 +112,11 @@ class Product_model extends CI_model
 			$this->db->where('m_pro_status', $status);
 		}
 		$this->db->select('master_product_tbl.*,cate.m_cat_name as category_name,subcate.m_cat_name as subcategory_name,pkg.m_cat_name as package_name,size.m_cat_name as size_name,brand.m_cat_name as brand_name');
-		$this->db->join('master_cate_tbl as cate', 'master_product_tbl.m_pro_cate = cate.m_cat_id');
-		$this->db->join('master_cate_tbl as subcate', 'master_product_tbl.m_pro_subcate = subcate.m_cat_id');
-		$this->db->join('master_cate_tbl as pkg', 'master_product_tbl.m_pro_pack = pkg.m_cat_id');
-		$this->db->join('master_cate_tbl as size', 'master_product_tbl.m_pro_size = size.m_cat_id');
-		$this->db->join('master_cate_tbl as brand', 'master_product_tbl.m_pro_brand = brand.m_cat_id');
+		$this->db->join('master_cate_tbl as cate', 'master_product_tbl.m_pro_cate = cate.m_cat_id','left');
+		$this->db->join('master_cate_tbl as subcate', 'master_product_tbl.m_pro_subcate = subcate.m_cat_id','left');
+		$this->db->join('master_cate_tbl as pkg', 'master_product_tbl.m_pro_pack = pkg.m_cat_id','left');
+		$this->db->join('master_cate_tbl as size', 'master_product_tbl.m_pro_size = size.m_cat_id','left');
+		$this->db->join('master_cate_tbl as brand', 'master_product_tbl.m_pro_brand = brand.m_cat_id','left');
 		$this->db->order_by('m_pro_id', 'desc');
 		$res = $this->db->get('master_product_tbl')->result();
 		return $res;
@@ -195,9 +195,14 @@ class Product_model extends CI_model
 		$res = $this->db->get('master_cate_tbl')->result();
 		return $res;
 	}
-	public function get_sucat_list()
+	public function get_sucat_list($status = '', $cat = '')
 	{
-		// $this->db->where('m_login_type!=', 1);
+		if (!empty($status)) {
+			$this->db->where('m_cat_status', $status);
+		}
+		if (!empty($cat)) {
+			$this->db->where('m_catsub_id', $cat);
+		}
 		$this->db->where('m_cat_type', 2);
 		$res = $this->db->get('master_cate_tbl')->result();
 		return $res;
@@ -236,9 +241,12 @@ class Product_model extends CI_model
 		if (!empty($user_store)) {
 			$this->db->where('m_batch_ware_id', $user_store);
 		}
-		$this->db->select('*');
+		$this->db->select('master_batch_tbl.*,m_pro_name,pkg.m_cat_name as package_name,size.m_cat_name as size_name,brand.m_cat_name as brand_name');
 		$this->db->order_by('m_batch_id', 'desc');
 		$this->db->join('master_product_tbl', 'master_product_tbl.m_pro_id = master_batch_tbl.m_batch_pro_id', 'left');
+		$this->db->join('master_cate_tbl as pkg', 'master_product_tbl.m_pro_pack = pkg.m_cat_id','left');
+		$this->db->join('master_cate_tbl as size', 'master_product_tbl.m_pro_size = size.m_cat_id','left');
+		$this->db->join('master_cate_tbl as brand', 'master_product_tbl.m_pro_brand = brand.m_cat_id','left');
 		$res = $this->db->get('master_batch_tbl')->result();
 		return $res;
 	}
